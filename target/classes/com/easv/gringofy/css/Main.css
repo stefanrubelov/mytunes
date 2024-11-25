@@ -3,15 +3,16 @@
     src: url("../fonts/Poppins/Poppins-Regular.ttf");
 }
 .body{
-    -fx-background-image: url("../images/backgroundImage.png");
+    -fx-background-image: url("../images/giphy.gif");
+    /*-fx-background-position: cover;*/
     -fx-font-family: 'Poppins';
 }
 .left-menu{
-    -fx-background-color: rgba(0,0,0,.2);
+    -fx-background-color: rgba(0,0,0,.6);
     -fx-background-radius: 10px;
 }
 .home-gallery{
-    -fx-background-color: rgba(0,0,0,.2);
+    -fx-background-color: rgba(0,0,0,.6);
     -fx-background-radius: 10px;
 }
 .search-bar{
@@ -20,21 +21,29 @@
     -fx-border-radius: 5px;
 }
 .left-menu-buttons-container > *{
+    -fx-background-color: transparent;
+    -fx-padding: 0;
     -fx-font-size: 16px;
     -fx-text-fill: #ccc;
+}
+.left-menu-buttons-container > *:hover{
+    -fx-text-fill: orange;
 }
 .bottom-nav-buttons-container{
     -fx-font-size: 24px;
 }
 .bottom-nav-buttons-container > *{
     -fx-background-color: transparent;
-    -fx-opacity: 1;
+    -fx-opacity: 0.8;
     -fx-text-fill: orange;
+}
+.bottom-nav-buttons-container > *:hover{
+    -fx-opacity: 1;
 }
 .song-progress-bar{
     -fx-pref-width: 300px;
     -fx-pref-height: 8px;
 }
 .song-progress-bar .track{
-    -fx-background-color: rgba(0,0,0,.2);
+    -fx-background-color: rgba(0,0,0,.5);
 }

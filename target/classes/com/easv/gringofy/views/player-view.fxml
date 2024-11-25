@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -10,13 +9,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="828.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlayerController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="516.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="538.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
          <children>
-            <ImageView fitHeight="103.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="177.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/logo.png" />
                </image>
@@ -26,48 +24,31 @@
             </ImageView>
             <TextField promptText="🔎  Search" styleClass="search-bar" stylesheets="@../css/Main.css">
                <VBox.margin>
-                  <Insets left="25.0" right="25.0" top="20.0" />
+                  <Insets left="25.0" right="25.0" top="10.0" />
                </VBox.margin>
             </TextField>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="40.0" styleClass="left-menu-buttons-container" stylesheets="@../css/Main.css">
-               <children>
-                  <Label text="Home" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="Categories" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="Playlists" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
-               </children>
                <padding>
                   <Insets left="30.0" />
                </padding>
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
+               <children>
+                  <Button mnemonicParsing="false" text="Home" />
+                  <Button mnemonicParsing="false" text="Categories" />
+                  <Button mnemonicParsing="false" text="Playlists" />
+               </children>
             </VBox>
          </children>
       </VBox>
-      <VBox layoutX="262.0" layoutY="14.0" prefHeight="516.0" prefWidth="552.0" styleClass="home-gallery" stylesheets="@../css/Main.css" />
+      <VBox layoutX="262.0" layoutY="14.0" prefHeight="538.0" prefWidth="552.0" styleClass="home-gallery" stylesheets="@../css/Main.css" />
       <VBox alignment="CENTER" layoutY="557.0" maxWidth="1.7976931348623157E308" prefHeight="68.0" prefWidth="828.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
          <children>
             <HBox alignment="BOTTOM_CENTER" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="682.0" spacing="10.0" styleClass="bottom-nav-buttons-container" stylesheets="@../css/Main.css">
                <children>
                   <Button mnemonicParsing="false" onAction="#playPreviousSong" text="⏮️" />
-                  <Button mnemonicParsing="false" onAction="#playCurrentSong" text="▶️" />
+                  <Button mnemonicParsing="false" onAction="#playCurrentSong" styleClass="play-button" stylesheets="@../css/Main.css" text="▶️" />
                   <Button mnemonicParsing="false" onAction="#playNextSong" text="⏭️" />
                </children>
             </HBox>
