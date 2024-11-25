@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="828.0" style="-fx-background-color: #555; -fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlayerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="828.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlayerController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="516.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
          <children>
