@@ -13,7 +13,7 @@ public class Song {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Song(int id, int duration, Genre genre, String title,String description, String artist, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Song(int id, int duration, Genre genre, String title,String description, String artist,String releaseDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -24,7 +24,37 @@ public class Song {
         this.updatedAt = updatedAt;
     }
 
-    public Song() {
 
+    protected int getId() {
+        return id;
+    }
+    protected int getDuration() {
+        return duration;
+    }
+
+    protected Genre getGenre() {
+        return genre;
+    }
+
+    protected String getTitle() {
+        return title;
+    }
+
+    protected String getDescription() {
+        return description;
+    }
+
+    protected String getArtist() {
+        return artist;
+    }
+
+    protected String getReleaseDate() {
+        return releaseDate;
+    }
+    protected LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    protected LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
