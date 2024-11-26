@@ -1,24 +1,25 @@
 package com.easv.gringofy.be;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-public class Playlist {
-    private Map<Integer, Song> songs = new LinkedHashMap<>();
+public class Album {
+    private int id;
     private String title;
     private String description;
     private String createdAt;
     private String updatedAt;
+    private Map<Integer, Song> songs;
 
-    public Playlist(String title, String description, String createdAt, String updatedAt) {
+    public Album(int id, String title, String description, String createdAt, String updatedAt) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.songs = new HashMap<>();
     }
     public void addSong(int position, Song song) {
-        songs.put(position, song);
+        this.songs.put(position, song);
     }
 }
