@@ -51,3 +51,18 @@
 .container{
     -fx-background-color: transparent;
 }
+.home-playlist-container{
+    -fx-spacing: 15px;
+}
+.playlist-node{
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(254,192,26,255);
+    -fx-spacing: 5px;
+    -fx-padding: 10px;
+    -fx-pref-width: 130px;
+    -fx-border-radius: 5px;
+    -fx-font-size: 12px;
+}
+.playlist-node > *{
+    -fx-text-fill: #aaa;
+}

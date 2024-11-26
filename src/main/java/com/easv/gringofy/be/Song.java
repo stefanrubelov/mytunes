@@ -1,5 +1,7 @@
 package com.easv.gringofy.be;
 
+import javafx.scene.Node;
+
 import java.time.LocalDateTime;
 
 public class Song {
@@ -20,6 +22,7 @@ public class Song {
         this.artist = artist;
         this.genre = genre;
         this.duration = duration;
+        this.releaseDate = releaseDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

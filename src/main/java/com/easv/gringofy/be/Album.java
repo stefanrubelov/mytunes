@@ -1,5 +1,10 @@
 package com.easv.gringofy.be;
 
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.image.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,4 +27,5 @@ public class Album {
     public void addSong(int position, Song song) {
         this.songs.put(position, song);
     }
+
 }
