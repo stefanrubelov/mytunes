@@ -31,12 +31,7 @@ public class HomePageController implements Initializable {
         LocalDateTime now = LocalDateTime.now();
         Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/logo.png"));
         Playlist playlist = new Playlist("Cool Songs", "Playlist with cool songs", now, now, image);
-        hboxHomePlaylists.getChildren().add(playlist.toNode());
-        hboxHomePlaylists.getChildren().add(playlist.toNode());
-        hboxHomePlaylists.getChildren().add(playlist.toNode());
-        hboxHomePlaylists.getChildren().add(playlist.toNode());
-//        hboxHomePlaylists.getChildren().add(playlist.toNode());
-        hboxHomePlaylists.getChildren().add(playlist.toNode());
+        hboxHomePlaylists.getChildren().addAll(playlist.toNode(),playlist.toNode(),playlist.toNode(),playlist.toNode(),playlist.toNode(),playlist.toNode(),playlist.toNode(),playlist.toNode());
 
     }
 
