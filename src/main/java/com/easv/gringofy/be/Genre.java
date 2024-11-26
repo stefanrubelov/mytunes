@@ -1,12 +1,14 @@
 package com.easv.gringofy.be;
 
+import java.time.LocalDateTime;
+
 public class Genre {
     private int id;
     private String title;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    public Genre(int id, String title, String createdAt, String updatedAt) {
+    public Genre(int id, String title, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;

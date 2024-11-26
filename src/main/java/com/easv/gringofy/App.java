@@ -14,14 +14,14 @@ import java.sql.SQLException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/easv/gringofy/views/player-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/easv/gringofy/views/home-page-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(Env.get("APP_NAME", "Gringofy"));
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         launch();
     }
 }

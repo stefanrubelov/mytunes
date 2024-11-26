@@ -7,7 +7,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DBConnection {
+public class DBConnection implements AutoCloseable {
     public Connection getConnection() throws SQLServerException {
         SQLServerDataSource ds;
         ds = new SQLServerDataSource();
@@ -24,5 +24,10 @@ public class DBConnection {
         try (Connection conn = getConnection()) {
             return true;
         }
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }
