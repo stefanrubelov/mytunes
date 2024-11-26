@@ -16,7 +16,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/easv/gringofy/views/player-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle(Env.get("APP_NAME", "Gringofy"))
+        stage.setTitle(Env.get("APP_NAME", "Gringofy"));
         stage.setScene(scene);
         stage.show();
     }
