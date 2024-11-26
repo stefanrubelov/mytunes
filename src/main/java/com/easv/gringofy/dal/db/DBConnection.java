@@ -1,20 +1,28 @@
 package com.easv.gringofy.dal.db;
 
+import com.easv.gringofy.utils.Env;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class DBConnection {
     public Connection getConnection() throws SQLServerException {
         SQLServerDataSource ds;
         ds = new SQLServerDataSource();
-        ds.setDatabaseName("");
-        ds.setUser("");
-        ds.setPassword("");
-        ds.setServerName("EASV-DB4");
-        ds.setPortNumber(1433);
+        ds.setDatabaseName(Env.get("DB_NAME"));
+        ds.setUser(Env.get("DB_USER"));
+        ds.setPassword(Env.get("DB_PASSWORD"));
+        ds.setServerName(Env.get("DB_HOST"));
+        ds.setPortNumber(Integer.parseInt(Env.get("DB_PORT", "1433")));
         ds.setTrustServerCertificate(true);
         return ds.getConnection();
+    }
+
+    public boolean testConnection() throws SQLException {
+        try (Connection conn = getConnection()) {
+            return true;
+        }
     }
 }
