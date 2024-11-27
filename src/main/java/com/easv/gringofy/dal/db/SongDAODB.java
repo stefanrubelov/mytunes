@@ -29,13 +29,12 @@ public class SongDAODB {
                 int genreId = resultSet.getInt("genre_id");
                 int duration = resultSet.getInt("duration");
                 String title = resultSet.getString("title");
-                String description = resultSet.getString("description");
                 String artist = resultSet.getString("artist");
                 String releaseDate = resultSet.getString("release_date");
                 LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
                 LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
                 Genre genre = genreData.getGenreById(genreId);
-                Song song = new Song(id, duration, genre, title, description, artist,releaseDate, createdAt, updatedAt);
+                Song song = new Song(id, duration, genre, title, artist,releaseDate, createdAt, updatedAt);
                 songs.add(song);
             }
         }

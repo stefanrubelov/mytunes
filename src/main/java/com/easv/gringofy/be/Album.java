@@ -1,9 +1,12 @@
 package com.easv.gringofy.be;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +27,25 @@ public class Album {
         this.updatedAt = updatedAt;
         this.songs = new HashMap<>();
     }
+    public Album(String title) {
+        this.title = title;
+    }
+
     public void addSong(int position, Song song) {
         this.songs.put(position, song);
     }
 
+    public HBox toNode() {
+        HBox hbox = new HBox();
+        hbox.getStyleClass().add("album-node");
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/defaultAlbumPicture.png"));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(50);
+        imageView.setFitHeight(50);
+        Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("album-node-title");
+        hbox.getChildren().addAll(imageView, titleLabel);
+        return hbox;
+    }
 }
