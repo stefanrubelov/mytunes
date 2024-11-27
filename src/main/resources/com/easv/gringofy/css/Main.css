@@ -80,7 +80,7 @@
     -fx-pref-height: 8px;
 }
 .song-progress-bar .track{
-    -fx-background-color: rgba(120,120,120,.4);
+    -fx-background-color: rgba(254,192,26,.3);
 }
 
 .container{
