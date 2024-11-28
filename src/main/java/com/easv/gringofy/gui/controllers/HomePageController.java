@@ -8,6 +8,7 @@ import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
+import com.easv.gringofy.gui.NodeBuilder;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ import java.util.ResourceBundle;
 public class HomePageController implements Initializable {
 
     PlayerModel playerModel = new PlayerModel();
+    NodeBuilder nodeBuilder = new NodeBuilder();
     SongManager songManager = new SongManager();
     PlaylistManager playlistManager = new PlaylistManager();
     AlbumManager albumManager = new AlbumManager();
@@ -74,13 +76,13 @@ public class HomePageController implements Initializable {
         LocalDateTime now = LocalDateTime.now();
         Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/logo.png"));
         Playlist playlist = new Playlist("Cool Songs", "Playlist with cool songs", now, now, image);
-        hboxHomePlaylists.getChildren().addAll(playlist.toNode(), playlist.toNode(), playlist.toNode(), playlist.toNode(), playlist.toNode(), playlist.toNode(), playlist.toNode(), playlist.toNode());
+        hboxHomePlaylists.getChildren().addAll(nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist));
 
         Song song = new Song("Cool song", "Some Artist");
-        flowPaneHomeSongs.getChildren().addAll(song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode(), song.toNode());
+        flowPaneHomeSongs.getChildren().addAll(nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song));
 
         Album album = new Album("Cool Album");
-        flowPaneHomeAlbums.getChildren().addAll(album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode());
+        flowPaneHomeAlbums.getChildren().addAll(nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album));
     }
 
     private void search(String input) throws PlayerException {

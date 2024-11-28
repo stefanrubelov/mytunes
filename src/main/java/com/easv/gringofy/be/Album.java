@@ -39,17 +39,8 @@ public class Album {
         this.songs.put(position, song);
     }
 
-    public HBox toNode() {
-        HBox hbox = new HBox();
-        hbox.setAlignment(Pos.CENTER_LEFT);
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_ALBUM_PICTURE)));
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(50);
-        imageView.setFitHeight(50);
-        Label titleLabel = new Label(title);
-        hbox.getStyleClass().add("album-node");
-        titleLabel.getStyleClass().add("album-node-title");
-        hbox.getChildren().addAll(imageView, titleLabel);
-        return hbox;
+
+    public String getTitle() {
+        return title;
     }
 }
