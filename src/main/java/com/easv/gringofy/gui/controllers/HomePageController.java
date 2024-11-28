@@ -44,6 +44,18 @@ public class HomePageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        txtFieldSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(oldValue.length() > newValue.length() && newValue.length() <= 3) {
+                showDefaultSections();
+            }
+            else if(newValue.length() > 3) {
+                try {
+                    search(newValue);
+                } catch (PlayerException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         testNodes();
     }
 
@@ -72,15 +84,9 @@ public class HomePageController implements Initializable {
         flowPaneHomeAlbums.getChildren().addAll(album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode(), album.toNode());
     }
 
-    @FXML private void search(ActionEvent actionEvent) throws PlayerException {
-        String input = txtFieldSearchBar.getText();
-        if (input.length() > 2) {
-            clearSections();
-            getNewSections(input);
-        }
-        else{
-            showDefaultSections();
-        }
+    private void search(String input) throws PlayerException {
+        clearSections();
+        getNewSections(input);
     }
 
     private void clearSections(){
@@ -100,5 +106,6 @@ public class HomePageController implements Initializable {
         flowPaneHomeSongs.getChildren().clear();
         flowPaneHomeAlbums.getChildren().clear();
         hboxHomePlaylists.getChildren().clear();
+        testNodes();
     }
 }
