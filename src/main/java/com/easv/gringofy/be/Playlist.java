@@ -8,12 +8,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Playlist {
+
+    private static final String DEFAULT_PLAYLIST_PICTURE = "/com/easv/gringofy/images/logo.png";
+
     private Map<Integer, Song> songs = new LinkedHashMap<>();
     private String title;
     private String description;
@@ -45,7 +45,14 @@ public class Playlist {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.getStyleClass().add("playlist-node");
-        ImageView imageView = new ImageView(image);
+        ImageView imageView = new ImageView();
+        if(image != null) {
+            imageView.setImage(image);
+        }
+        else{
+            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_PLAYLIST_PICTURE)));
+            imageView.setImage(image);
+        }
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
         Label titleLabel = new Label(title);

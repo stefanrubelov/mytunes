@@ -10,8 +10,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Song {
+    private static final String DEFAULT_SONG_PICTURE ="/com/easv/gringofy/images/defaultSongPicture.png";
+
     private int id;
     private int duration;
     private Genre genre;
@@ -74,7 +77,7 @@ public class Song {
         hbox.getStyleClass().add("song-node");
         hbox.setAlignment(Pos.CENTER);
 
-        Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/defaultSongPicture.png"));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(35);
         imageView.setFitHeight(35);
@@ -87,14 +90,16 @@ public class Song {
 
         // VBox for text (title and artist name)
         VBox vbox = new VBox();
-        vbox.getStyleClass().add("song-node-text");
         Label titleLabel = new Label(title);
-        titleLabel.getStyleClass().add("song-node-title");
         Label artistLabel = new Label(artist);
-        artistLabel.getStyleClass().add("song-node-artist");
-        vbox.getChildren().addAll(titleLabel, artistLabel);
 
+        titleLabel.getStyleClass().add("song-node-title");
+        vbox.getStyleClass().add("song-node-text");
+        artistLabel.getStyleClass().add("song-node-artist");
+
+        vbox.getChildren().addAll(titleLabel, artistLabel);
         hbox.getChildren().addAll(imageView, vbox);
+
         return hbox;
     }
 
