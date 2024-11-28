@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class Song {
     private static final String DEFAULT_SONG_PICTURE = "/com/easv/gringofy/images/defaultSongPicture.png";
+    private static final String OPTIONS_PICTURE = "/com/easv/gringofy/images/tripleDots.png";
 
     private int id;
     private int duration;
@@ -55,11 +56,11 @@ public class Song {
         return genre;
     }
 
-    protected String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    protected String getArtist() {
+    public String getArtist() {
         return artist;
     }
 
@@ -73,37 +74,6 @@ public class Song {
 
     protected LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public HBox toNode() {
-        HBox hbox = new HBox();
-        hbox.getStyleClass().add("song-node");
-        hbox.setAlignment(Pos.CENTER);
-
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(35);
-        imageView.setFitHeight(35);
-
-        // Clip the ImageView to a rounded rectangle, so that image is not square (cannot use border-radius or background radius)
-        Rectangle clip = new Rectangle(35, 35);
-        clip.setArcWidth(10);
-        clip.setArcHeight(10);
-        imageView.setClip(clip);
-
-        // VBox for text (title and artist name)
-        VBox vbox = new VBox();
-        Label titleLabel = new Label(title);
-        Label artistLabel = new Label(artist);
-
-        titleLabel.getStyleClass().add("song-node-title");
-        vbox.getStyleClass().add("song-node-text");
-        artistLabel.getStyleClass().add("song-node-artist");
-
-        vbox.getChildren().addAll(titleLabel, artistLabel);
-        hbox.getChildren().addAll(imageView, vbox);
-
-        return hbox;
     }
 
     public void playSong() {

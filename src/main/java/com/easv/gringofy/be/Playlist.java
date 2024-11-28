@@ -44,21 +44,11 @@ public class Playlist {
         this.updatedAt = date;
     }
 
-    public VBox toNode() {
-        VBox vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-        vbox.getStyleClass().add("playlist-node");
-        ImageView imageView = new ImageView();
-        if (image != null) {
-            imageView.setImage(image);
-        } else {
-            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_PLAYLIST_PICTURE)));
-            imageView.setImage(image);
-        }
-        imageView.setFitWidth(100);
-        imageView.setFitHeight(100);
-        Label titleLabel = new Label(title);
-        vbox.getChildren().addAll(imageView, titleLabel);
-        return vbox;
+    public Image getImage() {
+        return image;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
