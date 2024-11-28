@@ -100,9 +100,9 @@ public class HomePageController implements Initializable {
         List<Song> songs = playerModel.getAllSongsByInput(input);
         List<Playlist> playlists = playerModel.getAllPlaylistsByInput(input);
         List<Album> albums = playerModel.getAllAlbumsByInput(input);
-        songs.forEach(song -> flowPaneHomeSongs.getChildren().add(song.toNode()));
-        playlists.forEach(playlist -> flowPaneHomeSongs.getChildren().add(playlist.toNode()));
-        albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(album.toNode()));
+        songs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song)));
+        playlists.forEach(playlist -> flowPaneHomeSongs.getChildren().add(nodeBuilder.playlistToNode(playlist)));
+        albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
     }
 
     private void showDefaultSections() {
