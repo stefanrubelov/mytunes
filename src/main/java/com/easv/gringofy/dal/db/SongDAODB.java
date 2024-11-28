@@ -18,27 +18,25 @@ public class SongDAODB {
     public List<Song> getAllSongs() throws PlayerException {
         List<Song> songs = new ArrayList<>();
         try (DBConnection dbConnection = new DBConnection();
-             Connection connection = dbConnection.getConnection();)
-        {
+             Connection connection = dbConnection.getConnection();) {
             String sqlPromptToSongs = "SELECT * FROM songs";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlPromptToSongs);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next())
-            {
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 int genreId = resultSet.getInt("genre_id");
                 int duration = resultSet.getInt("duration");
                 String title = resultSet.getString("title");
                 String artist = resultSet.getString("artist");
                 String releaseDate = resultSet.getString("release_date");
+                String filePath = resultSet.getString("path");
                 LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
                 LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
                 Genre genre = genreData.getGenreById(genreId);
-                Song song = new Song(id, duration, genre, title, artist,releaseDate, createdAt, updatedAt);
+                Song song = new Song(id, duration, genre, title, artist, releaseDate, filePath, createdAt, updatedAt);
                 songs.add(song);
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new PlayerException(e.getMessage());
         }
         return songs;
@@ -62,10 +60,11 @@ public class SongDAODB {
                     String title = resultSet.getString("title");
                     String artist = resultSet.getString("artist_id");
                     String releaseDate = resultSet.getString("release_date");
+                    String filePath = resultSet.getString("path");
                     LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
                     LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
                     Genre genre = genreData.getGenreById(genreId);
-                    Song song = new Song(id, duration, genre, title, artist, releaseDate, createdAt, updatedAt);
+                    Song song = new Song(id, duration, genre, title, artist, releaseDate, filePath, createdAt, updatedAt);
                     songs.add(song);
                 }
             } catch (Exception e) {

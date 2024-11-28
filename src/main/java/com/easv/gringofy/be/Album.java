@@ -30,6 +30,7 @@ public class Album {
         this.updatedAt = updatedAt;
         this.songs = new HashMap<>();
     }
+
     public Album(String title) {
         this.title = title;
     }

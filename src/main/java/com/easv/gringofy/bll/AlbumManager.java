@@ -6,7 +6,7 @@ import com.easv.gringofy.dal.db.AlbumDAODB;
 import java.util.List;
 
 public class AlbumManager {
-    AlbumDAODB albumDAODB = new AlbumDAODB();
+    private AlbumDAODB albumDAODB = new AlbumDAODB();
 
     public List<Album> getAllAlbumsByInput(String input) {
         return albumDAODB.getAllAlbumsByInput(input);

@@ -45,10 +45,9 @@ public class HomePageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         txtFieldSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(oldValue.length() > newValue.length() && newValue.length() <= 3) {
+            if (oldValue.length() > newValue.length() && newValue.length() <= 3) {
                 showDefaultSections();
-            }
-            else if(newValue.length() > 3) {
+            } else if (newValue.length() > 3) {
                 try {
                     search(newValue);
                 } catch (PlayerException e) {
@@ -71,7 +70,7 @@ public class HomePageController implements Initializable {
         playerModel.playNextSong(actionEvent);
     }
 
-    public void testNodes(){
+    public void testNodes() {
         LocalDateTime now = LocalDateTime.now();
         Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/logo.png"));
         Playlist playlist = new Playlist("Cool Songs", "Playlist with cool songs", now, now, image);
@@ -89,11 +88,12 @@ public class HomePageController implements Initializable {
         getNewSections(input);
     }
 
-    private void clearSections(){
+    private void clearSections() {
         flowPaneHomeSongs.getChildren().clear();
         flowPaneHomeAlbums.getChildren().clear();
         hboxHomePlaylists.getChildren().clear();
     }
+
     private void getNewSections(String input) throws PlayerException {
         List<Song> songs = playerModel.getAllSongsByInput(input);
         List<Playlist> playlists = playerModel.getAllPlaylistsByInput(input);
@@ -102,7 +102,8 @@ public class HomePageController implements Initializable {
         playlists.forEach(playlist -> flowPaneHomeSongs.getChildren().add(playlist.toNode()));
         albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(album.toNode()));
     }
-    private void showDefaultSections(){
+
+    private void showDefaultSections() {
         flowPaneHomeSongs.getChildren().clear();
         flowPaneHomeAlbums.getChildren().clear();
         hboxHomePlaylists.getChildren().clear();

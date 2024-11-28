@@ -7,7 +7,8 @@ import com.easv.gringofy.exceptions.PlayerException;
 import java.util.List;
 
 public class SongManager {
-    SongDAODB songDAODB = new SongDAODB();
+    private SongDAODB songDAODB = new SongDAODB();
+
 
     public List<Song> getAllSongs() {
         return null;
@@ -16,4 +17,5 @@ public class SongManager {
     public List<Song> getAllSongsByInput(String input) throws PlayerException {
         return songDAODB.getAllSongsByInput(input);
     }
+
 }

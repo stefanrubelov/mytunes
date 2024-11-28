@@ -9,11 +9,12 @@ import com.easv.gringofy.exceptions.PlayerException;
 import java.util.List;
 
 public class PlaylistManager {
-    PlaylistDAODB playlistDAODB = new PlaylistDAODB();
+    private PlaylistDAODB playlistDAODB = new PlaylistDAODB();
 
     public List<Playlist> getAllPlaylists() {
         return null;
     }
+
     public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException {
         return playlistDAODB.getAllPlaylistsByInput(input);
     }
