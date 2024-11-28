@@ -26,7 +26,7 @@
                   <Insets />
                </VBox.margin>
             </ImageView>
-            <TextField fx:id="txtFieldSearchBar" onAction="#search" promptText="🔎  Search" styleClass="search-bar" stylesheets="@../css/Main.css">
+            <TextField fx:id="txtFieldSearchBar" promptText="🔎  Search" styleClass="search-bar" stylesheets="@../css/Main.css">
                <VBox.margin>
                   <Insets left="25.0" right="25.0" top="10.0" />
                </VBox.margin>
