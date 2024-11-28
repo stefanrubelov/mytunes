@@ -16,8 +16,7 @@ import java.util.List;
 public class GenreDAODB {
     public Genre getGenreById(int id) throws PlayerException {
         try (DBConnection dbConnection = new DBConnection();
-             Connection connection = dbConnection.getConnection();)
-        {
+             Connection connection = dbConnection.getConnection();) {
             String sql = "SELECT * FROM genres WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
@@ -28,8 +27,7 @@ public class GenreDAODB {
                 LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
                 return new Genre(id, title, createdAt, updatedAt);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new PlayerException(e.getMessage());
 
         }
@@ -38,21 +36,19 @@ public class GenreDAODB {
 
     public List<Genre> getAllGenres() throws PlayerException {
         try (DBConnection dbConnection = new DBConnection();
-             Connection connection = dbConnection.getConnection();)
-        {
-        List<Genre> genres = new ArrayList<>();
-        String sql = "SELECT * FROM genres";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String title = resultSet.getString("title");
-            LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
-            LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
-            genres.add(new Genre(id, title, createdAt, updatedAt));
-        }
-        }
-        catch (Exception e) {
+             Connection connection = dbConnection.getConnection();) {
+            List<Genre> genres = new ArrayList<>();
+            String sql = "SELECT * FROM genres";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String title = resultSet.getString("title");
+                LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
+                LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
+                genres.add(new Genre(id, title, createdAt, updatedAt));
+            }
+        } catch (Exception e) {
             throw new PlayerException(e.getMessage());
         }
         throw new PlayerException("No genres table found");

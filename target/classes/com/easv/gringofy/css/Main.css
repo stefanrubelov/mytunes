@@ -3,7 +3,7 @@
     src: url("../fonts/Poppins/Poppins-Regular.ttf");
 }
 .body{
-    -fx-background-image: url("../images/giphy.gif");
+    -fx-background-image: url("../images/backgroundImage.png");
     /*-fx-background-position: cover;*/
     -fx-font-family: 'Poppins';
 }

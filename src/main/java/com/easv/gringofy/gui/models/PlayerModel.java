@@ -22,21 +22,34 @@ public class PlayerModel {
     public void playPreviousSong(ActionEvent actionEvent) {
 
     }
+
     @FXML
     public void playCurrentSong(ActionEvent actionEvent) {
 
     }
+
     @FXML
     public void playNextSong(ActionEvent actionEvent) {
 
     }
-    public List<Song> getSongs(){
+
+    public List<Song> getSongs() {
         return songManager.getAllSongs();
     }
-    public List<Song> getAllSongsByInput(String input) throws PlayerException {return songManager.getAllSongsByInput(input);}
-    public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException {return playlistManager.getAllPlaylistsByInput(input);}
-    public List<Album> getAllAlbumsByInput(String input) throws PlayerException {return albumManager.getAllAlbumsByInput(input);}
-    public List<Playlist> getPlaylists(){
+
+    public List<Song> getAllSongsByInput(String input) throws PlayerException {
+        return songManager.getAllSongsByInput(input);
+    }
+
+    public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException {
+        return playlistManager.getAllPlaylistsByInput(input);
+    }
+
+    public List<Album> getAllAlbumsByInput(String input) throws PlayerException {
+        return albumManager.getAllAlbumsByInput(input);
+    }
+
+    public List<Playlist> getPlaylists() {
         return playlistManager.getAllPlaylists();
     }
 }
