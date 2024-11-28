@@ -10,8 +10,11 @@ import javafx.scene.shape.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Album {
+    private static final String DEFAULT_ALBUM_PICTURE = "/com/easv/gringofy/images/defaultAlbumPicture.png";
+
     private int id;
     private String title;
     private String description;
@@ -37,13 +40,13 @@ public class Album {
 
     public HBox toNode() {
         HBox hbox = new HBox();
-        hbox.getStyleClass().add("album-node");
         hbox.setAlignment(Pos.CENTER_LEFT);
-        Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/defaultAlbumPicture.png"));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_ALBUM_PICTURE)));
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(50);
         imageView.setFitHeight(50);
         Label titleLabel = new Label(title);
+        hbox.getStyleClass().add("album-node");
         titleLabel.getStyleClass().add("album-node-title");
         hbox.getChildren().addAll(imageView, titleLabel);
         return hbox;

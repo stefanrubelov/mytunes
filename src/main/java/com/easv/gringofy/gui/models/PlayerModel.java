@@ -6,6 +6,7 @@ import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.bll.SongManager;
+import com.easv.gringofy.exceptions.PlayerException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -32,10 +33,10 @@ public class PlayerModel {
     public List<Song> getSongs(){
         return songManager.getAllSongs();
     }
+    public List<Song> getAllSongsByInput(String input) throws PlayerException {return songManager.getAllSongsByInput(input);}
+    public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException {return playlistManager.getAllPlaylistsByInput(input);}
+    public List<Album> getAllAlbumsByInput(String input) throws PlayerException {return albumManager.getAllAlbumsByInput(input);}
     public List<Playlist> getPlaylists(){
         return playlistManager.getAllPlaylists();
-    }
-    public List<Album> getAlbums(){
-        return albumManager.getAllAlbums();
     }
 }
