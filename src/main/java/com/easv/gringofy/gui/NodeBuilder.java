@@ -1,8 +1,10 @@
 package com.easv.gringofy.gui;
 
 import com.easv.gringofy.be.Album;
+import com.easv.gringofy.be.Genre;
 import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.Song;
+import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
@@ -16,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
+import java.util.List;
 import java.util.Objects;
 
 public class NodeBuilder {
@@ -23,6 +26,7 @@ public class NodeBuilder {
     private static final String OPTIONS_PICTURE = "/com/easv/gringofy/images/tripleDots.png";
     private static final String DEFAULT_PLAYLIST_PICTURE = "/com/easv/gringofy/images/logo.png";
     private static final String DEFAULT_ALBUM_PICTURE = "/com/easv/gringofy/images/defaultAlbumPicture.png";
+    PlaylistManager playlistManager;
 
     public HBox songToNode(Song song) {
         HBox hbox = new HBox();
@@ -61,22 +65,25 @@ public class NodeBuilder {
         vbox.getChildren().addAll(titleLabel, artistLabel);
         hbox.getChildren().addAll(imageView, vbox, imageWrapper);
 
-        ContextMenu contextMenu = new ContextMenu();
+        ContextMenu songMenu = new ContextMenu();
         // Add menu items
         MenuItem item1 = new MenuItem("Add to playlist");
         MenuItem item2 = new MenuItem("Add to favorites");
         MenuItem item3 = new MenuItem("Add to queue");
-        contextMenu.getItems().addAll(item1, item2, item3);
+        songMenu.getItems().addAll(item1, item2, item3);
 
         // Set actions for menu items
-        item1.setOnAction(event -> System.out.println("Option 1 selected"));
         item2.setOnAction(event -> System.out.println("Option 2 selected"));
         item3.setOnAction(event -> System.out.println("Option 3 selected"));
+
+        ContextMenu playlistsMenu = new ContextMenu();
+        List<Playlist> playlists= playlistManager.getAllPlaylists();
+        playlists.forEach(playlist -> {playlistsMenu.getItems().add(new MenuItem(playlist.toString()));});
 
         // Show the context menu on left-click
         imageWrapper.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                contextMenu.show(imageView, event.getScreenX(), event.getScreenY());
+                songMenu.show(imageView, event.getScreenX(), event.getScreenY());
             }
         });
 
