@@ -5,9 +5,12 @@ import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.geometry.Pos;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -57,8 +60,24 @@ public class NodeBuilder {
 
         vbox.getChildren().addAll(titleLabel, artistLabel);
         hbox.getChildren().addAll(imageView, vbox, imageWrapper);
+
+        ContextMenu contextMenu = new ContextMenu();
+        // Add menu items
+        MenuItem item1 = new MenuItem("Add to playlist");
+        MenuItem item2 = new MenuItem("Add to favorites");
+        MenuItem item3 = new MenuItem("Add to queue");
+        contextMenu.getItems().addAll(item1, item2, item3);
+
+        // Set actions for menu items
+        item1.setOnAction(event -> System.out.println("Option 1 selected"));
+        item2.setOnAction(event -> System.out.println("Option 2 selected"));
+        item3.setOnAction(event -> System.out.println("Option 3 selected"));
+
+        // Show the context menu on left-click
         imageWrapper.setOnMouseClicked(event -> {
-            System.out.println("Options image clicked!");  // Debugging output
+            if (event.getButton() == MouseButton.PRIMARY) {
+                contextMenu.show(imageView, event.getScreenX(), event.getScreenY());
+            }
         });
 
         return hbox;
