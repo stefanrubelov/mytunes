@@ -3,11 +3,13 @@ package com.easv.gringofy.gui;
 import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.Song;
+import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
@@ -22,7 +24,7 @@ public class NodeBuilder {
     public HBox songToNode(Song song) {
         HBox hbox = new HBox();
         hbox.getStyleClass().add("song-node");
-        hbox.setAlignment(Pos.CENTER);
+        hbox.setAlignment(Pos.CENTER_LEFT);
 
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
         ImageView imageView = new ImageView(image);
@@ -32,8 +34,11 @@ public class NodeBuilder {
         ImageView optionsImageView = new ImageView(optionsImage);
         optionsImageView.setFitHeight(25);
         optionsImageView.setFitWidth(25);
-
-
+        HBox imageWrapper = new HBox();
+        imageWrapper.prefWidth(35);
+        imageWrapper.prefHeight(35);
+        imageWrapper.getChildren().add(optionsImageView);
+        imageWrapper.setAlignment(Pos.CENTER);
         // Clip the ImageView to a rounded rectangle, so that image is not square (cannot use border-radius or background radius)
         Rectangle clip = new Rectangle(35, 35);
         clip.setArcWidth(10);
@@ -48,9 +53,13 @@ public class NodeBuilder {
         titleLabel.getStyleClass().add("song-node-title");
         vbox.getStyleClass().add("song-node-text");
         artistLabel.getStyleClass().add("song-node-artist");
+        optionsImageView.getStyleClass().add("song-node-options");
 
         vbox.getChildren().addAll(titleLabel, artistLabel);
-        hbox.getChildren().addAll(imageView, vbox, optionsImageView);
+        hbox.getChildren().addAll(imageView, vbox, imageWrapper);
+        imageWrapper.setOnMouseClicked(event -> {
+            System.out.println("Options image clicked!");  // Debugging output
+        });
 
         return hbox;
     }
