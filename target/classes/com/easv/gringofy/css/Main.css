@@ -76,7 +76,7 @@
     -fx-background-position: center;
 }
 .song-progress-bar{
-    -fx-pref-width: 300px;
+    -fx-pref-width: 400px;
     -fx-pref-height: 8px;
 }
 .song-progress-bar .track{
@@ -88,7 +88,7 @@
     -fx-padding:7px;
 }
 .home-playlist-container{
-    -fx-spacing: 30px;
+    -fx-spacing: 20px;
 }
 .playlist-node{
     -fx-background-color: transparent;
@@ -109,7 +109,7 @@
 
 .song-node{
     -fx-padding:5px;
-    -fx-pref-width: 172px;
+    -fx-pref-width: 320px;
     -fx-border-width: 0 0 1 0;
     -fx-border-color: #555;
 }
@@ -120,9 +120,15 @@
 .song-node-image{
     /*-fx-background-radius: 20px;*/
 }
-
 .song-node-text {
-    -fx-padding: 12px;
+    -fx-padding: 12px 140px 12px 12px;
+
+}
+.song-node-options{
+    visibility: none;
+}
+.song-node:hover .song-node-options {
+    visibility: visible;
 }
 .song-node-title{
     font-size: 14px;
@@ -133,14 +139,14 @@
     -fx-text-fill: #aaa;
 }
 .home-albums-container{
-    -fx-hgap: 15px;
+    -fx-hgap: 35px;
     -fx-vgap: 15px;
 }
 .album-node{
     -fx-background-color: rgba(50,50,50,.9);
     -fx-background-radius: 5px;
     -fx-pref-height: 50px;
-    -fx-pref-width: 250px;
+    -fx-pref-width: 300px;
 }
 .album-node:hover{
     -fx-background-color: rgba(100,100,100,.8);
