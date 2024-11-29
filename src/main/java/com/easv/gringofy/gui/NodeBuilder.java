@@ -76,9 +76,10 @@ public class NodeBuilder {
         item2.setOnAction(event -> System.out.println("Option 2 selected"));
         item3.setOnAction(event -> System.out.println("Option 3 selected"));
 
-        ContextMenu playlistsMenu = new ContextMenu();
-        List<Playlist> playlists= playlistManager.getAllPlaylists();
-        playlists.forEach(playlist -> {playlistsMenu.getItems().add(new MenuItem(playlist.toString()));});
+        // Menu for the available playlists
+//        ContextMenu playlistsMenu = new ContextMenu();
+//        List<Playlist> playlists= playlistManager.getAllPlaylists();
+//        playlists.forEach(playlist -> {playlistsMenu.getItems().add(new MenuItem(playlist.toString()));});
 
         // Show the context menu on left-click
         imageWrapper.setOnMouseClicked(event -> {
@@ -86,7 +87,6 @@ public class NodeBuilder {
                 songMenu.show(imageView, event.getScreenX(), event.getScreenY());
             }
         });
-
         return hbox;
     }
 
