@@ -1,10 +1,8 @@
 package com.easv.gringofy.gui;
 
 import com.easv.gringofy.be.Album;
-import com.easv.gringofy.be.Genre;
 import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.Song;
-import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
@@ -20,7 +18,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
-import java.util.List;
 import java.util.Objects;
 
 public class NodeBuilder {
@@ -28,15 +25,21 @@ public class NodeBuilder {
     private static final String OPTIONS_PICTURE = "/com/easv/gringofy/images/tripleDots.png";
     private static final String DEFAULT_PLAYLIST_PICTURE = "/com/easv/gringofy/images/logo.png";
     private static final String DEFAULT_ALBUM_PICTURE = "/com/easv/gringofy/images/defaultAlbumPicture.png";
+    private static final String PLAY_SONG_ICON = "/com/easv/gringofy/images/playSongIcon.png";
     private PlayerModel playerModel = new PlayerModel();
 
     public HBox songToNode(Song song) {
         // Creates the container for the node
         HBox hbox = new HBox();
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(35);
-        imageView.setFitHeight(35);
+        Image songImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
+        ImageView songImageView = new ImageView(songImage);
+        songImageView.setFitWidth(35);
+        songImageView.setFitHeight(35);
+        Image playSongIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream(PLAY_SONG_ICON)));
+        ImageView playSongIconView = new ImageView(playSongIcon);
+        playSongIconView.setFitWidth(35);
+        playSongIconView.setFitHeight(35);
+        StackPane songImageWrapper = new StackPane(songImageView, playSongIconView);
         Image optionsImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(OPTIONS_PICTURE)));
         ImageView optionsImageView = new ImageView(optionsImage);
         optionsImageView.setFitHeight(25);
@@ -47,11 +50,11 @@ public class NodeBuilder {
         imageWrapper.getChildren().add(optionsImageView);
         imageWrapper.setAlignment(Pos.CENTER);
 
-        // Clip the ImageView to a rounded rectangle, so that image is not square (cannot use border-radius or background radius)
+        // Clip the ImageView to a rounded rectangle, so that songImage is not square (cannot use border-radius or background radius)
         Rectangle clip = new Rectangle(35, 35);
         clip.setArcWidth(10);
         clip.setArcHeight(10);
-        imageView.setClip(clip);
+        songImageView.setClip(clip);
 
         // VBox for text (title and artist name)
         VBox vbox = new VBox();
@@ -59,7 +62,7 @@ public class NodeBuilder {
         Label artistLabel = new Label(song.getArtist());
 
         vbox.getChildren().addAll(titleLabel, artistLabel);
-        hbox.getChildren().addAll(imageView, vbox, imageWrapper);
+        hbox.getChildren().addAll(songImageWrapper, vbox, imageWrapper);
 
         // Add menu items
         ContextMenu songMenu = new ContextMenu();
@@ -84,16 +87,20 @@ public class NodeBuilder {
         // Show the context menu on left-click
         imageWrapper.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                songMenu.show(imageView, event.getScreenX(), event.getScreenY());
+                songMenu.show(songImageView, event.getScreenX(), event.getScreenY());
             }
         });
 
         hbox.getStyleClass().add("song-node");
+        songImageWrapper.getStyleClass().add("song--node-image-wrapper");
+        songImageView.getStyleClass().add("song-node-image");
+        playSongIconView.getStyleClass().add("song-node-play-icon");
         titleLabel.getStyleClass().add("song-node-title");
         vbox.getStyleClass().add("song-node-text");
         artistLabel.getStyleClass().add("song-node-artist");
         optionsImageView.getStyleClass().add("song-node-options");
         songMenu.getStyleClass().add("song-node-menu");
+        imageWrapper.getStyleClass().add("song-node-options-wrapper");
         playlistsMenu.getStyleClass().add("song-node-playlists");
 
         return hbox;
