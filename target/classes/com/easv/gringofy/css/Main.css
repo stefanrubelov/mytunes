@@ -126,6 +126,16 @@
 
 }
 .song-node-options{
+    visibility: none;
+}
+.song-node-play-icon{
+    visibility: none;
+}
+.song-node:hover .song-node-play-icon{
+    visibility: visible;
+}
+.song-node:hover .song-node-image{
+    -fx-opacity:.6;
 }
 .song-node:hover .song-node-options {
     visibility: visible;
@@ -138,7 +148,8 @@
     font-size: 12px;
     -fx-text-fill: #aaa;
 }
-.song-node-menu{
+.song-node-menu > *{
+
 }
 .home-albums-container{
     -fx-hgap: 35px;
