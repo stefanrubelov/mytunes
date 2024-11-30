@@ -108,6 +108,7 @@
 }
 
 .song-node{
+    -fx-alignment: CENTER_LEFT;
     -fx-padding:5px;
     -fx-pref-width: 320px;
     -fx-border-width: 0 0 1 0;
@@ -125,7 +126,6 @@
 
 }
 .song-node-options{
-    visibility: none;
 }
 .song-node:hover .song-node-options {
     visibility: visible;
@@ -137,6 +137,8 @@
 .song-node-artist{
     font-size: 12px;
     -fx-text-fill: #aaa;
+}
+.song-node-menu{
 }
 .home-albums-container{
     -fx-hgap: 35px;
