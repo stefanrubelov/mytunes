@@ -7,7 +7,9 @@ import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -26,13 +28,11 @@ public class NodeBuilder {
     private static final String OPTIONS_PICTURE = "/com/easv/gringofy/images/tripleDots.png";
     private static final String DEFAULT_PLAYLIST_PICTURE = "/com/easv/gringofy/images/logo.png";
     private static final String DEFAULT_ALBUM_PICTURE = "/com/easv/gringofy/images/defaultAlbumPicture.png";
-    PlaylistManager playlistManager;
+    private PlayerModel playerModel = new PlayerModel();
 
     public HBox songToNode(Song song) {
+        // Creates the container for the node
         HBox hbox = new HBox();
-        hbox.getStyleClass().add("song-node");
-        hbox.setAlignment(Pos.CENTER_LEFT);
-
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(35);
@@ -46,6 +46,7 @@ public class NodeBuilder {
         imageWrapper.prefHeight(35);
         imageWrapper.getChildren().add(optionsImageView);
         imageWrapper.setAlignment(Pos.CENTER);
+
         // Clip the ImageView to a rounded rectangle, so that image is not square (cannot use border-radius or background radius)
         Rectangle clip = new Rectangle(35, 35);
         clip.setArcWidth(10);
@@ -57,36 +58,44 @@ public class NodeBuilder {
         Label titleLabel = new Label(song.getTitle());
         Label artistLabel = new Label(song.getArtist());
 
-        titleLabel.getStyleClass().add("song-node-title");
-        vbox.getStyleClass().add("song-node-text");
-        artistLabel.getStyleClass().add("song-node-artist");
-        optionsImageView.getStyleClass().add("song-node-options");
-
         vbox.getChildren().addAll(titleLabel, artistLabel);
         hbox.getChildren().addAll(imageView, vbox, imageWrapper);
 
-        ContextMenu songMenu = new ContextMenu();
         // Add menu items
-        MenuItem item1 = new MenuItem("Add to playlist");
+        ContextMenu songMenu = new ContextMenu();
+        Label hoverItem = new Label("Add to playlist");
+        CustomMenuItem item1 = new CustomMenuItem(hoverItem);
         MenuItem item2 = new MenuItem("Add to favorites");
         MenuItem item3 = new MenuItem("Add to queue");
         songMenu.getItems().addAll(item1, item2, item3);
 
-        // Set actions for menu items
-        item2.setOnAction(event -> System.out.println("Option 2 selected"));
-        item3.setOnAction(event -> System.out.println("Option 3 selected"));
-
         // Menu for the available playlists
-//        ContextMenu playlistsMenu = new ContextMenu();
-//        List<Playlist> playlists= playlistManager.getAllPlaylists();
-//        playlists.forEach(playlist -> {playlistsMenu.getItems().add(new MenuItem(playlist.toString()));});
+        ContextMenu playlistsMenu = new ContextMenu();
+        playlistsMenu.getItems().addAll(new MenuItem("TEST")); // Just a test item - remove later
+//        List<Playlist> playlists= playlistManager.getAllPlaylists(); // Needs implementation of method
+//        playlists.forEach(playlist -> {playlistsMenu.getItems().add(new MenuItem(playlist.toString()));}); // Needs implementation of method
 
+        // Set actions for menu items
+        //item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement
+        item3.setOnAction(event -> playerModel.addSongToQueue(song));
+        hoverItem.setOnMouseEntered(event -> {
+            playlistsMenu.show(hoverItem, Side.LEFT, -10, -8);
+        });
         // Show the context menu on left-click
         imageWrapper.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 songMenu.show(imageView, event.getScreenX(), event.getScreenY());
             }
         });
+
+        hbox.getStyleClass().add("song-node");
+        titleLabel.getStyleClass().add("song-node-title");
+        vbox.getStyleClass().add("song-node-text");
+        artistLabel.getStyleClass().add("song-node-artist");
+        optionsImageView.getStyleClass().add("song-node-options");
+        songMenu.getStyleClass().add("song-node-menu");
+        playlistsMenu.getStyleClass().add("song-node-playlists");
+
         return hbox;
     }
 
