@@ -51,7 +51,7 @@ public class NodeBuilder {
         // VBox for text (title and artist name)
         VBox vbox = new VBox();
         Label titleLabel = new Label(song.getTitle());
-        Label artistLabel = new Label(song.getArtist());
+        Label artistLabel = new Label(song.getArtist().getName());
 
         titleLabel.getStyleClass().add("song-node-title");
         vbox.getStyleClass().add("song-node-text");
