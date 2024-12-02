@@ -8,26 +8,33 @@ import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
+import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class HomePageController implements Initializable {
+public class HomePageController extends MusicPlayer implements Initializable  {
 
     PlayerModel playerModel = new PlayerModel();
     NodeBuilder nodeBuilder = new NodeBuilder();
@@ -58,18 +65,6 @@ public class HomePageController implements Initializable {
             }
         });
         testNodes();
-    }
-
-    public void playPreviousSong(ActionEvent actionEvent) {
-        playerModel.playPreviousSong(actionEvent);
-    }
-
-    public void playCurrentSong(ActionEvent actionEvent) {
-        playerModel.playCurrentSong(actionEvent);
-    }
-
-    public void playNextSong(ActionEvent actionEvent) {
-        playerModel.playNextSong(actionEvent);
     }
 
     public void testNodes() {
