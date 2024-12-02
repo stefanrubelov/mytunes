@@ -122,7 +122,7 @@
     /*-fx-background-radius: 20px;*/
 }
 .song-node-text {
-    -fx-padding: 12px 100px 12px 12px;
+    -fx-padding: 12px 0px 12px 12px;
 
 }
 .song-node-options{
