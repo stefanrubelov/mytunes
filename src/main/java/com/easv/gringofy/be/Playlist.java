@@ -8,12 +8,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Playlist {
+
+    private static final String DEFAULT_PLAYLIST_PICTURE = "/com/easv/gringofy/images/logo.png";
+
     private Map<Integer, Song> songs = new LinkedHashMap<>();
     private String title;
     private String description;
@@ -27,6 +27,7 @@ public class Playlist {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
     public Playlist(String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt, Image image) {
         this.title = title;
         this.description = description;
@@ -34,22 +35,20 @@ public class Playlist {
         this.updatedAt = updatedAt;
         this.image = image;
     }
+
     public void addSong(int position, Song song) {
         songs.put(position, song);
     }
+
     public void updateSong(LocalDateTime date) {
         this.updatedAt = date;
     }
 
-    public VBox toNode() {
-        VBox vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-        vbox.getStyleClass().add("playlist-node");
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(100);
-        imageView.setFitHeight(100);
-        Label titleLabel = new Label(title);
-        vbox.getChildren().addAll(imageView, titleLabel);
-        return vbox;
+    public Image getImage() {
+        return image;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

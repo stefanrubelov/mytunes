@@ -24,6 +24,7 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(Env.get("APP_NAME", "Gringofy"));
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 
         ArtistDAODB artistDAODB = new ArtistDAODB();
