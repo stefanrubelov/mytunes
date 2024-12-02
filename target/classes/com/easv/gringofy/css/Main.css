@@ -169,3 +169,12 @@
     -fx-font-size: 14px;
     -fx-padding: 0 0 0 15px;
 }
+.addPlaylistButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("../images/plusIcon.png");
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+}
+.addPlaylistButton:hover{
+    -fx-background-image: url("../images/plusIconHover.png");
+}

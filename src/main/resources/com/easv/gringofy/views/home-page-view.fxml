@@ -36,9 +36,9 @@
                   <Insets top="30.0" />
                </VBox.margin>
                <children>
-                  <Button mnemonicParsing="false" text="Home" />
-                  <Button mnemonicParsing="false" text="Categories" />
-                  <Button mnemonicParsing="false" text="Playlists" />
+                  <Button mnemonicParsing="false" onAction="#goToHomePageView" text="Home" />
+                  <Button mnemonicParsing="false" onAction="#goToCategoriesView" text="Categories" />
+                  <Button mnemonicParsing="false" onAction="#goToPlaylistsView" text="Playlists" />
                </children>
                <padding>
                   <Insets left="25.0" />

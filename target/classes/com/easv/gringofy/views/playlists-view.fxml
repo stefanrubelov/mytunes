@@ -10,11 +10,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.HomePageController">
+<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlaylistsPageController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="638.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
          <children>
@@ -57,45 +56,17 @@
                <content>
                   <HBox fx:id="hboxHomePlaylists" fillHeight="false" prefHeight="135.0" prefWidth="668.0" stylesheets="@../css/Main.css">
                      <styleClass>
-                        <String fx:value="home-playlist-container" />
+                        <String fx:value="playlist-container" />
                         <String fx:value="container" />
                      </styleClass>
                   </HBox>
                </content>
             </ScrollPane>
-            <Label text="Songs" textFill="WHITE">
+            <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#showPlaylistForm" prefHeight="52.0" prefWidth="51.0" styleClass="addPlaylistButton" stylesheets="@../css/Main.css">
                <VBox.margin>
-                  <Insets />
+                  <Insets left="600.0" top="380.0" />
                </VBox.margin>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </Label>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="236.0" prefWidth="672.0" style="-fx-background-color: transparent; -fx-background: transparent;" vbarPolicy="NEVER">
-               <content>
-                  <FlowPane fx:id="flowPaneHomeSongs" minWidth="-Infinity" prefHeight="14.0" prefWidth="666.0" stylesheets="@../css/Main.css">
-                     <styleClass>
-                        <String fx:value="home-songs-container" />
-                        <String fx:value="container" />
-                     </styleClass>
-                  </FlowPane>
-               </content>
-            </ScrollPane>
-            <Label text="Albums" textFill="WHITE">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </Label>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="132.0" prefWidth="669.0" style="-fx-background-color: transparent; -fx-background: transparent;" stylesheets="@../css/Main.css" vbarPolicy="NEVER">
-               <content>
-                  <FlowPane fx:id="flowPaneHomeAlbums" prefHeight="14.0" prefWidth="667.0" stylesheets="@../css/Main.css">
-                     <styleClass>
-                        <String fx:value="home-albums-container" />
-                        <String fx:value="container" />
-                     </styleClass>
-                  </FlowPane>
-               </content>
-            </ScrollPane>
+            </Button>
          </children>
          <opaqueInsets>
             <Insets />

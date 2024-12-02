@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.HomePageController">
+<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.CategoriesPageController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="638.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
          <children>
@@ -33,9 +33,9 @@
                   <Insets top="30.0" />
                </VBox.margin>
                <children>
-                  <Button mnemonicParsing="false" text="Home" />
-                  <Button mnemonicParsing="false" text="Categories" />
-                  <Button mnemonicParsing="false" text="Playlists" />
+                  <Button mnemonicParsing="false" onAction="#goToHomePageView" text="Home" />
+                  <Button mnemonicParsing="false" onAction="#goToCategoriesView" text="Categories" />
+                  <Button mnemonicParsing="false" onAction="#goToPlaylistsView" text="Playlists" />
                </children>
                <padding>
                   <Insets left="25.0" />
