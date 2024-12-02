@@ -178,3 +178,9 @@
 .addPlaylistButton:hover{
     -fx-background-image: url("../images/plusIconHover.png");
 }
+.playPlaylistButton{
+    -fx-background-image: url("../images/playButton2.png");
+    -fx-background-color: transparent;
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+}
