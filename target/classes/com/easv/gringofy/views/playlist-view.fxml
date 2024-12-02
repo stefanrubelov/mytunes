@@ -69,9 +69,9 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="55.0" styleClass="playlist-options" stylesheets="@../css/Main.css">
+                  <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" styleClass="playlist-options" stylesheets="@../css/Main.css">
                      <HBox.margin>
-                        <Insets left="500.0" />
+                        <Insets left="550.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                </children>
