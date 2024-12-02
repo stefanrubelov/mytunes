@@ -86,8 +86,4 @@ public class ArtistDAODB {
         LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
         return new Artist(id, name, description, createdAt, updatedAt);
     }
-    public static void main (String[] args) throws SQLException {
-        ArtistDAODB dao = new ArtistDAODB();
-        System.out.println(dao.get(8).getName());
-    }
 }
