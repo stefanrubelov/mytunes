@@ -73,7 +73,7 @@
             </Label>
             <ScrollPane hbarPolicy="NEVER" prefHeight="236.0" prefWidth="672.0" style="-fx-background-color: transparent; -fx-background: transparent;" vbarPolicy="NEVER">
                <content>
-                  <FlowPane fx:id="flowPaneHomeSongs" minWidth="-Infinity" prefHeight="14.0" prefWidth="671.0" stylesheets="@../css/Main.css">
+                  <FlowPane fx:id="flowPaneHomeSongs" minWidth="-Infinity" prefHeight="14.0" prefWidth="666.0" stylesheets="@../css/Main.css">
                      <styleClass>
                         <String fx:value="home-songs-container" />
                         <String fx:value="container" />
