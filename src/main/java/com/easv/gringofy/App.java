@@ -30,17 +30,17 @@ public class App extends Application {
         ArtistDAODB artistDAODB = new ArtistDAODB();
         SongDAODB songDAODB = new SongDAODB();
 
-        GenreDAODB genreDAODB = new GenreDAODB();
-        try {
-            artistDAODB.get(1);
-//            artistDAODB.delete(1);
-            Song newSong = new Song(0,69,genreDAODB.getGenreById(1), "insert new Song Title", artistDAODB.get(1), "2222-12-22", LocalDateTime.now(), LocalDateTime.now());
-
-            songDAODB.insert(newSong);
-        } catch (Exception e){
-            e.printStackTrace();
-
-        }
+//        GenreDAODB genreDAODB = new GenreDAODB();
+//        try {
+//            artistDAODB.get(1);
+////            artistDAODB.delete(1);
+//            Song newSong = new Song(0,69,genreDAODB.get(1), "insert new Song Title", artistDAODB.get(1), "2222-12-22", LocalDateTime.now(), LocalDateTime.now());
+//
+//            songDAODB.insert(newSong);
+//        } catch (Exception e){
+//            e.printStackTrace();
+//
+//        }
 //        SongDAODB songDAODB = new SongDAODB();
 //        try {
 //            Song song = songDAODB.get(1);

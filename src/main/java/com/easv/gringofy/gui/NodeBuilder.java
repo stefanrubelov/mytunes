@@ -59,7 +59,7 @@ public class NodeBuilder {
         // VBox for text (title and artist name)
         VBox vbox = new VBox();
         Label titleLabel = new Label(song.getTitle());
-        Label artistLabel = new Label(song.getArtist());
+        Label artistLabel = new Label(song.getArtist().getName());
 
         vbox.getChildren().addAll(titleLabel, artistLabel);
         hbox.getChildren().addAll(songImageWrapper, vbox, imageWrapper);
