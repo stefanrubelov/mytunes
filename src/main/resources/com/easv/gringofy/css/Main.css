@@ -184,3 +184,9 @@
     -fx-background-size: contain;
     -fx-background-repeat: no-repeat;
 }
+.playlist-options{
+    -fx-background-image: url("../images/tripleDots.png");
+    -fx-background-color: transparent;
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+}
