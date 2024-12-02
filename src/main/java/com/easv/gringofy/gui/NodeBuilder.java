@@ -4,6 +4,7 @@ import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.gui.models.PlayerModel;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
@@ -13,9 +14,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 
 import java.util.Objects;
@@ -62,7 +61,10 @@ public class NodeBuilder {
         Label artistLabel = new Label(song.getArtist().getName());
 
         vbox.getChildren().addAll(titleLabel, artistLabel);
-        hbox.getChildren().addAll(songImageWrapper, vbox, imageWrapper);
+        // Spacer is created to push the image wrapper maximally to the right
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        hbox.getChildren().addAll(songImageWrapper, vbox,spacer,imageWrapper);
 
         // Add menu items
         ContextMenu songMenu = new ContextMenu();
@@ -102,7 +104,6 @@ public class NodeBuilder {
         songMenu.getStyleClass().add("song-node-menu");
         imageWrapper.getStyleClass().add("song-node-options-wrapper");
         playlistsMenu.getStyleClass().add("song-node-playlists");
-
         return hbox;
     }
 

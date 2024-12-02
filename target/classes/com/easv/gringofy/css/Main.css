@@ -122,7 +122,7 @@
     /*-fx-background-radius: 20px;*/
 }
 .song-node-text {
-    -fx-padding: 12px 140px 12px 12px;
+    -fx-padding: 12px 0px 12px 12px;
 
 }
 .song-node-options{
@@ -181,6 +181,14 @@
 
 .playPlaylistButton{
     -fx-background-image: url("../images/playButton2.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+}
+
+.playlist-options{
+    -fx-background-image: url("../images/tripleDots.png");
+    -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-size: contain;
 }

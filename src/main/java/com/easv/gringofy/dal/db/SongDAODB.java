@@ -17,6 +17,7 @@ public class SongDAODB {
     ArtistDAODB artistData = new ArtistDAODB();
 
     public List<Song> getAllSongs() throws PlayerException, SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         List<Song> songs = new ArrayList<>();
         Song song = null;
 
@@ -35,6 +36,7 @@ public class SongDAODB {
     }
 
     public Song get(int id) throws PlayerException, SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         Song song = null;
 
         ResultSet resultSet = queryBuilder
@@ -85,7 +87,9 @@ public class SongDAODB {
         int genreId = resultSet.getInt("genre_id");
         int duration = resultSet.getInt("duration");
         String title = resultSet.getString("title");
-        Artist artist = artistData.get(resultSet.getInt("artist_id"));
+        int artistId = resultSet.getInt("artist_id");
+        Artist artist = artistData.get(artistId);
+//        System.out.println(artist.getName());
         String releaseDate = resultSet.getString("release_date");
         Genre genre = genreData.get(genreId);
 //        String path = resultSet.getString("file_path");
@@ -99,6 +103,7 @@ public class SongDAODB {
 
 
     public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         List<Song> songs = new ArrayList<>();
         Song song = null;
         if (input.length() >= 3) {
@@ -117,6 +122,7 @@ public class SongDAODB {
 
 public static void main (String[] args) throws SQLException, PlayerException {
         SongDAODB dao = new SongDAODB();
-    System.out.println(dao.getAllSongs());
-}
+        List<Song> songs = dao.getAllSongsByInput("lls");
+        System.out.println(songs.get(1).getArtist().getName());
+    }
 }

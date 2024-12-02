@@ -16,6 +16,7 @@ public class ArtistDAODB {
     }
 
     public List<Artist> getAll() throws SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         List<Artist> artists = new ArrayList<>();
         Artist artist = null;
 
@@ -34,6 +35,7 @@ public class ArtistDAODB {
     }
 
     public Artist get(int id) throws SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         Artist artist = null;
 
         ResultSet resultSet = queryBuilder
@@ -42,7 +44,7 @@ public class ArtistDAODB {
                 .where("id = ?", id)
                 .get();
 
-        if (resultSet.next()) {
+        if (resultSet.next()) {;
             artist = mapModel(resultSet, id);
         }
 
@@ -50,6 +52,7 @@ public class ArtistDAODB {
     }
 
     public void update(Artist artist) throws PlayerException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .table("artists")
                 .where("id = ?", artist.getId())
@@ -60,6 +63,7 @@ public class ArtistDAODB {
     }
 
     public void insert(Artist artist) throws PlayerException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .table("artists")
                 .insert("name", artist.getName())
@@ -68,6 +72,7 @@ public class ArtistDAODB {
     }
 
     public void delete(int id) throws PlayerException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .from("artists")
                 .where("id = ?", id)
@@ -80,5 +85,9 @@ public class ArtistDAODB {
         LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
         LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
         return new Artist(id, name, description, createdAt, updatedAt);
+    }
+    public static void main (String[] args) throws SQLException {
+        ArtistDAODB dao = new ArtistDAODB();
+        System.out.println(dao.get(8).getName());
     }
 }
