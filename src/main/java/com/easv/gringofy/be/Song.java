@@ -13,8 +13,9 @@ public class Song {
     private String releaseDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String filePath;
 
-    public Song(int id, int duration, Genre genre, String title, Artist artist, String releaseDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Song(int id, int duration, Genre genre, String title, Artist artist, String releaseDate, String filePath, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.artist = artist;
@@ -53,5 +54,9 @@ public class Song {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 }
