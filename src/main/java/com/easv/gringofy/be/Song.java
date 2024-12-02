@@ -38,8 +38,7 @@ public class Song {
         this.updatedAt = updatedAt;
     }
 
-    public int getId(){ return id; }
-    public Song(String title, Artist artist) {
+    public Song(String title, String artist) {
         this.title = title;
         this.artist = artist;
     }
