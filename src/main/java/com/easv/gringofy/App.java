@@ -27,8 +27,8 @@ public class App extends Application {
         stage.setResizable(false);
         stage.show();
 
-        ArtistDAODB artistDAODB = new ArtistDAODB();
-        SongDAODB songDAODB = new SongDAODB();
+//        ArtistDAODB artistDAODB = new ArtistDAODB();
+//        SongDAODB songDAODB = new SongDAODB();
 
 //        GenreDAODB genreDAODB = new GenreDAODB();
 //        try {

@@ -22,7 +22,7 @@ public class SongDAODB {
 
         ResultSet resultSet = queryBuilder
                 .select("*")
-                .from("artists")
+                .from("songs")
                 .get();
 
         while (resultSet.next()) {
@@ -87,11 +87,36 @@ public class SongDAODB {
         String title = resultSet.getString("title");
         Artist artist = artistData.get(resultSet.getInt("artist_id"));
         String releaseDate = resultSet.getString("release_date");
-        Genre genre = genreData.getGenreById(genreId);
+        Genre genre = genreData.get(genreId);
+//        String path = resultSet.getString("file_path");
+        String path = "";
         LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
         LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
-        Song song = new Song(id, duration, genre, title, artist, releaseDate, createdAt, updatedAt);
+        Song song = new Song(id, duration, genre, title, artist, releaseDate, path, createdAt, updatedAt);
 
         return song;
     }
+
+
+    public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
+        List<Song> songs = new ArrayList<>();
+        Song song = null;
+        if (input.length() >= 3) {
+            ResultSet resultSet = queryBuilder.from("songs")
+                    .where("title LIKE ?", '%' + input + '%')
+                    .get();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                song = mapModel(resultSet, id);
+                songs.add(song);
+            }
+            return songs;
+        }
+        return null;
+    }
+
+public static void main (String[] args) throws SQLException, PlayerException {
+        SongDAODB dao = new SongDAODB();
+    System.out.println(dao.getAllSongs());
+}
 }
