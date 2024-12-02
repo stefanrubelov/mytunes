@@ -69,14 +69,15 @@ public class HomePageController extends MusicPlayer implements Initializable  {
 
     public void startNodes() throws PlayerException, SQLException {
         LocalDateTime now = LocalDateTime.now();
-        SongDAODB songDAODB = new SongDAODB();
         Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/logo.png"));
         Playlist playlist = new Playlist("Cool Songs", "Playlist with cool songs", now, now, image);
         hboxHomePlaylists.getChildren().addAll(nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist));
+        List<Song> songs = songManager.getAllSongs();
+        songs.forEach(song -> {flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song));});
+//        Song song = songManager.getSongById(3);
+//        flowPaneHomeSongs.getChildren().addAll(nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song));
 
-        Song song = songDAODB.get(3);
-        flowPaneHomeSongs.getChildren().addAll(nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song));
-
+//        Album album = albumManager.getAlbumById(1);
         Album album = new Album("Cool Album");
         flowPaneHomeAlbums.getChildren().addAll(nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album),nodeBuilder.albumToNode(album));
     }

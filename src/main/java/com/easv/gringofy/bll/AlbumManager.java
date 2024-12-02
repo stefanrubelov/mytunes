@@ -11,4 +11,9 @@ public class AlbumManager {
     public List<Album> getAllAlbumsByInput(String input) {
         return albumDAODB.getAllAlbumsByInput(input);
     }
+
+    public Album getAlbumById(int id) {
+//        return albumDAODB.get(id);
+        return null;
+    }
 }

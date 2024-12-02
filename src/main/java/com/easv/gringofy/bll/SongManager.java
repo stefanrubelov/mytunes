@@ -11,12 +11,15 @@ public class SongManager {
     private SongDAODB songDAODB = new SongDAODB();
 
 
-    public List<Song> getAllSongs() {
-        return null;
+    public List<Song> getAllSongs() throws PlayerException, SQLException {
+        return songDAODB.getAllSongs();
     }
 
     public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
         return songDAODB.getAllSongsByInput(input);
     }
 
+    public Song getSongById(int id) throws PlayerException, SQLException {
+        return songDAODB.get(id);
+    }
 }

@@ -36,7 +36,7 @@ public class PlayerModel {
 
     }
 
-    public List<Song> getSongs() {
+    public List<Song> getAllSongs() throws PlayerException, SQLException {
         return songManager.getAllSongs();
     }
 

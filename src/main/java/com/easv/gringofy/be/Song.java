@@ -10,12 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class Song {
-    private static final String DEFAULT_SONG_PICTURE = "/com/easv/gringofy/images/defaultSongPicture.png";
-    private static final String OPTIONS_PICTURE = "/com/easv/gringofy/images/tripleDots.png";
-
     private int id;
     private int duration;
     private Genre genre;
