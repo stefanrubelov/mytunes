@@ -4,32 +4,22 @@ import com.easv.gringofy.be.*;
 import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.bll.SongManager;
+import com.easv.gringofy.dal.db.SongDAODB;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
 import com.easv.gringofy.gui.models.PlayerModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HomePageController extends MusicPlayer implements Initializable  {
@@ -52,9 +42,15 @@ public class HomePageController extends MusicPlayer implements Initializable  {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         txtFieldSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue.length() > newValue.length() && newValue.length() <= 3) {
-                showDefaultSections();
-            } else if (newValue.length() > 3) {
+            if (oldValue.length() > newValue.length() && newValue.length() <= 3 && oldValue.length() >= 3) {
+                try {
+                    showDefaultSections();
+                } catch (PlayerException e) {
+                    throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (newValue.length() >= 3) {
                 try {
                     search(newValue);
                 } catch (PlayerException | SQLException e) {
@@ -62,16 +58,23 @@ public class HomePageController extends MusicPlayer implements Initializable  {
                 }
             }
         });
-        testNodes();
+        try {
+            startNodes();
+        } catch (PlayerException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void testNodes() {
+    public void startNodes() throws PlayerException, SQLException {
         LocalDateTime now = LocalDateTime.now();
+        SongDAODB songDAODB = new SongDAODB();
         Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/logo.png"));
         Playlist playlist = new Playlist("Cool Songs", "Playlist with cool songs", now, now, image);
         hboxHomePlaylists.getChildren().addAll(nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist));
 
-        Song song = new Song("Cool song", new Artist(1, "Metallica", "Made in Cali", LocalDateTime.now(), LocalDateTime.now()));
+        Song song = songDAODB.get(3);
         flowPaneHomeSongs.getChildren().addAll(nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song));
 
         Album album = new Album("Cool Album");
@@ -91,17 +94,17 @@ public class HomePageController extends MusicPlayer implements Initializable  {
 
     private void getNewSections(String input) throws PlayerException, SQLException {
         List<Song> songs = playerModel.getAllSongsByInput(input);
-        List<Playlist> playlists = playerModel.getAllPlaylistsByInput(input);
-        List<Album> albums = playerModel.getAllAlbumsByInput(input);
+//        List<Playlist> playlists = playerModel.getAllPlaylistsByInput(input);
+//        List<Album> albums = playerModel.getAllAlbumsByInput(input);
         songs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song)));
-        playlists.forEach(playlist -> flowPaneHomeSongs.getChildren().add(nodeBuilder.playlistToNode(playlist)));
-        albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
+//        playlists.forEach(playlist -> flowPaneHomeSongs.getChildren().add(nodeBuilder.playlistToNode(playlist)));
+//        albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
     }
 
-    private void showDefaultSections() {
+    private void showDefaultSections() throws PlayerException, SQLException {
         flowPaneHomeSongs.getChildren().clear();
         flowPaneHomeAlbums.getChildren().clear();
         hboxHomePlaylists.getChildren().clear();
-        testNodes();
+        startNodes();
     }
 }
