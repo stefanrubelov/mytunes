@@ -1,6 +1,8 @@
 package com.easv.gringofy.dal.db;
 
+import com.easv.gringofy.be.Artist;
 import com.easv.gringofy.be.Genre;
+import com.easv.gringofy.be.Song;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
@@ -14,47 +16,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenreDAODB {
-    public Genre getGenreById(int id) throws PlayerException {
-        try (DBConnection dbConnection = new DBConnection();
-             Connection connection = dbConnection.getConnection();)
-        {
-            String sql = "SELECT * FROM genre WHERE id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                String title = resultSet.getString("title");
-                LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
-                LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
-                return new Genre(id, title, createdAt, updatedAt);
-            }
-        }
-        catch (Exception e) {
-            throw new PlayerException(e.getMessage());
+    private QueryBuilder queryBuilder;
 
-        }
-        throw new PlayerException("Genre with id " + id + " not found");
+    public GenreDAODB() {
+        this.queryBuilder = new QueryBuilder();
     }
 
-    public List<Genre> getAllGenres() throws PlayerException {
-        try (DBConnection dbConnection = new DBConnection();
-             Connection connection = dbConnection.getConnection();)
-        {
+    public List<Genre> getAllGenres() throws PlayerException, SQLException {
         List<Genre> genres = new ArrayList<>();
-        String sql = "SELECT * FROM genre";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        Genre genre = null;
+
+        ResultSet resultSet = queryBuilder
+                .select("*")
+                .from("genres")
+                .get();
+
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
-            String title = resultSet.getString("title");
-            LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
-            LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
-            genres.add(new Genre(id, title, createdAt, updatedAt));
+            genre = mapModel(resultSet, id);
+            genres.add(genre);
         }
+
+        return genres;
+    }
+
+    public Genre get(int id) throws PlayerException, SQLException {
+        Genre genre = null;
+
+        ResultSet resultSet = queryBuilder
+                .select("*")
+                .where("id = ?", id)
+                .from("genres")
+                .get();
+
+        if (resultSet.next()) {
+            genre = mapModel(resultSet, id);
         }
-        catch (Exception e) {
-            throw new PlayerException(e.getMessage());
-        }
-        throw new PlayerException("No genres table found");
+
+        return genre;
+    }
+
+    public void update(Genre genre) throws PlayerException {
+        queryBuilder
+                .table("genres")
+                .where("id = ?", genre.getId())
+                .set("title", genre.getTitle())
+                .set("updated_at", LocalDateTime.now())
+                .update();
+    }
+
+    public void insert(Genre genre) throws PlayerException {
+        queryBuilder
+                .table("genres")
+                .insert("title", genre.getTitle())
+                .save();
+    }
+
+    public Genre mapModel(ResultSet resultSet, int id) throws SQLException {
+        String title = resultSet.getString("title");
+        LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
+        LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
+        return new Genre(id, title, createdAt, updatedAt);
     }
 }

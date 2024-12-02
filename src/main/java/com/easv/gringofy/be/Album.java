@@ -24,8 +24,8 @@ public class Album {
         this.updatedAt = updatedAt;
         this.songs = new HashMap<>();
     }
+
     public void addSong(int position, Song song) {
         this.songs.put(position, song);
     }
-
 }
