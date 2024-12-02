@@ -20,13 +20,13 @@ public class Song {
     private int duration;
     private Genre genre;
     private String title;
-    private String artist;
+    private Artist artist;
     private String releaseDate;
     private String filePath;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Song(int id, int duration, Genre genre, String title, String artist, String releaseDate, String filePath, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Song(int id, int duration, Genre genre, String title, Artist artist, String releaseDate, String filePath, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.artist = artist;
@@ -38,21 +38,18 @@ public class Song {
         this.updatedAt = updatedAt;
     }
 
-    public Song(String title, String artist) {
+    public int getId(){ return id; }
+    public Song(String title, Artist artist) {
         this.title = title;
         this.artist = artist;
     }
 
 
-    protected int getId() {
-        return id;
-    }
-
-    protected int getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    protected Genre getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
@@ -60,19 +57,19 @@ public class Song {
         return title;
     }
 
-    public String getArtist() {
+    public Artist getArtist() {
         return artist;
     }
 
-    protected String getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    protected LocalDateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    protected LocalDateTime getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 

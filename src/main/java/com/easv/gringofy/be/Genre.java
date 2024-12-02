@@ -14,4 +14,12 @@ public class Genre {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public int getId(){
+        return id;
+    }
 }

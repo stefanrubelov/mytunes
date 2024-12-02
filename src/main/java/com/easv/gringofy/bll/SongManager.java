@@ -4,6 +4,7 @@ import com.easv.gringofy.be.Song;
 import com.easv.gringofy.dal.db.SongDAODB;
 import com.easv.gringofy.exceptions.PlayerException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class SongManager {
@@ -14,7 +15,7 @@ public class SongManager {
         return null;
     }
 
-    public List<Song> getAllSongsByInput(String input) throws PlayerException {
+    public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
         return songDAODB.getAllSongsByInput(input);
     }
 

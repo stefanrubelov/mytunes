@@ -11,6 +11,7 @@ import com.easv.gringofy.exceptions.PlayerException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class PlayerModel {
@@ -39,7 +40,7 @@ public class PlayerModel {
         return songManager.getAllSongs();
     }
 
-    public List<Song> getAllSongsByInput(String input) throws PlayerException {
+    public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
         return songManager.getAllSongsByInput(input);
     }
 
