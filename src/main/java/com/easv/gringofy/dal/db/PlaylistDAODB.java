@@ -2,6 +2,8 @@ package com.easv.gringofy.dal.db;
 
 import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
+import com.easv.gringofy.be.Song;
+import com.easv.gringofy.exceptions.PlayerException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,5 +48,15 @@ public class PlaylistDAODB {
         String title = resultSet.getString("title");
         String description = resultSet.getString("description");
         return new Playlist(id, title, description);
+    }
+    public void insert(Playlist playlist) throws PlayerException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        queryBuilder
+                .table("playlists")
+                .insert("title", playlist.getTitle())
+                .insert("description", playlist.getDescription())
+                .insert("created_at", playlist.getCreatedAt())
+                .insert("updated_at", playlist.getUpdatedAt())
+                .save();
     }
 }

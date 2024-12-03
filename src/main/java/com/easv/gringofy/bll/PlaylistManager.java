@@ -19,4 +19,7 @@ public class PlaylistManager {
     public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException, SQLException {
         return playlistDAODB.getAllPlaylistsByInput(input);
     }
+    public void insert(Playlist playlist) throws PlayerException, SQLException {
+        playlistDAODB.insert(playlist);
+    }
 }
