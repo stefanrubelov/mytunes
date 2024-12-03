@@ -34,7 +34,7 @@ public class Song {
         this.updatedAt = updatedAt;
     }
 
-    public Song(String title, String artist) {
+    public Song(String title, Artist artist) {
         this.title = title;
         this.artist = artist;
     }
@@ -76,5 +76,9 @@ public class Song {
 
     public String getFilePath() {
         return filePath;
+    }
+
+    public int getId() {
+        return id;
     }
 }
