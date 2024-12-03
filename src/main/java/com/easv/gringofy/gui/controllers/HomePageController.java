@@ -59,15 +59,16 @@ public class HomePageController extends MusicPlayer implements Initializable {
         }
 
         txtFieldSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue.length() > newValue.length() && newValue.length() < 3 && oldValue.length() >= 3) {
+             if (newValue.length() >= 3) {
                 try {
-                    showDefaultNodes();
+                    search(newValue);
                 } catch (PlayerException | SQLException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (newValue.length() >= 3) {
+            }
+            else if (oldValue.length() > newValue.length() && oldValue.length() >= 3) {
                 try {
-                    search(newValue);
+                    showDefaultNodes();
                 } catch (PlayerException | SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -82,7 +83,6 @@ public class HomePageController extends MusicPlayer implements Initializable {
     }
 
     private void search(String input) throws PlayerException, SQLException {
-        clearSections();
 
         Debounce debouncer = new Debounce(100);
         debouncer.debounce(() -> {
@@ -108,7 +108,7 @@ public class HomePageController extends MusicPlayer implements Initializable {
             List<Playlist> playlists = playerModel.getAllPlaylistsByInput(input);
 
             Platform.runLater(() -> {
-                flowPaneHomeSongs.getChildren().clear();
+                clearSections();
                 songs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song)));
                 albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
                 playlists.forEach(playlist -> hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist)));
