@@ -20,6 +20,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HomePageController extends MusicPlayer implements Initializable  {
@@ -69,13 +70,13 @@ public class HomePageController extends MusicPlayer implements Initializable  {
 
     public void startNodes() throws PlayerException, SQLException {
         LocalDateTime now = LocalDateTime.now();
-        Image image = new Image(getClass().getResourceAsStream("/com/easv/gringofy/images/logo.png"));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/easv/gringofy/images/logo.png")));
         Playlist playlist = new Playlist("Cool Songs", "Playlist with cool songs", now, now, image);
         hboxHomePlaylists.getChildren().addAll(nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist),nodeBuilder.playlistToNode(playlist));
-        List<Song> songs = songManager.getAllSongs();
-        songs.forEach(song -> {flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song));});
-//        Song song = songManager.getSongById(3);
-//        flowPaneHomeSongs.getChildren().addAll(nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song));
+//        List<Song> songs = songManager.getAllSongs();
+//        songs.forEach(song -> {flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song));});
+        Song song = songManager.getSongById(3);
+        flowPaneHomeSongs.getChildren().addAll(nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song),nodeBuilder.songToNode(song));
 
 //        Album album = albumManager.getAlbumById(1);
         Album album = new Album("Cool Album");
