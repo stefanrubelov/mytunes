@@ -2,6 +2,7 @@ package com.easv.gringofy.bll;
 
 import com.easv.gringofy.be.Album;
 import com.easv.gringofy.dal.db.AlbumDAODB;
+import com.easv.gringofy.exceptions.PlayerException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +18,9 @@ public class AlbumManager {
         }
     }
 
+    public List<Album> getAllAlbums() throws PlayerException, SQLException {
+        return albumDAODB.getAllAlbums();
+    }
     public Album getAlbumById(int id) {
 //        return albumDAODB.get(id);
         return null;

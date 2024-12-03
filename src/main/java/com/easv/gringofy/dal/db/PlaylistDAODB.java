@@ -26,7 +26,22 @@ public class PlaylistDAODB {
         }
         return playlists;
     }
+    public List<Playlist> getAllPlaylists() throws SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        List<Playlist> playlists = new ArrayList<Playlist>();
+        Playlist playlist = null;
 
+        ResultSet resultSet = queryBuilder
+                .from("playlists")
+                .select("*")
+                .get();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            playlist = mapModel(resultSet, id);
+            playlists.add(playlist);
+        }
+        return playlists;
+    }
     private Playlist mapModel(ResultSet resultSet, int id) throws SQLException {
         String title = resultSet.getString("title");
         String description = resultSet.getString("description");
