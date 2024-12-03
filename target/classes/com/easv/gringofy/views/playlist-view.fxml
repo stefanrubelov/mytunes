@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -45,14 +46,17 @@
                 </VBox>
             </children>
         </VBox>
-        <VBox fillWidth="false" layoutX="262.0" layoutY="14.0" prefHeight="638.0" prefWidth="674.0" styleClass="home-gallery" stylesheets="@../css/Main.css">
+        <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="262.0" layoutY="14.0" prefHeight="638.0" prefWidth="674.0" styleClass="home-gallery" stylesheets="@../css/Main.css">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
          <children>
-            <HBox prefHeight="200.0" prefWidth="674.0">
+            <HBox prefHeight="200.0" prefWidth="674.0" styleClass="header" stylesheets="@../css/PlaylistStyles.css">
                <children>
-                  <ImageView fitHeight="199.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="playlistImage" />
+                  <ImageView fitHeight="199.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="playlistImage">
+                     <image>
+                        <Image url="@../images/playlistDefaultPicture.png" />
+                     </image></ImageView>
                   <Label textFill="WHITE">
                      <font>
                         <Font size="65.0" />
@@ -61,28 +65,48 @@
                         <Insets left="20.0" top="80.0" />
                      </HBox.margin>
                   </Label>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Playlist" textFill="WHITE" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="73.0" prefWidth="674.0">
+            <HBox prefHeight="56.0" prefWidth="674.0">
                <children>
                   <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="55.0" styleClass="playPlaylistButton" stylesheets="@../css/Main.css">
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
                   <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" styleClass="playlist-options" stylesheets="@../css/Main.css">
                      <HBox.margin>
-                        <Insets left="550.0" top="10.0" />
+                        <Insets left="540.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets />
+                  <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
             </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="637.0" styleClass="tools-container" stylesheets="@../css/PlaylistStyles.css">
+               <children>
+                  <Label text="#" />
+                  <Label text="Title">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin></Label>
+                  <Label text="Release date">
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin></Label>
+                  <Label text="Duration">
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin></Label>
+               </children>
+            </HBox>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="269.0" prefWidth="674.0" styleClass="songs-container" stylesheets="@../css/PlaylistStyles.css" vbarPolicy="NEVER" />
          </children></VBox>
         <VBox alignment="CENTER" layoutX="12.0" layoutY="663.0" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
             <children>

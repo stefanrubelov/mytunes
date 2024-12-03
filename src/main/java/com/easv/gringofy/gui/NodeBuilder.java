@@ -2,6 +2,7 @@ package com.easv.gringofy.gui;
 
 import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
+import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.geometry.Insets;
@@ -136,6 +137,27 @@ public class NodeBuilder {
         hbox.getStyleClass().add("album-node");
         titleLabel.getStyleClass().add("album-node-title");
         hbox.getChildren().addAll(imageView, titleLabel);
+        return hbox;
+    }
+
+    public HBox songToPlaylistSongNode(PlaylistSong song) {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        Label songIdLabel = new Label("#");
+
+        VBox vbox = new VBox();
+        Label titleLabel = new Label(song.getTitle());
+        Label artistLabel = new Label(song.getArtist().getName());
+        vbox.getChildren().addAll(titleLabel, artistLabel);
+
+        Label releasedDateLabel = new Label(song.getReleaseDate());
+        Label durationLabel = new Label(String.valueOf(song.getDuration()));
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        hbox.getChildren().addAll(songIdLabel, vbox, spacer, releasedDateLabel, durationLabel);
+
         return hbox;
     }
 }

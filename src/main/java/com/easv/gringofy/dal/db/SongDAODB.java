@@ -20,23 +20,17 @@ public class SongDAODB {
         QueryBuilder queryBuilder = new QueryBuilder();
         List<Song> songs = new ArrayList<>();
         Song song = null;
-        long queryStart = System.currentTimeMillis();
         ResultSet resultSet = queryBuilder
                 .from("songs")
                 .select("songs.*, artists.name AS artist_name, artists.description AS artist_description, genres.title AS genre_title")
                 .join("artists", "songs.artist_id = artists.id", "")
                 .join("genres", "songs.genre_id = genres.id", "")
                 .get();
-        long queryEnd = System.currentTimeMillis();
-        System.out.println("Query Execution Time: " + (queryEnd - queryStart) + "ms");
-        long mappingStart = System.currentTimeMillis();
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             song = mapModel(resultSet, id);
             songs.add(song);
         }
-        long mappingEnd = System.currentTimeMillis();
-        System.out.println("Mapping Time: " + (mappingEnd - mappingStart) + "ms");
         return songs;
     }
 
@@ -124,10 +118,5 @@ public class SongDAODB {
         Song song = new Song(id, duration, genre, title, artist, releaseDate, path, createdAt, updatedAt);
 
         return song;
-    }
-
-    public static void main(String[] args) throws SQLException, PlayerException {
-        SongDAODB dao = new SongDAODB();
-        List<Song> songs = dao.getAllSongs();
     }
 }
