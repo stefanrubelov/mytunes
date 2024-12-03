@@ -10,10 +10,9 @@ import java.util.List;
 
 public class AlbumDAODB {
 
-    public List<Album> getAllAlbums() throws PlayerException, SQLException {
+    public List<Album> getAllAlbums() throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
         List<Album> albums = new ArrayList<>();
-        Album album = null;
 
         ResultSet resultSet = queryBuilder
                 .from("albums")
@@ -22,7 +21,7 @@ public class AlbumDAODB {
 
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
-            album = mapModel(resultSet, id);
+            Album album = mapModel(resultSet, id);
             albums.add(album);
         }
 
@@ -48,7 +47,6 @@ public class AlbumDAODB {
     public List<Album> getAllAlbumsByInput(String input) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
         List<Album> albums = new ArrayList<>();
-        Album album = null;
 
         ResultSet resultSet = queryBuilder
                 .from("albums")
@@ -58,7 +56,7 @@ public class AlbumDAODB {
 
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
-            album = mapModel(resultSet, id);
+            Album album = mapModel(resultSet, id);
             albums.add(album);
         }
 
@@ -68,8 +66,7 @@ public class AlbumDAODB {
     public Album mapModel(ResultSet resultSet, int id) throws SQLException {
         String title = resultSet.getString("title");
         String description = resultSet.getString("description");
-        Album album = new Album(id, title, description);
 
-        return album;
+        return new Album(id, title, description);
     }
 }

@@ -83,6 +83,65 @@ public class SongDAODB {
                 .save();
     }
 
+    public List<Song> getAllSongsByAlbum(int album_id) throws SQLException {
+        List<Song> songs = new ArrayList<>();
+        ResultSet resultSet = queryBuilder
+                .select("songs.id")
+                .select("songs.duration")
+                .select("songs.title")
+                .select("songs.release_date")
+                .select("songs.created_at")
+                .select("songs.updated_at")
+                .select("artists.id AS artist_id")
+                .select("artists.name AS artist_name")
+                .select("artists.description AS artist_description")
+                .select("genres.id AS genre_id")
+                .select("genres.title AS genre_title")
+                .from("album_song")
+                .join("albums", "album_song.album_id = albums.id", "")
+                .join("songs", "album_song.song_id = songs.id", "")
+                .join("artists", "songs.artist_id = artists.id", "")
+                .join("genres", "songs.genre_id = genres.id", "")
+                .where("album_song.album_id", "=", album_id)
+                .get();
+
+        while (resultSet.next()){
+            int id = resultSet.getInt("id");
+            Song song = mapModel(resultSet, id);
+            songs.add(song);
+        }
+
+        return songs;
+    }
+    public List<Song> getAllSongsByPlaylist(int playlist_id) throws SQLException {
+        List<Song> songs = new ArrayList<>();
+        ResultSet resultSet = queryBuilder
+                .select("songs.id")
+                .select("songs.duration")
+                .select("songs.title")
+                .select("songs.release_date")
+                .select("songs.created_at")
+                .select("songs.updated_at")
+                .select("artists.id AS artist_id")
+                .select("artists.name AS artist_name")
+                .select("artists.description AS artist_description")
+                .select("genres.id AS genre_id")
+                .select("genres.title AS genre_title")
+                .from("playlist_song")
+                .join("songs", "playlist_song.song_id = songs.id", "")
+                .join("artists", "songs.artist_id = artists.id", "")
+                .join("genres", "songs.genre_id = genres.id", "")
+                .where("playlist_song.playlist_id", "=", playlist_id)
+                .get();
+
+        while (resultSet.next()){
+            int id = resultSet.getInt("id");
+            Song song = mapModel(resultSet, id);
+            songs.add(song);
+        }
+
+        return songs;
+    }
 
     public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
@@ -106,12 +165,12 @@ public class SongDAODB {
         return null;
     }
 
-    public Song mapModel(ResultSet resultSet, int id) throws PlayerException, SQLException {
+    public Song mapModel(ResultSet resultSet, int id) throws SQLException {
         int duration = resultSet.getInt("duration");
         String title = resultSet.getString("title");
         Artist artist = new Artist(resultSet.getInt("artist_id"), resultSet.getString("artist_name"), resultSet.getString("artist_description"));
-        String releaseDate = resultSet.getString("release_date");
         Genre genre = new Genre(resultSet.getInt("genre_id"), resultSet.getString("genre_title"));
+        String releaseDate = resultSet.getString("release_date");
         String path = "";
         LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
         LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();

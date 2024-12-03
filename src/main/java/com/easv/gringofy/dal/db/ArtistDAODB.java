@@ -75,6 +75,7 @@ public class ArtistDAODB {
 
     public void delete(int id) throws PlayerException {
         QueryBuilder queryBuilder = new QueryBuilder();
+
         queryBuilder
                 .from("artists")
                 .where("id", "=", id)
