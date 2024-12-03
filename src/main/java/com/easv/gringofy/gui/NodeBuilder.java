@@ -7,9 +7,11 @@ import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.controllers.PlaylistController;
+import com.easv.gringofy.gui.controllers.PlaylistController;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
@@ -28,6 +30,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.io.IOException;
 import java.util.Objects;
 
 public class NodeBuilder {

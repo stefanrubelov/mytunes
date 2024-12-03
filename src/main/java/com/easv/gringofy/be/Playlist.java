@@ -64,6 +64,17 @@ public class Playlist {
         return title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     public int getId(){
         return id;
     }
