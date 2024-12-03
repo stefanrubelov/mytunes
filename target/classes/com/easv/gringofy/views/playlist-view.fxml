@@ -51,7 +51,7 @@
                 <Insets />
             </opaqueInsets>
          <children>
-            <HBox prefHeight="200.0" prefWidth="674.0" styleClass="header" stylesheets="@../css/PlaylistStyles.css">
+            <HBox prefHeight="200.0" prefWidth="674.0" styleClass="header" stylesheets="@../css/playlist_styles.css">
                <children>
                   <ImageView fitHeight="199.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="playlistImage">
                      <image>
@@ -89,7 +89,7 @@
                   <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="637.0" styleClass="tools-container" stylesheets="@../css/PlaylistStyles.css">
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="637.0" styleClass="tools-container" stylesheets="@../css/playlist_styles.css">
                <children>
                   <Label text="#" />
                   <Label text="Title">
@@ -106,7 +106,7 @@
                      </HBox.margin></Label>
                </children>
             </HBox>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="269.0" prefWidth="674.0" styleClass="songs-container" stylesheets="@../css/PlaylistStyles.css" vbarPolicy="NEVER" />
+            <ScrollPane hbarPolicy="NEVER" prefHeight="269.0" prefWidth="674.0" styleClass="songs-container" stylesheets="@../css/playlist_styles.css" vbarPolicy="NEVER" />
          </children></VBox>
         <VBox alignment="CENTER" layoutX="12.0" layoutY="663.0" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
             <children>
@@ -133,6 +133,6 @@
     </children>
    <stylesheets>
       <URL value="@../css/Main.css" />
-      <URL value="@../css/PlaylistStyles.css" />
+      <URL value="@../css/playlist_styles.css" />
    </stylesheets>
 </AnchorPane>
