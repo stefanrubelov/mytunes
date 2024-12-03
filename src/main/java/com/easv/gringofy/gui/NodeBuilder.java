@@ -4,10 +4,13 @@ import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
+import com.easv.gringofy.gui.controllers.PlaylistController;
 import com.easv.gringofy.gui.models.PlayerModel;
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
@@ -17,7 +20,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class NodeBuilder {
@@ -123,6 +128,22 @@ public class NodeBuilder {
         imageView.setFitHeight(100);
         Label titleLabel = new Label(playlist.getTitle());
         vbox.getChildren().addAll(imageView, titleLabel);
+        vbox.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlist-view.fxml"));
+                try {
+                    Parent root = loader.load();
+                    PlaylistController controller = (PlaylistController) loader.getController();
+                    controller.setPlaylist(playlist);
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) vbox.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        });
         return vbox;
     }
 

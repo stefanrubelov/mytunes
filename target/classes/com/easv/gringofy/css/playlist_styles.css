@@ -15,3 +15,12 @@
 .tools-container > *{
     -fx-text-fill: #aaa;
 }
+
+.playlist-name{
+    -fx-font-size: 36px;
+    -fx-font-weight: bolder;
+}
+.playlist-description{
+    -fx-wrap-text: true;
+    -fx-text-fill: #aaa;
+}
