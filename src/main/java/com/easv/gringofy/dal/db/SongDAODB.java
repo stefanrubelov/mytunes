@@ -20,18 +20,21 @@ public class SongDAODB {
         QueryBuilder queryBuilder = new QueryBuilder();
         List<Song> songs = new ArrayList<>();
         Song song = null;
-
+        long queryStart = System.currentTimeMillis();
         ResultSet resultSet = queryBuilder
                 .select("*")
                 .from("songs")
                 .get();
-
+        long queryEnd = System.currentTimeMillis();
+        System.out.println("Query Execution Time: " + (queryEnd - queryStart) + "ms");
+        long mappingStart = System.currentTimeMillis();
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             song = mapModel(resultSet, id);
             songs.add(song);
         }
-
+        long mappingEnd = System.currentTimeMillis();
+        System.out.println("Mapping Time: " + (mappingEnd - mappingStart) + "ms");
         return songs;
     }
 
