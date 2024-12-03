@@ -15,6 +15,11 @@ public class Genre {
         this.updatedAt = updatedAt;
     }
 
+    public Genre(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     public String getTitle(){
         return title;
     }
