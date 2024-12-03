@@ -125,7 +125,6 @@ public class SongDAODB {
 
 public static void main (String[] args) throws SQLException, PlayerException {
         SongDAODB dao = new SongDAODB();
-        List<Song> songs = dao.getAllSongsByInput("lls");
-        System.out.println(songs.get(1).getArtist().getName());
+        List<Song> songs = dao.getAllSongs();
     }
 }
