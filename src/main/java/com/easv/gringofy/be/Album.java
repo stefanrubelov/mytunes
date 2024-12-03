@@ -29,6 +29,12 @@ public class Album {
         this.title = title;
     }
 
+    public Album(int id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+
     public void addSong(int position, Song song) {
         this.songs.put(position, song);
     }

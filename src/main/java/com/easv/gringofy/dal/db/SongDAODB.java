@@ -49,7 +49,7 @@ public class SongDAODB {
                 .select("songs.*, artists.name AS artist_name, artists.description AS artist_description, genres.title AS genre_title")
                 .join("artists", "songs.artist_id = artists.id", "")
                 .join("genres", "songs.genre_id = genres.id", "")
-                .where("songs.id = ?", id)
+                .where("songs.id", "=", id)
                 .get();
 
         if (resultSet.next()) {
@@ -61,14 +61,14 @@ public class SongDAODB {
     public void delete(int id) throws PlayerException {
         queryBuilder
                 .from("songs")
-                .where("id = ?", id)
+                .where("id", "=", id)
                 .delete();
     }
 
     public void update(Song song) throws PlayerException {
         queryBuilder
                 .table("songs")
-                .where("id = ?", song.getId())
+                .where("id", "=", song.getId())
                 .set("title", song.getTitle())
                 .set("release_date", song.getReleaseDate())
                 .set("duration", song.getDuration())
@@ -100,7 +100,7 @@ public class SongDAODB {
                     .select("songs.*, artists.name AS artist_name, artists.description AS artist_description, genres.title AS genre_title")
                     .join("artists", "songs.artist_id = artists.id", "")
                     .join("genres", "songs.genre_id = genres.id", "")
-                    .where("songs.title LIKE ?", '%' + input + '%')
+                    .where("songs.title", "LIKE", '%' + input + '%')
                     .get();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");

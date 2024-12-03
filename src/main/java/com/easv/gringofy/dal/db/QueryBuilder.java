@@ -52,9 +52,9 @@ public class QueryBuilder {
         return this;
     }
 
-    public QueryBuilder where(String condition, Object... params) {
-        whereClauses.add(condition);
-        Collections.addAll(parameters, params);
+    public QueryBuilder where(String column, String operator, Object value) {
+        whereClauses.add(column + " " + operator + " ?");
+        parameters.add(value);
         return this;
     }
 
@@ -208,7 +208,7 @@ public class QueryBuilder {
     public ResultSet get() {
         this.get = true;
         String sql = build();
-
+        System.out.println(sql);
         try {
             Connection connection = dbConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

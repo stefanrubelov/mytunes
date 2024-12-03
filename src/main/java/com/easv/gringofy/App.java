@@ -22,31 +22,6 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
-//        ArtistDAODB artistDAODB = new ArtistDAODB();
-        SongDAODB songDAODB = new SongDAODB();
-        songDAODB.getAllSongs();
-//        GenreDAODB genreDAODB = new GenreDAODB();
-//        try {
-//            artistDAODB.get(1);
-////            artistDAODB.delete(1);
-//            Song newSong = new Song(0,69,genreDAODB.get(1), "insert new Song Title", artistDAODB.get(1), "2222-12-22", LocalDateTime.now(), LocalDateTime.now());
-//
-//            songDAODB.insert(newSong);
-//        } catch (Exception e){
-//            e.printStackTrace();
-//
-//        }
-//        SongDAODB songDAODB = new SongDAODB();
-//        try {
-//            Song song = songDAODB.get(1);
-//            System.out.println();
-//
-//            System.out.println(song.getTitle() + " - " + song.getArtist().getName() + " (" + song.getGenre().getTitle() + ")");
-//
-//        } catch (PlayerException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     public static void main(String[] args) throws SQLException {
