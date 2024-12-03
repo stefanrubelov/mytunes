@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class QueryBuilder {
-    private String selectClause = "*";
+    private String selectClause = "";
     private String fromClause = "";
     private List<String> whereClauses = new ArrayList<>();
     private List<Object> parameters = new ArrayList<>();
@@ -34,10 +34,23 @@ public class QueryBuilder {
     }
 
     public QueryBuilder select(String... columns) {
-        if (columns.equals("*")) {
+        if (this.selectClause == null) {
+            this.selectClause = "";
+        }
+
+        if (columns.length == 0) {
+            return this; // Do nothing if no column provided
+        }
+
+        if (columns.length == 1 && columns[0].equals("*")) {
             this.selectClause = "*";
         } else {
-            this.selectClause = String.join(", ", columns);
+            String joinedColumns = String.join(", ", columns);
+            if (this.selectClause.isEmpty()) {
+                this.selectClause = joinedColumns;
+            } else {
+                this.selectClause += ", " + joinedColumns;
+            }
         }
         return this;
     }
@@ -59,7 +72,11 @@ public class QueryBuilder {
     }
 
     public QueryBuilder join(String table, String condition, String type) {
-        this.joinClauses.add(type.toUpperCase() + " JOIN " + table + " ON " + condition);
+        if (type.isEmpty() || type.equals(" ")) {
+            this.joinClauses.add("JOIN " + table + " ON " + condition);
+        } else {
+            this.joinClauses.add(type.toUpperCase() + " JOIN " + table + " ON " + condition);
+        }
         return this;
     }
 
@@ -155,8 +172,11 @@ public class QueryBuilder {
             if (top != null) {
                 query.append("TOP ").append(top).append(" ");
             }
-
-            query.append(selectClause).append(" FROM ").append(fromClause);
+            if (selectClause.isEmpty()) {
+                query.append("*").append(" FROM ").append(fromClause);
+            } else {
+                query.append(selectClause).append(" FROM ").append(fromClause);
+            }
         } else if (insert) {
             query.append("INSERT INTO ").append(fromClause).append(" (").append(String.join(", ", insertColumnsPlaceholders)).append(") VALUES (")
                     .append(String.join(", ", Collections.nCopies(parameters.size(), "?")))
@@ -221,6 +241,8 @@ public class QueryBuilder {
             System.err.println("SQL SELECT Execution Error: " + e.getMessage());
             e.printStackTrace();
             return null;
+        } finally {
+            resetFields();
         }
     }
 
@@ -241,6 +263,8 @@ public class QueryBuilder {
             System.err.println("SQL UPDATE Execution Error: " + e.getMessage());
             e.printStackTrace();
             return false;
+        } finally {
+            resetFields();
         }
     }
 
@@ -261,6 +285,8 @@ public class QueryBuilder {
             System.err.println("SQL DELETE Execution Error: " + e.getMessage());
             e.printStackTrace();
             return false;
+        } finally {
+            resetFields();
         }
     }
 
