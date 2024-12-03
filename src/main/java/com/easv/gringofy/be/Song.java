@@ -39,7 +39,6 @@ public class Song {
         this.artist = artist;
     }
 
-
     public int getDuration() {
         return duration;
     }
