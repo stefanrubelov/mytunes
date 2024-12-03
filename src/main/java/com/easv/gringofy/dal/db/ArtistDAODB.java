@@ -2,6 +2,7 @@ package com.easv.gringofy.dal.db;
 
 import com.easv.gringofy.be.Artist;
 import com.easv.gringofy.exceptions.PlayerException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -41,10 +42,11 @@ public class ArtistDAODB {
         ResultSet resultSet = queryBuilder
                 .select("*")
                 .from("artists")
-                .where("id = ?", id)
+                .where("id", "=", id)
                 .get();
 
-        if (resultSet.next()) {;
+        if (resultSet.next()) {
+            ;
             artist = mapModel(resultSet, id);
         }
 
@@ -55,7 +57,7 @@ public class ArtistDAODB {
         QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .table("artists")
-                .where("id = ?", artist.getId())
+                .where("id", "=", artist.getId())
                 .set("name", artist.getName())
                 .set("description", artist.getDescription())
                 .set("updated_at", LocalDateTime.now())
@@ -75,7 +77,7 @@ public class ArtistDAODB {
         QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .from("artists")
-                .where("id = ?", id)
+                .where("id", "=", id)
                 .delete();
     }
 

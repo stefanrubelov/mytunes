@@ -44,7 +44,7 @@ public class PlayerModel {
         return songManager.getAllSongsByInput(input);
     }
 
-    public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException {
+    public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException, SQLException {
         return playlistManager.getAllPlaylistsByInput(input);
     }
 

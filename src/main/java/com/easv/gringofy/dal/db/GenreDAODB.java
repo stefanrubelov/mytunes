@@ -45,7 +45,7 @@ public class GenreDAODB {
 
         ResultSet resultSet = queryBuilder
                 .select("*")
-                .where("id = ?", id)
+                .where("id", "=", id)
                 .from("genres")
                 .get();
 
@@ -59,7 +59,7 @@ public class GenreDAODB {
     public void update(Genre genre) throws PlayerException {
         queryBuilder
                 .table("genres")
-                .where("id = ?", genre.getId())
+                .where("id", "=", genre.getId())
                 .set("title", genre.getTitle())
                 .set("updated_at", LocalDateTime.now())
                 .update();

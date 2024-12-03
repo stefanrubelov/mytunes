@@ -15,6 +15,7 @@ public class Playlist {
     private static final String DEFAULT_PLAYLIST_PICTURE = "/com/easv/gringofy/images/logo.png";
 
     private Map<Integer, Song> songs = new LinkedHashMap<>();
+    private int id;
     private String title;
     private String description;
     private LocalDateTime createdAt;
@@ -34,6 +35,12 @@ public class Playlist {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.image = image;
+    }
+
+    public Playlist(int id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
     }
 
     public void addSong(int position, Song song) {
