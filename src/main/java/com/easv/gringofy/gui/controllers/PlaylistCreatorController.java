@@ -18,6 +18,11 @@ public class PlaylistCreatorController {
 
     private PlaylistManager playlistManager = new PlaylistManager();
     private PlaylistsPageController playlistsPageController;
+    private PlaylistController playlistController;
+    private Playlist playlist;
+
+    private boolean editMode = false;
+
     @FXML
     private TextField txtFieldPlaylistName;
     @FXML
@@ -28,14 +33,30 @@ public class PlaylistCreatorController {
         String name = txtFieldPlaylistName.getText();
         String description = txtAreaPlaylistDescription.getText();
         LocalDateTime now = LocalDateTime.now();
-        Playlist playlist = new Playlist(name, description, now, now);
-        playlistManager.insert(playlist);
-        playlistsPageController.refreshPlaylists();
+        if(!editMode) {
+            Playlist playlist = new Playlist(name, description, now, now);
+            playlistManager.insert(playlist);
+            playlistsPageController.refreshPlaylists();
+        }
+        else{
+            Playlist playlist = new Playlist(this.playlist.getId(), name, description);
+            playlistManager.update(playlist);
+        }
         Stage stage = (Stage) txtFieldPlaylistName.getScene().getWindow();
         stage.close();
     }
 
     public void setPlaylistsPageController(PlaylistsPageController playlistsPageController){
         this.playlistsPageController = playlistsPageController;
+    }
+    public void setPlaylistController(PlaylistController playlistController){
+        this.playlistController = playlistController;
+    }
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
+
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
     }
 }

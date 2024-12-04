@@ -48,6 +48,15 @@ public class PlayerModel {
     public void loadDefaultAlbums() throws PlayerException, SQLException {
         defaultAlbums = albumManager.getAllAlbums();
     }
+    public List<Song> getDefaultSongs() {
+        return defaultSongs;
+    }
+    public List<Playlist> getDefaultPlaylists() {
+        return defaultPlaylists;
+    }
+    public List<Album> getDefaultAlbums() {
+        return defaultAlbums;
+    }
     public List<Song> getAllSongs() throws PlayerException, SQLException {
         return songManager.getAllSongs();
     }

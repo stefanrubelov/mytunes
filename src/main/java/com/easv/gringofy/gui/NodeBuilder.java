@@ -87,7 +87,7 @@ public class NodeBuilder {
 //        playlists.forEach(playlist -> {playlistsMenu.getItems().add(new MenuItem(playlist.toString()));}); // Needs implementation of method
 
         // Set actions for menu items
-        //item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement
+//        item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement
         item3.setOnAction(event -> playerModel.addSongToQueue(song));
         hoverItem.setOnMouseEntered(event -> {
             playlistsMenu.show(hoverItem, Side.LEFT, -10, -8);

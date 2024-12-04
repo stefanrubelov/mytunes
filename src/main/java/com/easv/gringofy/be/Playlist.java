@@ -67,4 +67,7 @@ public class Playlist {
     public int getId(){
         return id;
     }
+    public int getId() {
+        return id;
+    }
 }

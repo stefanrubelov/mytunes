@@ -250,7 +250,7 @@ public class QueryBuilder {
         this.update = true;
 
         String sql = build();
-
+        System.out.println(sql);
         try {
             Connection connection = dbConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

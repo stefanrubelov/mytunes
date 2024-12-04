@@ -5,6 +5,7 @@ import com.easv.gringofy.be.Playlist;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,4 +103,18 @@ public class PlaylistDAODB {
                 .insert("updated_at", playlist.getUpdatedAt())
                 .save();
     }
+    public void update(Playlist playlist) throws PlayerException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        queryBuilder
+                .table("playlists")
+                .where("id", "=", playlist.getId())
+                .set("title", playlist.getTitle())
+                .set("description", playlist.getDescription())
+                .set("updated_at", LocalDateTime.now())
+                .update();
+    }
+//    public static void main (String[] args) throws SQLException {
+//        PlaylistDAODB dao = new PlaylistDAODB();
+//        dao.update();
+//    }
 }

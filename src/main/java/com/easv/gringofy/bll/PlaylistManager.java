@@ -22,4 +22,7 @@ public class PlaylistManager {
     public void insert(Playlist playlist) throws PlayerException, SQLException {
         playlistDAODB.insert(playlist);
     }
+    public void update(Playlist playlist) throws PlayerException, SQLException {
+        playlistDAODB.update(playlist);
+    }
 }
