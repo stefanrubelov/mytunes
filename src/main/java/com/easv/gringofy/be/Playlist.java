@@ -79,14 +79,4 @@ public class Playlist {
         return id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
 }
