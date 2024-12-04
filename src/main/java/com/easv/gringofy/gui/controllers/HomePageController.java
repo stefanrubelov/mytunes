@@ -13,13 +13,17 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HomePageController extends MusicPlayer implements Initializable {
@@ -46,9 +50,9 @@ public class HomePageController extends MusicPlayer implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            defaultSongs = songManager.getAllSongs();
-            defaultPlaylists = playlistManager.getAllPlaylists();
-            defaultAlbums = albumManager.getAllAlbums();
+            playerModel.loadDefaultSongs();
+            playerModel.loadDefaultPlaylists();
+            playerModel.loadDefaultAlbums();
             showDefaultNodes();
         } catch (PlayerException | SQLException e) {
             throw new RuntimeException(e);
@@ -73,9 +77,21 @@ public class HomePageController extends MusicPlayer implements Initializable {
 
     public void showDefaultNodes() throws PlayerException, SQLException {
         clearSections();
-        defaultSongs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song)));
-        defaultPlaylists.forEach(playlist -> hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist)));
-        defaultAlbums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
+        playerModel.getDefaultSongs().forEach(song -> {flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song));});
+        playerModel.getDefaultPlaylists().forEach(playlist -> {hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist));});
+        playerModel.getDefaultAlbums().forEach(album -> {flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album));});
+    }
+
+    private void search(String input) throws PlayerException, SQLException {
+
+        Debounce debouncer = new Debounce(100);
+        debouncer.debounce(() -> {
+            try {
+                fetchSearch(input);
+            } catch (PlayerException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void clearSections() {

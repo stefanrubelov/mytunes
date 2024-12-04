@@ -23,6 +23,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class NodeBuilder {
@@ -31,7 +32,7 @@ public class NodeBuilder {
     private static final String DEFAULT_PLAYLIST_PICTURE = "/com/easv/gringofy/images/logo.png";
     private static final String DEFAULT_ALBUM_PICTURE = "/com/easv/gringofy/images/defaultAlbumPicture.png";
     private static final String PLAY_SONG_ICON = "/com/easv/gringofy/images/playSongIcon.png";
-    private PlayerModel playerModel = new PlayerModel();
+    private final PlayerModel playerModel = new PlayerModel();
 
     public HBox songToNode(Song song) {
         // Creates the container for the node
@@ -82,9 +83,15 @@ public class NodeBuilder {
 
         // Menu for the available playlists
         ContextMenu playlistsMenu = new ContextMenu();
-        playlistsMenu.getItems().addAll(new MenuItem("TEST")); // Just a test item - remove later
-//        List<Playlist> playlists= playlistManager.getAllPlaylists(); // Needs implementation of method
-//        playlists.forEach(playlist -> {playlistsMenu.getItems().add(new MenuItem(playlist.toString()));}); // Needs implementation of method
+        List<Playlist> playlists= playerModel.getDefaultPlaylists();
+        playlists.forEach(playlist -> {
+            MenuItem menuItem = new MenuItem(playlist.toString());
+            menuItem.setOnAction(event -> {
+                PlaylistSong playlistSong = new PlaylistSong(playlist.getId(), song);
+                // needs to add the playlistSong to database later
+            });
+            playlistsMenu.getItems().add(menuItem);});
+
 
         // Set actions for menu items
 //        item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement

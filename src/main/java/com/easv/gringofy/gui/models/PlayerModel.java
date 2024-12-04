@@ -17,13 +17,14 @@ import java.util.List;
 
 public class PlayerModel {
 
-    private SongManager songManager = new SongManager();
-    private PlaylistManager playlistManager = new PlaylistManager();
-    private AlbumManager albumManager = new AlbumManager();
-    private SongPlayer songPlayer = new SongPlayer();
-    List<Song> defaultSongs = new ArrayList<>();
-    List<Playlist> defaultPlaylists = new ArrayList<>();
-    List<Album> defaultAlbums = new ArrayList<>();
+    private final SongManager songManager = new SongManager();
+    private final PlaylistManager playlistManager = new PlaylistManager();
+    private final AlbumManager albumManager = new AlbumManager();
+    private final SongPlayer songPlayer = new SongPlayer();
+
+    private static List<Song> defaultSongs = new ArrayList<>();
+    private static List<Playlist> defaultPlaylists = new ArrayList<>();
+    private static List<Album> defaultAlbums = new ArrayList<>();
 
     @FXML
     public void playPreviousSong(ActionEvent actionEvent) {

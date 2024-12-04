@@ -1,6 +1,8 @@
 package com.easv.gringofy.gui.controllers;
 
 import com.easv.gringofy.be.Playlist;
+import com.easv.gringofy.bll.PlaylistManager;
+import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +25,7 @@ import java.util.ResourceBundle;
 public class PlaylistController extends MusicPlayer implements Initializable {
 
     private Playlist playlist;
+    private final PlaylistManager playlistManager = new PlaylistManager();
 
     @FXML private Label lblPlaylistName;
     @FXML private Label lblPlaylistDescription;
@@ -47,8 +50,14 @@ public class PlaylistController extends MusicPlayer implements Initializable {
             }
         });
     }
-    @FXML private void delete(){
-
+    @FXML private void delete() throws PlayerException, IOException {
+        playlistManager.delete(playlist);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlists-view.fxml"));
+        Parent root = loader.load();
+        PlaylistsPageController controller = (PlaylistsPageController) loader.getController();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) contextMenu.getScene().getWindow();
+        stage.setScene(scene);
     }
     @FXML private void edit() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlist-creator.fxml"));

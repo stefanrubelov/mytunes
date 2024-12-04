@@ -91,7 +91,7 @@
                           <items>
                               <MenuItem mnemonicParsing="false" text="Add to queue" />
                             <MenuItem onAction="#edit" mnemonicParsing="false" text="Edit" />
-                              <MenuItem mnemonicParsing="false" text="Delete" />
+                              <MenuItem onAction="#delete" mnemonicParsing="false" text="Delete" />
                           </items>
                         </ContextMenu>
                      </contextMenu>

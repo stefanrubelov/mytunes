@@ -113,6 +113,13 @@ public class PlaylistDAODB {
                 .set("updated_at", LocalDateTime.now())
                 .update();
     }
+    public void delete(Playlist playlist) throws PlayerException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        queryBuilder
+                .from("playlists")
+                .where("id", "=", playlist.getId())
+                .delete();
+    }
 //    public static void main (String[] args) throws SQLException {
 //        PlaylistDAODB dao = new PlaylistDAODB();
 //        dao.update();

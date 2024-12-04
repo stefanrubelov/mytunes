@@ -25,4 +25,8 @@ public class PlaylistManager {
     public void update(Playlist playlist) throws PlayerException, SQLException {
         playlistDAODB.update(playlist);
     }
+
+    public void delete(Playlist playlist) throws PlayerException {
+        playlistDAODB.delete(playlist);
+    }
 }
