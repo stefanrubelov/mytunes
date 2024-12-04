@@ -13,17 +13,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HomePageController extends MusicPlayer implements Initializable {
@@ -58,40 +54,28 @@ public class HomePageController extends MusicPlayer implements Initializable {
             throw new RuntimeException(e);
         }
 
+        Debounce debouncer = new Debounce(200);
+
         txtFieldSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-             if (newValue.length() >= 3) {
+            debouncer.debounce(() -> Platform.runLater(() -> {
                 try {
-                    search(newValue);
+                    if (newValue.length() >= 3) {
+                        fetchSearch(newValue);
+                    } else if (oldValue.length() > newValue.length() && oldValue.length() >= 3) {
+                        showDefaultNodes();
+                    }
                 } catch (PlayerException | SQLException e) {
                     throw new RuntimeException(e);
                 }
-            }
-            else if (oldValue.length() > newValue.length() && oldValue.length() >= 3) {
-                try {
-                    showDefaultNodes();
-                } catch (PlayerException | SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            }));
         });
     }
+
     public void showDefaultNodes() throws PlayerException, SQLException {
         clearSections();
-        defaultSongs.forEach(song -> {flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song));});
-        defaultPlaylists.forEach(playlist -> {hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist));});
-        defaultAlbums.forEach(album -> {flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album));});
-    }
-
-    private void search(String input) throws PlayerException, SQLException {
-
-        Debounce debouncer = new Debounce(100);
-        debouncer.debounce(() -> {
-            try {
-                fetchSearch(input);
-            } catch (PlayerException | SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        defaultSongs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song)));
+        defaultPlaylists.forEach(playlist -> hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist)));
+        defaultAlbums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
     }
 
     private void clearSections() {

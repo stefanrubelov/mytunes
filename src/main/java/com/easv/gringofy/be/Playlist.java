@@ -63,4 +63,8 @@ public class Playlist {
     public String toString() {
         return title;
     }
+
+    public int getId(){
+        return id;
+    }
 }
