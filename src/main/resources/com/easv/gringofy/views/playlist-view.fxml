@@ -90,8 +90,8 @@
                         <ContextMenu fx:id="contextMenu">
                           <items>
                               <MenuItem mnemonicParsing="false" text="Add to queue" />
-                            <MenuItem onAction="#edit" mnemonicParsing="false" text="Edit" />
-                              <MenuItem onAction="#delete" mnemonicParsing="false" text="Delete" />
+                            <MenuItem mnemonicParsing="false" onAction="#edit" text="Edit" />
+                              <MenuItem mnemonicParsing="false" onAction="#delete" text="Delete" />
                           </items>
                         </ContextMenu>
                      </contextMenu>
@@ -106,11 +106,11 @@
                   <Label text="#" />
                   <Label text="Title">
                      <HBox.margin>
-                        <Insets left="40.0" />
+                        <Insets left="20.0" />
                      </HBox.margin></Label>
                   <Label text="Release date">
                      <HBox.margin>
-                        <Insets left="200.0" />
+                        <Insets left="220.0" />
                      </HBox.margin></Label>
                   <Label text="Duration">
                      <HBox.margin>
@@ -118,7 +118,10 @@
                      </HBox.margin></Label>
                </children>
             </HBox>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="269.0" prefWidth="674.0" styleClass="songs-container" stylesheets="@../css/playlist_styles.css" vbarPolicy="NEVER" />
+            <ScrollPane fx:id="scrollPaneSongs" hbarPolicy="NEVER" prefHeight="263.0" prefWidth="674.0" styleClass="songs-container" stylesheets="@../css/playlist_styles.css" vbarPolicy="NEVER">
+               <content>
+                  <VBox fx:id="vboxSongsContainer" prefHeight="260.0" prefWidth="672.0" styleClass="song-nodes-container" stylesheets="@../css/playlist_styles.css" />
+               </content></ScrollPane>
          </children></VBox>
         <VBox alignment="CENTER" layoutX="12.0" layoutY="663.0" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
             <children>

@@ -4,9 +4,12 @@ import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
+import com.easv.gringofy.bll.PlaylistManager;
+import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.controllers.PlaylistController;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
@@ -23,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +37,7 @@ public class NodeBuilder {
     private static final String DEFAULT_ALBUM_PICTURE = "/com/easv/gringofy/images/defaultAlbumPicture.png";
     private static final String PLAY_SONG_ICON = "/com/easv/gringofy/images/playSongIcon.png";
     private final PlayerModel playerModel = new PlayerModel();
+    private final PlaylistManager playlistManager = new PlaylistManager();
 
     public HBox songToNode(Song song) {
         // Creates the container for the node
@@ -71,7 +76,7 @@ public class NodeBuilder {
         // Spacer is created to push the image wrapper maximally to the right
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        hbox.getChildren().addAll(songImageWrapper, vbox,spacer,imageWrapper);
+        hbox.getChildren().addAll(songImageWrapper, vbox, spacer, imageWrapper);
 
         // Add menu items
         ContextMenu songMenu = new ContextMenu();
@@ -83,14 +88,21 @@ public class NodeBuilder {
 
         // Menu for the available playlists
         ContextMenu playlistsMenu = new ContextMenu();
-        List<Playlist> playlists= playerModel.getDefaultPlaylists();
+        List<Playlist> playlists = playerModel.getDefaultPlaylists();
         playlists.forEach(playlist -> {
             MenuItem menuItem = new MenuItem(playlist.toString());
             menuItem.setOnAction(event -> {
-                PlaylistSong playlistSong = new PlaylistSong(playlist.getId(), song);
-                // needs to add the playlistSong to database later
+                PlaylistSong playlistSong = new PlaylistSong(playlist.getId(), song.getId());
+                try {
+                    playlistManager.addSong(playlist, song);
+                } catch (PlayerException e) {
+                    throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             });
-            playlistsMenu.getItems().add(menuItem);});
+            playlistsMenu.getItems().add(menuItem);
+        });
 
 
         // Set actions for menu items
@@ -168,24 +180,46 @@ public class NodeBuilder {
         return hbox;
     }
 
-    public HBox songToPlaylistSongNode(PlaylistSong song) {
+    public HBox songToPlaylistSongNode(Song song, int index) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
-        Label songIdLabel = new Label("#");
-
+        Label songIdLabel = new Label(String.valueOf(index));
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(35);
+        imageView.setFitHeight(35);
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
+        imageView.setImage(image);
         VBox vbox = new VBox();
         Label titleLabel = new Label(song.getTitle());
         Label artistLabel = new Label(song.getArtist().getName());
         vbox.getChildren().addAll(titleLabel, artistLabel);
 
         Label releasedDateLabel = new Label(song.getReleaseDate());
-        Label durationLabel = new Label(String.valueOf(song.getDuration()));
+        Label durationLabel = new Label(formatTime(song.getDuration()));
+
+        Image optionsImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(OPTIONS_PICTURE)));
+        ImageView optionsImageView = new ImageView(optionsImage);
+        optionsImageView.setFitHeight(25);
+        optionsImageView.setFitWidth(25);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        hbox.getChildren().addAll(songIdLabel, vbox, spacer, releasedDateLabel, durationLabel);
+        hbox.getStyleClass().add("playlist-song-node");
+        releasedDateLabel.getStyleClass().add("song-released-date-label");
+        songIdLabel.getStyleClass().add("song-id-label");
+        artistLabel.getStyleClass().add("song-artist-label");
+        durationLabel.getStyleClass().add("song-duration-label");
+        optionsImageView.getStyleClass().add("song-options-image-view");
+        HBox.setMargin(durationLabel, new Insets(0, 20, 0, 82));
+        hbox.getChildren().addAll(songIdLabel, imageView, vbox, spacer, releasedDateLabel, durationLabel, optionsImageView);
 
         return hbox;
+    }
+
+    public String formatTime(int totalSeconds) {
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        return String.format("%d:%02d", minutes, seconds);
     }
 }

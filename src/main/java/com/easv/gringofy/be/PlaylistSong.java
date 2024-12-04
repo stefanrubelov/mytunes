@@ -10,6 +10,10 @@ public class PlaylistSong {
         this.playlistId = playlistId;
         this.songId = songId;
     }
+    public PlaylistSong(int playlistId, int songId) {
+        this.playlistId = playlistId;
+        this.songId = songId;
+    }
 
     public int getId() {
         return id;

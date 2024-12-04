@@ -1,6 +1,7 @@
 package com.easv.gringofy.bll;
 
 import com.easv.gringofy.be.Playlist;
+import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.dal.db.PlaylistDAODB;
 import com.easv.gringofy.dal.db.SongDAODB;
@@ -26,7 +27,13 @@ public class PlaylistManager {
         playlistDAODB.update(playlist);
     }
 
-    public void delete(Playlist playlist) throws PlayerException {
+    public void delete(Playlist playlist) throws PlayerException, SQLException {
         playlistDAODB.delete(playlist);
+    }
+    public void addSong(Playlist playlist, Song song) throws PlayerException, SQLException {
+        playlistDAODB.addSong(playlist, song);
+    }
+    public void removePlaylistSong(PlaylistSong playlistSong) throws PlayerException, SQLException {
+        playlistDAODB.removeSong(playlistSong);
     }
 }

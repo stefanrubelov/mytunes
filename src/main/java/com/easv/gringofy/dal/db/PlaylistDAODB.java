@@ -2,6 +2,9 @@ package com.easv.gringofy.dal.db;
 
 import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
+import com.easv.gringofy.be.PlaylistSong;
+import com.easv.gringofy.be.Song;
+import com.easv.gringofy.exceptions.PlayerException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -112,13 +115,6 @@ public class PlaylistDAODB {
                 .set("description", playlist.getDescription())
                 .set("updated_at", LocalDateTime.now())
                 .update();
-    }
-    public void delete(Playlist playlist) throws PlayerException {
-        QueryBuilder queryBuilder = new QueryBuilder();
-        queryBuilder
-                .from("playlists")
-                .where("id", "=", playlist.getId())
-                .delete();
     }
 //    public static void main (String[] args) throws SQLException {
 //        PlaylistDAODB dao = new PlaylistDAODB();

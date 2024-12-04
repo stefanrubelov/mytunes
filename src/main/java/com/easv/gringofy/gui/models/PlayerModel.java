@@ -2,6 +2,7 @@ package com.easv.gringofy.gui.models;
 
 import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
+import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.PlaylistManager;
@@ -58,10 +59,6 @@ public class PlayerModel {
     public List<Album> getDefaultAlbums() {
         return defaultAlbums;
     }
-    public List<Song> getAllSongs() throws PlayerException, SQLException {
-        return songManager.getAllSongs();
-    }
-
     public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
         return songManager.getAllSongsByInput(input);
     }
@@ -73,11 +70,8 @@ public class PlayerModel {
     public List<Album> getAllAlbumsByInput(String input) throws PlayerException {
         return albumManager.getAllAlbumsByInput(input);
     }
-
-    public List<Playlist> getAllPlaylists() throws SQLException {
-        return playlistManager.getAllPlaylists();
-    }
     public void addSongToQueue(Song song){
         songPlayer.addSongToQueue(song);
     }
+
 }

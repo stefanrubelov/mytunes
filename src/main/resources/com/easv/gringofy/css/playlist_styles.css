@@ -24,3 +24,36 @@
     -fx-wrap-text: true;
     -fx-text-fill: #aaa;
 }
+.song-nodes-container{
+    -fx-spacing: 3px;
+}
+.playlist-song-node{
+    -fx-background-color: rgba(90, 90, 90, .2);
+    -fx-background-radius: 10px;
+    -fx-padding: 5 30 5 28;
+    -fx-spacing: 22px;
+}
+.playlist-song-node:hover{
+    -fx-background-color: rgba(100, 100, 100, .7);
+}
+.song-id-label{
+    -fx-pref-width: 12px;
+    -fx-text-fill: #ddd;
+}
+.song-artist-label{
+    -fx-text-fill: #999;
+}
+.song-released-date-label{
+    -fx-pref-width: 100px;
+    -fx-text-fill: #ddd;
+}
+.song-duration-label{
+    -fx-pref-width: 50px;
+    -fx-text-fill: #ddd;
+}
+.song-options-image-view{
+    visibility: none;
+}
+.playlist-song-node:hover .song-options-image-view{
+    visibility:visible;
+}

@@ -67,7 +67,15 @@ public class Playlist {
     public int getId(){
         return id;
     }
-    public int getId() {
-        return id;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
