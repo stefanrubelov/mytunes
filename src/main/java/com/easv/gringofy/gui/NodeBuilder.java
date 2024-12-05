@@ -7,11 +7,9 @@ import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.controllers.PlaylistController;
-import com.easv.gringofy.gui.controllers.PlaylistController;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
@@ -30,7 +28,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.io.IOException;
 import java.util.Objects;
 
 public class NodeBuilder {
@@ -91,35 +88,10 @@ public class NodeBuilder {
 
         // Menu for the available playlists
         ContextMenu playlistsMenu = new ContextMenu();
-        List<Playlist> playlists = playerModel.getDefaultPlaylists();
-        playlists.forEach(playlist -> {
-            MenuItem menuItem = new MenuItem(playlist.toString());
-            menuItem.setOnAction(event -> {
-                PlaylistSong playlistSong = new PlaylistSong(playlist.getId(), song.getId());
-                try {
-                    playlistManager.addSong(playlist, song);
-                } catch (PlayerException e) {
-                    throw new RuntimeException(e);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            playlistsMenu.getItems().add(menuItem);
-        });
+        addPlaylists(song, playlistsMenu);
 
 
-        // Set actions for menu items
-//        item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement
-        item3.setOnAction(event -> playerModel.addSongToQueue(song));
-        hoverItem.setOnMouseEntered(event -> {
-            playlistsMenu.show(hoverItem, Side.LEFT, -10, -8);
-        });
-        // Show the context menu on left-click
-        imageWrapper.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                songMenu.show(songImageView, event.getScreenX(), event.getScreenY());
-            }
-        });
+
 
         hbox.getStyleClass().add("song-node");
         songImageWrapper.getStyleClass().add("song--node-image-wrapper");
@@ -132,6 +104,19 @@ public class NodeBuilder {
         songMenu.getStyleClass().add("song-node-menu");
         imageWrapper.getStyleClass().add("song-node-options-wrapper");
         playlistsMenu.getStyleClass().add("song-node-playlists");
+
+        // Set actions for menu items
+//        item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement
+        item3.setOnAction(event -> playerModel.addSongToQueue(song));
+        hoverItem.setOnMouseEntered(event -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
+
+        // Show the context menu on left-click
+        imageWrapper.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                songMenu.show(songImageView, event.getScreenX(), event.getScreenY());
+            }
+        });
+
         return hbox;
     }
 
@@ -187,6 +172,7 @@ public class NodeBuilder {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
         Label songIdLabel = new Label(String.valueOf(index));
+
         ImageView imageView = new ImageView();
         imageView.setFitWidth(35);
         imageView.setFitHeight(35);
@@ -200,10 +186,28 @@ public class NodeBuilder {
         Label releasedDateLabel = new Label(song.getReleaseDate());
         Label durationLabel = new Label(formatTime(song.getDuration()));
 
+        HBox optionsImageContainer = new HBox();
+        optionsImageContainer.setPrefHeight(35);
+        optionsImageContainer.setPrefWidth(35);
         Image optionsImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(OPTIONS_PICTURE)));
         ImageView optionsImageView = new ImageView(optionsImage);
         optionsImageView.setFitHeight(25);
         optionsImageView.setFitWidth(25);
+        optionsImageContainer.getChildren().add(optionsImageView);
+        optionsImageContainer.setAlignment(Pos.CENTER);
+
+        ContextMenu songMenu = new ContextMenu();
+
+        Label hoverItem = new Label("Add to playlist");
+        CustomMenuItem item1 = new CustomMenuItem(hoverItem);
+        MenuItem item2 = new MenuItem("Add to favorites");
+        MenuItem item3 = new MenuItem("Delete from playlist");
+        MenuItem item4 = new MenuItem("Add to queue");
+
+        ContextMenu playlistsMenu = new ContextMenu();
+        addPlaylists(song, playlistsMenu);
+
+        songMenu.getItems().addAll(item1, item2, item3, item4);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -215,8 +219,15 @@ public class NodeBuilder {
         durationLabel.getStyleClass().add("song-duration-label");
         optionsImageView.getStyleClass().add("song-options-image-view");
         HBox.setMargin(durationLabel, new Insets(0, 20, 0, 82));
-        hbox.getChildren().addAll(songIdLabel, imageView, vbox, spacer, releasedDateLabel, durationLabel, optionsImageView);
+        hbox.getChildren().addAll(songIdLabel, imageView, vbox, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
 
+
+        optionsImageContainer.setOnMouseClicked(event -> songMenu.show(optionsImageView, event.getScreenX(), event.getScreenY()));
+
+        hoverItem.setOnMouseEntered(event -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
+        item3.setOnAction(event -> {
+//            playlistManager.removePlaylistSong(song);
+        });
         return hbox;
     }
 
@@ -224,5 +235,22 @@ public class NodeBuilder {
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
         return String.format("%d:%02d", minutes, seconds);
+    }
+    private void addPlaylists(Song song, ContextMenu contextMenu) {
+        List<Playlist> playlists = playerModel.getDefaultPlaylists();
+        playlists.forEach(playlist -> {
+            MenuItem menuItem = new MenuItem(playlist.toString());
+            menuItem.setOnAction(event -> {
+                PlaylistSong playlistSong = new PlaylistSong(playlist.getId(), song.getId());
+                try {
+                    playlistManager.addSong(playlist, song);
+                } catch (PlayerException e) {
+                    throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            contextMenu.getItems().add(menuItem);
+        });
     }
 }

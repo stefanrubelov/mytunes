@@ -79,7 +79,6 @@ public class PlaylistDAODB {
                 .where("position", ">", playlistSong.getPosition())
                 .update();
     }
-
     private int getLargestPosition(Playlist playlist) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
 
