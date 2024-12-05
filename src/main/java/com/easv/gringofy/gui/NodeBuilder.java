@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
@@ -168,7 +169,7 @@ public class NodeBuilder {
         return hbox;
     }
 
-    public HBox songToPlaylistSongNode(Song song, int index) {
+    public HBox songToPlaylistSongNode(Song song, Playlist playlist, int index) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
         Label songIdLabel = new Label(String.valueOf(index));
@@ -226,7 +227,16 @@ public class NodeBuilder {
 
         hoverItem.setOnMouseEntered(event -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
         item3.setOnAction(event -> {
-//            playlistManager.removePlaylistSong(song);
+            try {
+                PlaylistSong playlistSong = new PlaylistSong(song.getPlaylistSongId());
+                playlistManager.removePlaylistSong(playlistSong);
+                VBox parent = (VBox) hbox.getParent();
+                parent.getChildren().remove(hbox);
+            } catch (PlayerException e) {
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
         return hbox;
     }

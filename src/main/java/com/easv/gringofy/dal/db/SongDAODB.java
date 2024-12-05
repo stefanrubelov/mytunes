@@ -126,16 +126,19 @@ public class SongDAODB {
                 .select("artists.description AS artist_description")
                 .select("genres.id AS genre_id")
                 .select("genres.title AS genre_title")
+                .select("playlist_song.id AS playlist_song_id")
                 .from("playlist_song")
                 .join("songs", "playlist_song.song_id = songs.id", "")
                 .join("artists", "songs.artist_id = artists.id", "")
                 .join("genres", "songs.genre_id = genres.id", "")
                 .where("playlist_song.playlist_id", "=", playlist_id)
+                .orderBy("playlist_song.position", "asc")
                 .get();
 
         while (resultSet.next()){
             int id = resultSet.getInt("id");
             Song song = mapModel(resultSet, id);
+            song.setPlaylistSongId(resultSet.getInt("playlist_song_id"));
             songs.add(song);
         }
 

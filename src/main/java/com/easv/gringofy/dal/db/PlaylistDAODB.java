@@ -68,7 +68,6 @@ public class PlaylistDAODB {
 
         this.updateOrder(playlistSong);
     }
-
     private void updateOrder(PlaylistSong playlistSong) {
         QueryBuilder queryBuilder = new QueryBuilder();
 

@@ -71,7 +71,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     private void setSongs(){
         AtomicInteger i = new AtomicInteger(1);
         songs.forEach(song -> {
-            vboxSongsContainer.getChildren().add(nodeBuilder.songToPlaylistSongNode(song, i.get()));
+            vboxSongsContainer.getChildren().add(nodeBuilder.songToPlaylistSongNode(song,playlist, i.get()));
             i.getAndIncrement();
         });
     }
@@ -100,8 +100,5 @@ public class PlaylistController extends MusicPlayer implements Initializable {
         stage.setTitle("Playlist Editor");
         stage.setResizable(false);
         stage.show();
-    }
-    public void refresh(){
-
     }
 }

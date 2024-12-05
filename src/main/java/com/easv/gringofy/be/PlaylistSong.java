@@ -9,8 +9,12 @@ public class PlaylistSong {
     public PlaylistSong(int id, int playlistId, int songId) {
         this.id = id;
         this.playlistId = playlistId;
+        this.songId = songId;
     }
 
+    public PlaylistSong(int id){
+        this.id = id;
+    }
     public PlaylistSong(int id, int playlistId, int songId, int position) {
         this.id = id;
         this.playlistId = playlistId;

@@ -41,6 +41,7 @@ public class PlaylistCreatorController {
         else{
             Playlist playlist = new Playlist(this.playlist.getId(), name, description);
             playlistManager.update(playlist);
+            playlistController.setPlaylist(playlist);
         }
         Stage stage = (Stage) txtFieldPlaylistName.getScene().getWindow();
         stage.close();
