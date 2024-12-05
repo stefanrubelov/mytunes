@@ -123,6 +123,25 @@ public class QueryBuilder {
         return this;
     }
 
+    public QueryBuilder set(String column, Object value, boolean raw) {
+        String valueString;
+
+        if (raw && value instanceof String) {
+            valueString = value.toString(); // Use raw SQL string
+        } else if (value instanceof String) {
+            valueString = "'" + value + "'";
+        } else if (value instanceof LocalDateTime) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            valueString = "'" + ((LocalDateTime) value).format(formatter) + "'";
+        } else {
+            valueString = value.toString();
+        }
+
+        setClauses.add(column + " = " + valueString);
+        return this;
+    }
+
+
     public QueryBuilder when(boolean condition, Consumer<QueryBuilder> callback) {
         if (condition) {
             callback.accept(this);

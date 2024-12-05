@@ -59,20 +59,35 @@ public class PlaylistDAODB {
                 .save();
     }
 
-    public void delete(Playlist playlist) throws SQLException {
+    public void delete(Playlist playlist) {
         QueryBuilder queryBuilder = new QueryBuilder();
+
         queryBuilder
                 .from("playlists")
                 .where("id", "=", playlist.getId())
                 .delete();
     }
 
-    public void removeSong(PlaylistSong song) throws SQLException {
+    public void removeSong(PlaylistSong playlistSong) {
         QueryBuilder queryBuilder = new QueryBuilder();
+
         queryBuilder
                 .from("playlist_song")
-                .where("id", "=", song.getId())
+                .where("id", "=", playlistSong.getId())
                 .delete();
+
+        this.updateOrder(playlistSong);
+    }
+
+    private void updateOrder(PlaylistSong playlistSong) {
+        QueryBuilder queryBuilder = new QueryBuilder();
+
+        queryBuilder
+                .table("playlist_song")
+                .set("position", "position - 1", true)
+                .where("playlist_id", "=", playlistSong.getPlaylistId())
+                .where("position", ">", playlistSong.getPosition())
+                .update();
     }
 
     private int getLargestPosition(Playlist playlist) throws SQLException {

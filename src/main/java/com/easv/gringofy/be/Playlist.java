@@ -43,6 +43,10 @@ public class Playlist {
         this.description = description;
     }
 
+    public Playlist(int id){
+        this.id = id;
+    }
+
     public void addSong(int position, Song song) {
         songs.put(position, song);
     }
