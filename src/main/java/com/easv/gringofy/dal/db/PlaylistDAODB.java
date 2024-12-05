@@ -1,6 +1,5 @@
 package com.easv.gringofy.dal.db;
 
-import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
@@ -41,11 +40,13 @@ public class PlaylistDAODB {
                 .select("*")
                 .where("title", "LIKE", "%" + input + "%")
                 .get();
+
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             Playlist playlist = mapModel(resultSet, id);
             playlists.add(playlist);
         }
+
         return playlists;
     }
 
@@ -57,15 +58,6 @@ public class PlaylistDAODB {
                 .insert("song_id", song.getId())
                 .insert("position", this.getLargestPosition(playlist) + 1)
                 .save();
-    }
-
-    public void delete(Playlist playlist) {
-        QueryBuilder queryBuilder = new QueryBuilder();
-
-        queryBuilder
-                .from("playlists")
-                .where("id", "=", playlist.getId())
-                .delete();
     }
 
     public void removeSong(PlaylistSong playlistSong) {
@@ -90,6 +82,26 @@ public class PlaylistDAODB {
                 .update();
     }
 
+    public void incrementPosition(PlaylistSong playlistSong) {
+        QueryBuilder queryBuilder = new QueryBuilder();
+
+        queryBuilder
+                .table("playlist_song")
+                .set("position", "position + 1", true)
+                .where("id", "=", playlistSong.getId())
+                .update();
+    }
+
+    public void decrementPosition(PlaylistSong playlistSong) {
+        QueryBuilder queryBuilder = new QueryBuilder();
+
+        queryBuilder
+                .table("playlist_song")
+                .set("position", "position - 1", true)
+                .where("id", "=", playlistSong.getId())
+                .update();
+    }
+
     private int getLargestPosition(Playlist playlist) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
 
@@ -111,7 +123,8 @@ public class PlaylistDAODB {
         String description = resultSet.getString("description");
         return new Playlist(id, title, description);
     }
-    public void insert(Playlist playlist) throws PlayerException {
+
+    public void insert(Playlist playlist) {
         QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .table("playlists")
@@ -121,7 +134,8 @@ public class PlaylistDAODB {
                 .insert("updated_at", playlist.getUpdatedAt())
                 .save();
     }
-    public void update(Playlist playlist) throws PlayerException {
+
+    public void update(Playlist playlist) {
         QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .table("playlists")
@@ -131,8 +145,13 @@ public class PlaylistDAODB {
                 .set("updated_at", LocalDateTime.now())
                 .update();
     }
-//    public static void main (String[] args) throws SQLException {
-//        PlaylistDAODB dao = new PlaylistDAODB();
-//        dao.update();
-//    }
+
+    public void delete(Playlist playlist) {
+        QueryBuilder queryBuilder = new QueryBuilder();
+
+        queryBuilder
+                .from("playlists")
+                .where("id", "=", playlist.getId())
+                .delete();
+    }
 }
