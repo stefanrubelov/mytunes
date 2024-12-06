@@ -1,5 +1,7 @@
 package com.easv.gringofy;
 
+import com.easv.gringofy.dal.db.AlbumDAODB;
+import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.utils.Env;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +13,16 @@ import java.sql.SQLException;
 
 public class App extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, PlayerException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/easv/gringofy/views/home-page-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(Env.get("APP_NAME", "Gringofy"));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+        AlbumDAODB dao = new AlbumDAODB();
+        dao.get(1);
     }
 
     public static void main(String[] args) throws SQLException {

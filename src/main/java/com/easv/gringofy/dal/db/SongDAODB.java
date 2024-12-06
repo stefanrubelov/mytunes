@@ -68,7 +68,6 @@ public class SongDAODB {
                 .set("duration", song.getDuration())
                 .set("artist_id", song.getArtist().getId())
                 .set("genre_id", song.getGenre().getId())
-                .set("updated_at", LocalDateTime.now())
                 .update();
     }
 
