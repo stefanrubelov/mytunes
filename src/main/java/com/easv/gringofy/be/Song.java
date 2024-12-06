@@ -1,14 +1,5 @@
 package com.easv.gringofy.be;
 
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-
 import java.time.LocalDateTime;
 
 public class Song {
@@ -35,6 +26,14 @@ public class Song {
         this.updatedAt = updatedAt;
     }
 
+    public Song(String title, int duration, Genre genre, Artist artist, String releaseDate, String filePath, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.duration = duration;
+        this.genre = genre;
+        this.title = title;
+        this.artist = artist;
+        this.releaseDate = releaseDate;
+        this.filePath = filePath;
+    }
     public Song(String title, Artist artist) {
         this.title = title;
         this.artist = artist;

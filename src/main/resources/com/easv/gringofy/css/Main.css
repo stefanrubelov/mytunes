@@ -49,6 +49,13 @@
 .bottom-nav-buttons-container > *:hover{
     -fx-opacity: 1;
 }
+.add-song-button{
+    -fx-background-color : rgba(50,50,50,.5);
+    -fx-pref-width: 100px;
+}
+.add-song-button:hover{
+    -fx-background-color: rgba(254,192,26,.7);
+}
 .play-button{
     -fx-background-image: url("../images/playButton1.png");
     -fx-pref-width: 25px;

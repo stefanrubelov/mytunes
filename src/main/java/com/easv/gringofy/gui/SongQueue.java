@@ -29,6 +29,7 @@ public class SongQueue {
         String filepath = songQueue.getFirst().getFilePath();
         Media media = new Media(new File(filepath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
+
     }
 
     public static void addSong(Song song) {

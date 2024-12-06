@@ -48,7 +48,7 @@
     -fx-text-fill: #ddd;
 }
 .song-duration-label{
-    -fx-pref-width: 50px;
+    -fx-pref-width: 40px;
     -fx-text-fill: #ddd;
 }
 .song-options-image-view{

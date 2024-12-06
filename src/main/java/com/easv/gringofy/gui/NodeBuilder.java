@@ -219,7 +219,7 @@ public class NodeBuilder {
         artistLabel.getStyleClass().add("song-artist-label");
         durationLabel.getStyleClass().add("song-duration-label");
         optionsImageView.getStyleClass().add("song-options-image-view");
-        HBox.setMargin(durationLabel, new Insets(0, 20, 0, 82));
+        HBox.setMargin(durationLabel, new Insets(0, 20, 0, 85));
         hbox.getChildren().addAll(songIdLabel, imageView, vbox, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
 
 
