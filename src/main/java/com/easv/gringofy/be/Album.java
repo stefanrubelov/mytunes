@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,8 @@ public class Album {
     private String createdAt;
     private String updatedAt;
     private Map<Integer, Song> songs;
+    private String releaseDate;
+    private Artist artist;
 
     public Album(int id, String title, String description, String createdAt, String updatedAt) {
         this.id = id;
@@ -35,10 +38,35 @@ public class Album {
         this.description = description;
     }
 
+    public Album(int id, String title, String description, String releaseDate, Artist artist) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.artist = artist;
+    }
+
     public void addSong(int position, Song song) {
         this.songs.put(position, song);
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getReleaseDate(){
+        return releaseDate;
+    }
+
+    public Artist getArtist(){
+        return artist;
     }
 }

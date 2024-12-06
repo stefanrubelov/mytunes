@@ -61,7 +61,6 @@ public class GenreDAODB {
                 .table("genres")
                 .where("id", "=", genre.getId())
                 .set("title", genre.getTitle())
-                .set("updated_at", LocalDateTime.now())
                 .update();
     }
 

@@ -267,6 +267,7 @@ public class QueryBuilder {
 
     public boolean update() {
         this.update = true;
+        this.set("updated_at", LocalDateTime.now());
 
         String sql = build();
         System.out.println(sql);

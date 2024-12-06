@@ -60,7 +60,6 @@ public class ArtistDAODB {
                 .where("id", "=", artist.getId())
                 .set("name", artist.getName())
                 .set("description", artist.getDescription())
-                .set("updated_at", LocalDateTime.now())
                 .update();
     }
 
