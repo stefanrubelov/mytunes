@@ -45,6 +45,7 @@ public class SongQueue {
     }
     public static void forcePlay(Song song) {
         if(mediaPlayer!=null) mediaPlayer.stop();
+        songQueue.add(song);
         File file = new File(song.getFilePath());
         Media media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
