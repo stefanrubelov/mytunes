@@ -29,8 +29,8 @@ public class SongQueue {
         Media media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setOnEndOfMedia(() -> {
-            playCurrentSong(songQueue.get(currentIndex));
             currentIndex++;
+            playCurrentSong(songQueue.get(currentIndex));
         });
         mediaPlayer.play();
 
