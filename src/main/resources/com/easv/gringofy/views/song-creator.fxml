@@ -4,7 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -33,6 +32,7 @@
                         <VBox fx:id="vboxInputsContainer" prefHeight="231.0" prefWidth="334.0" styleClass="text-fields-container" stylesheets="@../css/creator.css">
                             <children>
                                 <TextField fx:id="txtFieldSongTitle" prefHeight="35.0" prefWidth="314.0" promptText="Title" styleClass="input" stylesheets="@../css/creator.css" />
+                        <TextField fx:id="txtFieldSongReleaseDate" promptText="Year of the release" styleClass="input" stylesheets="@../css/creator.css" />
                         <ComboBox fx:id="comboBoxSongGenre" prefWidth="150.0" promptText="Genre" stylesheets="@../css/creator.css">
                            <styleClass>
                               <String fx:value="input" />
@@ -51,7 +51,6 @@
                               <String fx:value="input" />
                            </styleClass>
                         </ComboBox>
-                        <DatePicker fx:id="datePicker" styleClass="data-picker" stylesheets="@../css/creator.css" />
                         <Button mnemonicParsing="false" onAction="#selectFile" styleClass="select-song-btn" stylesheets="@../css/creator.css" text="Select song" />
                         <Label fx:id="lblPath" styleClass="selected-path-label" stylesheets="@../css/creator.css" textFill="WHITE" />
                             </children>

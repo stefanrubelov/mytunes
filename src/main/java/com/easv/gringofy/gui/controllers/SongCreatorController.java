@@ -46,15 +46,23 @@ public class SongCreatorController implements Initializable {
     private final GenreManager genreManager = new GenreManager();
     private final SongManager songManager = new SongManager();
     private final static String SONGS_DIRECTORY_PATH = "src/main/resources/songs";
-    @FXML private VBox vboxInputsContainer;
-    @FXML private Label lblPath;
-    @FXML private TextField txtFieldSongTitle;
-    @FXML private ComboBox<Artist> comboBoxSongArtist;
-    @FXML private ComboBox<Genre> comboBoxSongGenre;
-    @FXML private ComboBox<Album> comboBoxSongAlbum;
-    @FXML private DatePicker datePicker;
+    @FXML
+    private VBox vboxInputsContainer;
+    @FXML
+    private Label lblPath;
+    @FXML
+    private TextField txtFieldSongTitle;
+    @FXML
+    private TextField txtFieldSongReleaseDate;
+    @FXML
+    private ComboBox<Artist> comboBoxSongArtist;
+    @FXML
+    private ComboBox<Genre> comboBoxSongGenre;
+    @FXML
+    private ComboBox<Album> comboBoxSongAlbum;
 
-    @FXML private void selectFile(ActionEvent event) throws IOException {
+    @FXML
+    private void selectFile(ActionEvent event) throws IOException {
         Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select a Song");
@@ -71,6 +79,7 @@ public class SongCreatorController implements Initializable {
             lblPath.setText("No file selected");
         }
     }
+
     private void setFilePath(String filePath) throws IOException {
         Path sourcePath = Paths.get(filePath);
 
@@ -82,16 +91,17 @@ public class SongCreatorController implements Initializable {
 
         this.filePath = destinationPath.toString();
     }
+
     public void createSong(ActionEvent actionEvent) {
         File mp3File = new File(filePath);
         Media media = new Media(mp3File.toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setOnReady(() -> {
             String title = txtFieldSongTitle.getText();
+            String releaseDate = txtFieldSongReleaseDate.getText();
             Artist artist = comboBoxSongArtist.getSelectionModel().getSelectedItem();
             Genre genre = comboBoxSongGenre.getSelectionModel().getSelectedItem();
             Album album = comboBoxSongAlbum.getSelectionModel().getSelectedItem();
-            String releaseDate = String.valueOf(datePicker.getValue());
             LocalDateTime now = LocalDateTime.now();
             int durationInSeconds = (int) media.getDuration().toSeconds();
             Song song = new Song(title, durationInSeconds, genre, artist, releaseDate, filePath, now, now);

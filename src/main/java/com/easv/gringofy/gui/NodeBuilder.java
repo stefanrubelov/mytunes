@@ -15,10 +15,7 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.CustomMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -39,8 +36,8 @@ public class NodeBuilder {
     private static final String PLAY_SONG_ICON = "/com/easv/gringofy/images/playSongIcon.png";
     private final PlayerModel playerModel = new PlayerModel();
     private final PlaylistManager playlistManager = new PlaylistManager();
-
-    public HBox songToNode(Song song) {
+    private final MusicPlayer musicPlayer = new MusicPlayer();
+    public HBox songToNode(Song song, Button switchStateButton) {
         // Creates the container for the node
         HBox hbox = new HBox();
         Image songImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
@@ -108,7 +105,9 @@ public class NodeBuilder {
 
         // Set actions for menu items
 //        item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement
-        item3.setOnAction(event -> playerModel.addSongToQueue(song));
+        item3.setOnAction(event -> {
+            SongQueue.addSong(song);
+        });
         hoverItem.setOnMouseEntered(event -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
 
         // Show the context menu on left-click
@@ -117,7 +116,13 @@ public class NodeBuilder {
                 songMenu.show(songImageView, event.getScreenX(), event.getScreenY());
             }
         });
-
+        songImageWrapper.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                SongQueue.forcePlay(song);
+                switchStateButton.getStyleClass().remove("play-button");
+                switchStateButton.getStyleClass().add("pause-button");
+            }
+        });
         return hbox;
     }
 

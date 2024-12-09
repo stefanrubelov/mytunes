@@ -1,5 +1,7 @@
 package com.easv.gringofy;
 
+import com.easv.gringofy.dal.db.SongDAODB;
+import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.SongQueue;
 import com.easv.gringofy.utils.Env;
 import javafx.application.Application;
@@ -23,7 +25,7 @@ public class App extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         launch();
     }
 }

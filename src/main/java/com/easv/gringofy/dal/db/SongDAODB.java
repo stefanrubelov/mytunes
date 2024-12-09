@@ -79,6 +79,7 @@ public class SongDAODB {
                 .insert("duration", song.getDuration())
                 .insert("artist_id", song.getArtist().getId())
                 .insert("genre_id", song.getGenre().getId())
+                .insert("path", song.getFilePath())
                 .save();
     }
 
@@ -173,7 +174,8 @@ public class SongDAODB {
         Artist artist = new Artist(resultSet.getInt("artist_id"), resultSet.getString("artist_name"), resultSet.getString("artist_description"));
         Genre genre = new Genre(resultSet.getInt("genre_id"), resultSet.getString("genre_title"));
         String releaseDate = resultSet.getString("release_date");
-        String path = "";
+        String path = resultSet.getString("path");
+//        String path = "";
         LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
         LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
         Song song = new Song(id, duration, genre, title, artist, releaseDate, path, createdAt, updatedAt);

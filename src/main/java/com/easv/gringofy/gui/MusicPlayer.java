@@ -7,13 +7,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class MusicPlayer {
-    PlayerModel playerModel = new PlayerModel();
+
+    private PlayerModel playerModel = new PlayerModel();
+
+    @FXML protected Button buttonSwitchState;
+
     @FXML
     private void playPreviousSong(ActionEvent actionEvent) {
         playerModel.playPreviousSong(actionEvent);
@@ -49,5 +54,29 @@ public class MusicPlayer {
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+    }
+    @FXML private void playSong(ActionEvent event) {
+        if(SongQueue.switchState()){
+            if(SongQueue.getState()){
+                buttonSwitchState.getStyleClass().remove("pause-button");
+                buttonSwitchState.getStyleClass().add("play-button");
+            }
+            else{
+
+                buttonSwitchState.getStyleClass().remove("play-button");
+                buttonSwitchState.getStyleClass().add("pause-button");
+            }
+        }
+    }
+
+    public void changeSwitchStateButton() {
+        if(SongQueue.getState()){
+            buttonSwitchState.getStyleClass().remove("play-button");
+            buttonSwitchState.getStyleClass().add("pause-button");
+        }
+        else{
+            buttonSwitchState.getStyleClass().remove("pause-button");
+            buttonSwitchState.getStyleClass().add("play-button");
+        }
     }
 }

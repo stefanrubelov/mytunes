@@ -83,7 +83,7 @@ public class HomePageController extends MusicPlayer implements Initializable {
 
     public void showDefaultNodes() throws PlayerException, SQLException {
         clearSections();
-        playerModel.getDefaultSongs().forEach(song -> {flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song));});
+        playerModel.getDefaultSongs().forEach(song -> {flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song, buttonSwitchState));});
         playerModel.getDefaultPlaylists().forEach(playlist -> {hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist));});
         playerModel.getDefaultAlbums().forEach(album -> {flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album));});
     }
@@ -115,7 +115,7 @@ public class HomePageController extends MusicPlayer implements Initializable {
 
             Platform.runLater(() -> {
                 clearSections();
-                songs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song)));
+                songs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song, buttonSwitchState)));
                 albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
                 playlists.forEach(playlist -> hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist)));
             });
