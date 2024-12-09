@@ -40,6 +40,7 @@ public class NodeBuilder {
     private final PlaylistManager playlistManager = new PlaylistManager();
     private final SongManager songManager = new SongManager();
     private final MusicPlayer musicPlayer = new MusicPlayer();
+
     public HBox songToNode(Song song, Button switchStateButton) {
         // Creates the container for the node
         HBox hbox = new HBox();
@@ -92,8 +93,6 @@ public class NodeBuilder {
         // Menu for the available playlists
         ContextMenu playlistsMenu = new ContextMenu();
         addPlaylists(song, playlistsMenu);
-
-
 
 
         hbox.getStyleClass().add("song-node");
@@ -153,8 +152,9 @@ public class NodeBuilder {
         songImageWrapper.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 SongQueue.forcePlay(song);
-                switchStateButton.getStyleClass().remove("play-button");
-                switchStateButton.getStyleClass().add("pause-button");
+                if (switchStateButton.getStyleClass().remove("play-button")) {
+                    switchStateButton.getStyleClass().add("pause-button");
+                }
             }
         });
         return hbox;
@@ -286,6 +286,7 @@ public class NodeBuilder {
         int seconds = totalSeconds % 60;
         return String.format("%d:%02d", minutes, seconds);
     }
+
     private void addPlaylists(Song song, ContextMenu contextMenu) {
         List<Playlist> playlists = playerModel.getDefaultPlaylists();
         playlists.forEach(playlist -> {

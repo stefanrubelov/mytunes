@@ -15,13 +15,15 @@ public class SongQueue {
     private static MediaPlayer mediaPlayer;
     private static int currentIndex = 0;
 
-    public static void playPreviousSong() {
+    public static boolean playPreviousSong() {
         if(currentIndex > 0) {
             currentIndex--;
             if(mediaPlayer!=null) mediaPlayer.stop();
             Song song = songQueue.get(currentIndex);
             playCurrentSong(song);
+            return true;
         }
+        return false;
     }
 
     public static void playCurrentSong(Song song) {
@@ -35,13 +37,15 @@ public class SongQueue {
         mediaPlayer.play();
 
     }
-    public static void playNextSong() {
+    public static boolean playNextSong() {
         if(currentIndex < songQueue.size()-1) {
             currentIndex++;
             if(mediaPlayer!=null) mediaPlayer.stop();
             Song song = songQueue.get(currentIndex);
             playCurrentSong(song);
+            return true;
         }
+        return false;
     }
     public static void forcePlay(Song song) {
         if(mediaPlayer!=null) mediaPlayer.stop();

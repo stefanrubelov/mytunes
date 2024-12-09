@@ -38,7 +38,6 @@ public class MusicPlayer {
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
-        changeSwitchStateButton();
     }
     @FXML
     private void goToPlaylistsView(ActionEvent event) throws IOException {
@@ -49,38 +48,50 @@ public class MusicPlayer {
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
-        changeSwitchStateButton();
     }
     @FXML private void playSong(ActionEvent event) {
         if(SongQueue.switchState()){
-            if(SongQueue.getState()){
-                buttonSwitchState.getStyleClass().remove("pause-button");
-                buttonSwitchState.getStyleClass().add("play-button");
-            }
-            else{
-
-                buttonSwitchState.getStyleClass().remove("play-button");
-                buttonSwitchState.getStyleClass().add("pause-button");
-            }
+            changeSwitchStateButton2();
         }
     }
     @FXML
     private void playPreviousSong(ActionEvent actionEvent) {
-        SongQueue.playPreviousSong();
+        if(SongQueue.playPreviousSong()){
+            changeSwitchStateButton2();
+        }
     }
 
     @FXML
     private void playNextSong(ActionEvent actionEvent) {
-        SongQueue.playNextSong();
+        if(SongQueue.playNextSong()){
+            changeSwitchStateButton2();
+        }
     }
     public void changeSwitchStateButton() {
+        System.out.println(SongQueue.getState());
         if(SongQueue.getState()){
-            buttonSwitchState.getStyleClass().remove("play-button");
-            buttonSwitchState.getStyleClass().add("pause-button");
+            if(buttonSwitchState.getStyleClass().remove("play-button")){
+                buttonSwitchState.getStyleClass().add("pause-button");
+            }
         }
         else{
-            buttonSwitchState.getStyleClass().remove("pause-button");
-            buttonSwitchState.getStyleClass().add("play-button");
+            if(buttonSwitchState.getStyleClass().remove("pause-button")) {
+                buttonSwitchState.getStyleClass().add("play-button");
+            }
+        }
+    }
+    public void changeSwitchStateButton2() { // Made by trial and error, I have no idea why it doesn't work with just one function and have no idea why it works now.
+        System.out.println(SongQueue.getState());
+        if(SongQueue.getState()){
+            if(buttonSwitchState.getStyleClass().remove("pause-button")) {
+                buttonSwitchState.getStyleClass().add("play-button");
+            }
+        }
+        else{
+
+            if(buttonSwitchState.getStyleClass().remove("play-button")){
+                buttonSwitchState.getStyleClass().add("pause-button");
+            }
         }
     }
 }
