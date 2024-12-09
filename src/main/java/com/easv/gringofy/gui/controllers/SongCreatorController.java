@@ -12,8 +12,8 @@ import com.easv.gringofy.exceptions.PlayerException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -30,17 +30,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static java.nio.file.Files.move;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-
 public class SongCreatorController implements Initializable {
 
     private String filePath;
+    private Song song;
+    private boolean editMode = false;
+
     private final ArtistManager artistManager = new ArtistManager();
     private final AlbumManager albumManager = new AlbumManager();
     private final GenreManager genreManager = new GenreManager();
@@ -60,7 +59,24 @@ public class SongCreatorController implements Initializable {
     private ComboBox<Genre> comboBoxSongGenre;
     @FXML
     private ComboBox<Album> comboBoxSongAlbum;
+    @FXML
+    private Button buttonSelectSong;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            List<Genre> genres = genreManager.getAllGenres();
+            List<Artist> artists = artistManager.getAllArtists();
+            List<Album> albums = albumManager.getAllAlbums();
+            comboBoxSongGenre.getItems().addAll(genres);
+            comboBoxSongArtist.getItems().addAll(artists);
+            comboBoxSongAlbum.getItems().addAll(albums);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (PlayerException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @FXML
     private void selectFile(ActionEvent event) throws IOException {
         Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
@@ -92,42 +108,62 @@ public class SongCreatorController implements Initializable {
         this.filePath = destinationPath.toString();
     }
 
-    public void createSong(ActionEvent actionEvent) {
-        File mp3File = new File(filePath);
-        Media media = new Media(mp3File.toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setOnReady(() -> {
-            String title = txtFieldSongTitle.getText();
-            String releaseDate = txtFieldSongReleaseDate.getText();
-            Artist artist = comboBoxSongArtist.getSelectionModel().getSelectedItem();
-            Genre genre = comboBoxSongGenre.getSelectionModel().getSelectedItem();
-            Album album = comboBoxSongAlbum.getSelectionModel().getSelectedItem();
-            LocalDateTime now = LocalDateTime.now();
-            int durationInSeconds = (int) media.getDuration().toSeconds();
-            Song song = new Song(title, durationInSeconds, genre, artist, releaseDate, filePath, now, now);
-            try {
-                songManager.insert(song);
-                Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
-                stage.close();
-            } catch (PlayerException | SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
+    public void createSong(ActionEvent actionEvent) throws PlayerException {
+        if(!editMode) {
+            File mp3File = new File(filePath);
+            Media media = new Media(mp3File.toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setOnReady(() -> {
+                String title = txtFieldSongTitle.getText();
+                String releaseDate = txtFieldSongReleaseDate.getText();
+                Artist artist = comboBoxSongArtist.getSelectionModel().getSelectedItem();
+                Genre genre = comboBoxSongGenre.getSelectionModel().getSelectedItem();
+                Album album = comboBoxSongAlbum.getSelectionModel().getSelectedItem();
+                LocalDateTime now = LocalDateTime.now();
+                int durationInSeconds = (int) media.getDuration().toSeconds();
+                Song song = new Song(title, durationInSeconds, genre, artist, releaseDate, filePath, now, now);
+                try {
+                    songManager.insert(song);
+                    Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
+                    stage.close();
+                } catch (PlayerException | SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+        else{
+            updateSong();
+        }
+    }
+    public void setSong(Song song) {
+        this.song = song;
+    }
+    public void setCurrentParameters(){
+        buttonSelectSong.setVisible(false);
+        txtFieldSongTitle.setText(song.getTitle());
+        txtFieldSongReleaseDate.setText(song.getReleaseDate());
+        comboBoxSongArtist.getSelectionModel().select(song.getArtist());
+        comboBoxSongGenre.getSelectionModel().select(song.getGenre());
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            List<Genre> genres = genreManager.getAllGenres();
-            List<Artist> artists = artistManager.getAllArtists();
-            List<Album> albums = albumManager.getAllAlbums();
-            comboBoxSongGenre.getItems().addAll(genres);
-            comboBoxSongArtist.getItems().addAll(artists);
-            comboBoxSongAlbum.getItems().addAll(albums);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (PlayerException e) {
-            throw new RuntimeException(e);
-        }
+    public void updateSong() throws PlayerException {
+        int id = song.getId();
+        String filePath = song.getFilePath();
+        String title = txtFieldSongTitle.getText();
+        String releaseDate = txtFieldSongReleaseDate.getText();
+        Artist artist = comboBoxSongArtist.getSelectionModel().getSelectedItem();
+        Genre genre = comboBoxSongGenre.getSelectionModel().getSelectedItem();
+        Album album = comboBoxSongAlbum.getSelectionModel().getSelectedItem();
+        LocalDateTime now = LocalDateTime.now();
+        int duration = song.getDuration();
+        Song updatedSong = new Song(id, duration, genre, title, artist, releaseDate, filePath, now, now);
+        songManager.update(updatedSong);
+        Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
+        stage.close();
+    }
+
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 }

@@ -53,6 +53,7 @@ public class SongDAODB {
     }
 
     public void delete(int id) throws PlayerException {
+        QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .from("songs")
                 .where("id", "=", id)
@@ -122,6 +123,7 @@ public class SongDAODB {
                 .select("songs.release_date")
                 .select("songs.created_at")
                 .select("songs.updated_at")
+                .select("songs.path")
                 .select("artists.id AS artist_id")
                 .select("artists.name AS artist_name")
                 .select("artists.description AS artist_description")

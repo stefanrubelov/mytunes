@@ -129,8 +129,8 @@ public class HomePageController extends MusicPlayer implements Initializable {
     private void showSongCreatorWindow(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/song-creator.fxml"));
         Parent root = loader.load();
-//        PlaylistCreatorController controller = (PlaylistCreatorController) loader.getController();
-//        controller.setPlaylistsPageController(this);
+        SongCreatorController controller = (SongCreatorController) loader.getController();
+        controller.setEditMode(false);
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

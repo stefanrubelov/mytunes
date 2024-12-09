@@ -20,40 +20,36 @@ public class MusicPlayer {
     @FXML protected Button buttonSwitchState;
 
     @FXML
-    private void playPreviousSong(ActionEvent actionEvent) {
-        playerModel.playPreviousSong(actionEvent);
-    }
-
-    @FXML
-    private void playCurrentSong(ActionEvent actionEvent) {
-        playerModel.playCurrentSong(actionEvent);
-    }
-
-    @FXML
-    private void playNextSong(ActionEvent actionEvent) {
-        playerModel.playNextSong(actionEvent);
-    }
-
-    @FXML
     private void goToHomePageView(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/easv/gringofy/views/home-page-view.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/home-page-view.fxml"));
+        Parent root = loader.load();
+        MusicPlayer controller = loader.getController();
+        controller.changeSwitchStateButton();
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
     @FXML
     private void goToCategoriesView(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/easv/gringofy/views/categories-view.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/categories-view.fxml"));
+        Parent root = loader.load();
+        MusicPlayer controller = loader.getController();
+        controller.changeSwitchStateButton();
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        changeSwitchStateButton();
     }
     @FXML
     private void goToPlaylistsView(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/easv/gringofy/views/playlists-view.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlists-view.fxml"));
+        Parent root = loader.load();
+        MusicPlayer controller = loader.getController();
+        controller.changeSwitchStateButton();
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        changeSwitchStateButton();
     }
     @FXML private void playSong(ActionEvent event) {
         if(SongQueue.switchState()){
@@ -68,7 +64,15 @@ public class MusicPlayer {
             }
         }
     }
+    @FXML
+    private void playPreviousSong(ActionEvent actionEvent) {
+        SongQueue.playPreviousSong();
+    }
 
+    @FXML
+    private void playNextSong(ActionEvent actionEvent) {
+        SongQueue.playNextSong();
+    }
     public void changeSwitchStateButton() {
         if(SongQueue.getState()){
             buttonSwitchState.getStyleClass().remove("play-button");

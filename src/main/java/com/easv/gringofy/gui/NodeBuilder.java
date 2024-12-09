@@ -5,8 +5,10 @@ import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.PlaylistManager;
+import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.controllers.PlaylistController;
+import com.easv.gringofy.gui.controllers.SongCreatorController;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -36,6 +38,7 @@ public class NodeBuilder {
     private static final String PLAY_SONG_ICON = "/com/easv/gringofy/images/playSongIcon.png";
     private final PlayerModel playerModel = new PlayerModel();
     private final PlaylistManager playlistManager = new PlaylistManager();
+    private final SongManager songManager = new SongManager();
     private final MusicPlayer musicPlayer = new MusicPlayer();
     public HBox songToNode(Song song, Button switchStateButton) {
         // Creates the container for the node
@@ -82,7 +85,9 @@ public class NodeBuilder {
         CustomMenuItem item1 = new CustomMenuItem(hoverItem);
         MenuItem item2 = new MenuItem("Add to favorites");
         MenuItem item3 = new MenuItem("Add to queue");
-        songMenu.getItems().addAll(item1, item2, item3);
+        MenuItem item4 = new MenuItem("Delete song");
+        MenuItem item5 = new MenuItem("Edit Song");
+        songMenu.getItems().addAll(item1, item2, item3, item4, item5);
 
         // Menu for the available playlists
         ContextMenu playlistsMenu = new ContextMenu();
@@ -107,6 +112,35 @@ public class NodeBuilder {
 //        item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement
         item3.setOnAction(event -> {
             SongQueue.addSong(song);
+        });
+        item4.setOnAction(event -> {
+            try {
+                songManager.delete(song.getId());
+                FlowPane parent = (FlowPane) hbox.getParent();
+                parent.getChildren().remove(hbox);
+            } catch (PlayerException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        item5.setOnAction(event -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/song-creator.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+                SongCreatorController controller = (SongCreatorController) loader.getController();
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                controller.setEditMode(true);
+                controller.setSong(song);
+                controller.setCurrentParameters();
+                stage.setTitle("Song editor");
+                stage.setResizable(false);
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         });
         hoverItem.setOnMouseEntered(event -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
 
@@ -148,6 +182,7 @@ public class NodeBuilder {
                     Parent root = loader.load();
                     PlaylistController controller = (PlaylistController) loader.getController();
                     controller.setPlaylist(playlist);
+                    controller.changeSwitchStateButton();
                     Scene scene = new Scene(root);
                     Stage stage = (Stage) vbox.getScene().getWindow();
                     stage.setScene(scene);

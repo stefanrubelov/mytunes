@@ -51,7 +51,7 @@
                               <String fx:value="input" />
                            </styleClass>
                         </ComboBox>
-                        <Button mnemonicParsing="false" onAction="#selectFile" styleClass="select-song-btn" stylesheets="@../css/creator.css" text="Select song" />
+                        <Button fx:id="buttonSelectSong" mnemonicParsing="false" onAction="#selectFile" styleClass="select-song-btn" stylesheets="@../css/creator.css" text="Select song" />
                         <Label fx:id="lblPath" styleClass="selected-path-label" stylesheets="@../css/creator.css" textFill="WHITE" />
                             </children>
                         </VBox>
