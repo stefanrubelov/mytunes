@@ -106,7 +106,7 @@ public class SongDAODB {
                 .where("album_song.album_id", "=", album_id)
                 .get();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             int id = resultSet.getInt("id");
             Song song = mapModel(resultSet, id);
             songs.add(song);
@@ -114,6 +114,7 @@ public class SongDAODB {
 
         return songs;
     }
+
     public List<Song> getAllSongsByPlaylist(int playlist_id) throws SQLException {
         List<Song> songs = new ArrayList<>();
         ResultSet resultSet = queryBuilder
@@ -138,7 +139,7 @@ public class SongDAODB {
                 .orderBy("playlist_song.position", "asc")
                 .get();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             int id = resultSet.getInt("id");
             Song song = mapModel(resultSet, id);
             song.setPlaylistSongId(resultSet.getInt("playlist_song_id"));

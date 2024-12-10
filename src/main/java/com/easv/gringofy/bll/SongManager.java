@@ -35,6 +35,7 @@ public class SongManager {
     public void delete(int id) throws PlayerException {
         songDAODB.delete(id);
     }
+
     public void update(Song song) throws PlayerException {
         songDAODB.update(song);
     }

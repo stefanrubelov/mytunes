@@ -50,15 +50,21 @@ public class PlaylistsPageController extends MusicPlayer implements Initializabl
             throw new RuntimeException(e);
         }
     }
+
     private void fetchPlaylists() throws SQLException {
         playlists = playlistManager.getAllPlaylists();
     }
-    private void setPlaylists(){
-        playlists.forEach(playlist -> {flowPanePlaylistsContainer.getChildren().add(nodeBuilder.playlistToNode(playlist));});
+
+    private void setPlaylists() {
+        playlists.forEach(playlist -> {
+            flowPanePlaylistsContainer.getChildren().add(nodeBuilder.playlistToNode(playlist));
+        });
     }
-    private void clearPlaylists(){
+
+    private void clearPlaylists() {
         flowPanePlaylistsContainer.getChildren().clear();
     }
+
     public void refreshPlaylists() throws SQLException {
         clearPlaylists();
         fetchPlaylists();

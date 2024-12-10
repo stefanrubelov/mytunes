@@ -68,6 +68,7 @@ public class PlaylistDAODB {
 
         this.updateOrder(playlistSong);
     }
+
     private void updateOrder(PlaylistSong playlistSong) {
         QueryBuilder queryBuilder = new QueryBuilder();
 
@@ -78,6 +79,7 @@ public class PlaylistDAODB {
                 .where("position", ">", playlistSong.getPosition())
                 .update();
     }
+
     private int getLargestPosition(Playlist playlist) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
 

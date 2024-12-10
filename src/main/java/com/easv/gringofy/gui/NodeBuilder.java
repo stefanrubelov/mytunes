@@ -14,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -227,6 +226,7 @@ public class NodeBuilder {
         Label releasedDateLabel = new Label(song.getReleaseDate());
         Label durationLabel = new Label(formatTime(song.getDuration()));
 
+
         HBox optionsImageContainer = new HBox();
         optionsImageContainer.setPrefHeight(35);
         optionsImageContainer.setPrefWidth(35);
@@ -277,6 +277,9 @@ public class NodeBuilder {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        });
+        item4.setOnAction(event -> {
+            SongQueue.addSong(song);
         });
         return hbox;
     }

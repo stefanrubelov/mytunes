@@ -1,7 +1,21 @@
 .header{
     -fx-padding: 20px;
 }
-
+.playPlaylistButton{
+    -fx-background-image: url("../images/playButton2.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+}
+.playPlaylistButton:hover{
+    -fx-pref-height: 65;
+}
+.playlist-options{
+    -fx-background-image: url("../images/tripleDots.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+}
 .songs-container{
     -fx-background:transparent;
     -fx-background-color: transparent;
@@ -13,6 +27,9 @@
     -fx-padding: 10px;
 }
 .tools-container > *{
+    -fx-text-fill: #aaa;
+}
+.song-artist-label{
     -fx-text-fill: #aaa;
 }
 
@@ -36,24 +53,20 @@
 .playlist-song-node:hover{
     -fx-background-color: rgba(100, 100, 100, .7);
 }
-.song-id-label{
-    -fx-pref-width: 14px;
-    -fx-text-fill: #ddd;
-}
-.song-artist-label{
-    -fx-text-fill: #999;
-}
-.song-released-date-label{
-    -fx-pref-width: 100px;
-    -fx-text-fill: #ddd;
-}
-.song-duration-label{
-    -fx-pref-width: 40px;
-    -fx-text-fill: #ddd;
-}
 .song-options-image-view{
     visibility: none;
 }
 .playlist-song-node:hover .song-options-image-view{
     visibility:visible;
+}
+.tools-button-container{
+}
+.tools-button-container > *{
+    -fx-text-fill: #999;
+}
+.tools-button{
+    -fx-background-color: transparent;
+}
+.tools-button-container:hover .tools-button{
+    -fx-text-fill: #fff;
 }

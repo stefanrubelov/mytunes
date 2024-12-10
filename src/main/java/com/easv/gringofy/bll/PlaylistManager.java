@@ -20,9 +20,11 @@ public class PlaylistManager {
     public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException, SQLException {
         return playlistDAODB.getAllPlaylistsByInput(input);
     }
+
     public void insert(Playlist playlist) throws PlayerException, SQLException {
         playlistDAODB.insert(playlist);
     }
+
     public void update(Playlist playlist) throws PlayerException, SQLException {
         playlistDAODB.update(playlist);
     }
@@ -30,9 +32,11 @@ public class PlaylistManager {
     public void delete(Playlist playlist) throws PlayerException, SQLException {
         playlistDAODB.delete(playlist);
     }
+
     public void addSong(Playlist playlist, Song song) throws PlayerException, SQLException {
         playlistDAODB.addSong(playlist, song);
     }
+
     public void removePlaylistSong(PlaylistSong playlistSong) throws PlayerException, SQLException {
         playlistDAODB.removeSong(playlistSong);
     }

@@ -53,6 +53,7 @@ public class Album {
     public String getTitle() {
         return title;
     }
+
     @Override
     public String toString() {
         return title;
@@ -66,11 +67,11 @@ public class Album {
         return description;
     }
 
-    public String getReleaseDate(){
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public Artist getArtist(){
+    public Artist getArtist() {
         return artist;
     }
 }

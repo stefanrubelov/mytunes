@@ -41,24 +41,31 @@ public class PlayerModel {
     public void playNextSong(ActionEvent actionEvent) {
 
     }
+
     public void loadDefaultSongs() throws PlayerException, SQLException {
         defaultSongs = songManager.getAllSongs();
     }
+
     public void loadDefaultPlaylists() throws PlayerException, SQLException {
         defaultPlaylists = playlistManager.getAllPlaylists();
     }
+
     public void loadDefaultAlbums() throws PlayerException, SQLException {
         defaultAlbums = albumManager.getAllAlbums();
     }
+
     public List<Song> getDefaultSongs() {
         return defaultSongs;
     }
+
     public List<Playlist> getDefaultPlaylists() {
         return defaultPlaylists;
     }
+
     public List<Album> getDefaultAlbums() {
         return defaultAlbums;
     }
+
     public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
         return songManager.getAllSongsByInput(input);
     }
@@ -70,7 +77,8 @@ public class PlayerModel {
     public List<Album> getAllAlbumsByInput(String input) throws PlayerException {
         return albumManager.getAllAlbumsByInput(input);
     }
-    public void addSongToQueue(Song song){
+
+    public void addSongToQueue(Song song) {
         songPlayer.addSongToQueue(song);
     }
 

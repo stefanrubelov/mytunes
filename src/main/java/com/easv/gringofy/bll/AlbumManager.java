@@ -21,6 +21,7 @@ public class AlbumManager {
     public List<Album> getAllAlbums() throws PlayerException, SQLException {
         return albumDAODB.getAllAlbums();
     }
+
     public Album getAlbumById(int id) {
 //        return albumDAODB.get(id);
         return null;

@@ -34,6 +34,7 @@ public class Song {
         this.releaseDate = releaseDate;
         this.filePath = filePath;
     }
+
     public Song(String title, Artist artist) {
         this.title = title;
         this.artist = artist;
@@ -80,7 +81,8 @@ public class Song {
     public int getId() {
         return id;
     }
-    public void setPlaylistSongId(int id){
+
+    public void setPlaylistSongId(int id) {
         this.playlistSongId = id;
     }
 

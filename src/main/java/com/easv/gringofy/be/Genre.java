@@ -20,11 +20,11 @@ public class Genre {
         this.title = title;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 

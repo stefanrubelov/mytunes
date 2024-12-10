@@ -43,7 +43,7 @@ public class Playlist {
         this.description = description;
     }
 
-    public Playlist(int id){
+    public Playlist(int id) {
         this.id = id;
     }
 
@@ -75,11 +75,12 @@ public class Playlist {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 

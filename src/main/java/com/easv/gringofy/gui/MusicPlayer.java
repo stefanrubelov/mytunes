@@ -17,7 +17,8 @@ public class MusicPlayer {
 
     private PlayerModel playerModel = new PlayerModel();
 
-    @FXML protected Button buttonSwitchState;
+    @FXML
+    protected Button buttonSwitchState;
 
     @FXML
     private void goToHomePageView(ActionEvent event) throws IOException {
@@ -26,9 +27,10 @@ public class MusicPlayer {
         MusicPlayer controller = loader.getController();
         controller.changeSwitchStateButton();
         Scene scene = new Scene(root);
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
+
     @FXML
     private void goToCategoriesView(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/categories-view.fxml"));
@@ -36,9 +38,10 @@ public class MusicPlayer {
         MusicPlayer controller = loader.getController();
         controller.changeSwitchStateButton();
         Scene scene = new Scene(root);
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
+
     @FXML
     private void goToPlaylistsView(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlists-view.fxml"));
@@ -46,50 +49,53 @@ public class MusicPlayer {
         MusicPlayer controller = loader.getController();
         controller.changeSwitchStateButton();
         Scene scene = new Scene(root);
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
-    @FXML private void playSong(ActionEvent event) {
-        if(SongQueue.switchState()){
+
+    @FXML
+    private void playSong(ActionEvent event) {
+        if (SongQueue.switchState()) {
             changeSwitchStateButton2();
         }
     }
+
     @FXML
     private void playPreviousSong(ActionEvent actionEvent) {
-        if(SongQueue.playPreviousSong()){
+        if (SongQueue.playPreviousSong()) {
             changeSwitchStateButton2();
         }
     }
 
     @FXML
     private void playNextSong(ActionEvent actionEvent) {
-        if(SongQueue.playNextSong()){
+        if (SongQueue.playNextSong()) {
             changeSwitchStateButton2();
         }
     }
+
     public void changeSwitchStateButton() {
         System.out.println(SongQueue.getState());
-        if(SongQueue.getState()){
-            if(buttonSwitchState.getStyleClass().remove("play-button")){
+        if (SongQueue.getState()) {
+            if (buttonSwitchState.getStyleClass().remove("play-button")) {
                 buttonSwitchState.getStyleClass().add("pause-button");
             }
-        }
-        else{
-            if(buttonSwitchState.getStyleClass().remove("pause-button")) {
+        } else {
+            if (buttonSwitchState.getStyleClass().remove("pause-button")) {
                 buttonSwitchState.getStyleClass().add("play-button");
             }
         }
     }
+
     public void changeSwitchStateButton2() { // Made by trial and error, I have no idea why it doesn't work with just one function and have no idea why it works now.
         System.out.println(SongQueue.getState());
-        if(SongQueue.getState()){
-            if(buttonSwitchState.getStyleClass().remove("pause-button")) {
+        if (SongQueue.getState()) {
+            if (buttonSwitchState.getStyleClass().remove("pause-button")) {
                 buttonSwitchState.getStyleClass().add("play-button");
             }
-        }
-        else{
+        } else {
 
-            if(buttonSwitchState.getStyleClass().remove("play-button")){
+            if (buttonSwitchState.getStyleClass().remove("play-button")) {
                 buttonSwitchState.getStyleClass().add("pause-button");
             }
         }
