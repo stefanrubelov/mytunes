@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,8 +42,9 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     private final SongManager songManager = new SongManager();
     private final NodeBuilder nodeBuilder = new NodeBuilder();
     private List<Song> songs;
-    private int currentSortingMethod = 0;
+    private List<Song> defaultSortedSongs;
 
+    private static final int DEFAULT_SORTING = 0;
     private static final int ALPHABETICAL_TITLE_SORTING = 1;
     private static final int REVERSE_ALPHABETICAL_TITLE_SORTING = 2;
     private static final int RELEASE_DATE_SORTING = 3;
@@ -51,6 +53,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     private static final int REVERSE_DURATION_SORTING = 6;
     private static final int ALPHABETICAL_ARTIST_SORTING = 7;
     private static final int REVERSE_ALPHABETICAL_ARTIST_SORTING = 8;
+    private int currentSortingMethod = DEFAULT_SORTING;
     private static final ImageView TRIANGLE_POINTING_DOWNWARDS = new ImageView(new Image("com/easv/gringofy/images/trianglePointingDownwards.png"));
     private static final ImageView TRIANGLE_POINTING_UPWARDS = new ImageView(new Image("com/easv/gringofy/images/trianglePointingUpwards.png"));
 
@@ -74,6 +77,8 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     private HBox hboxDurationContainer;
     @FXML
     private Button btnSongTitle;
+    @FXML
+    private Button buttonSwitchState;
 
     public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
@@ -103,6 +108,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     private void fetchSongs() {
         try {
             songs = songManager.getAllSongsByPlaylist(playlist.getId());
+            defaultSortedSongs = new ArrayList<>(songs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -176,12 +182,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
             btnSongTitle.setText("Title");
         } else if (currentSortingMethod == REVERSE_ALPHABETICAL_TITLE_SORTING) {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o1.getArtist().getName().compareTo(o2.getArtist().getName());
-                }
-            });
+            songs.sort((o1, o2) -> o1.getArtist().getName().compareTo(o2.getArtist().getName()));
             currentSortingMethod = ALPHABETICAL_ARTIST_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_UPWARDS);
             btnSongTitle.setText("Artist");
@@ -195,13 +196,13 @@ public class PlaylistController extends MusicPlayer implements Initializable {
             currentSortingMethod = REVERSE_ALPHABETICAL_ARTIST_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
             btnSongTitle.setText("Artist");
-        } else {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o1.getTitle().compareTo(o2.getTitle());
-                }
-            });
+        }
+        else if(currentSortingMethod == REVERSE_ALPHABETICAL_ARTIST_SORTING) {
+            songs = defaultSortedSongs;
+            currentSortingMethod = DEFAULT_SORTING;
+        }
+        else {
+            songs.sort((o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
             currentSortingMethod = ALPHABETICAL_TITLE_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_UPWARDS);
             btnSongTitle.setText("Title");
@@ -221,7 +222,12 @@ public class PlaylistController extends MusicPlayer implements Initializable {
             });
             currentSortingMethod = REVERSE_RELEASE_DATE_SORTING;
             hboxReleaseDateContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
-        } else {
+        }
+        else if(currentSortingMethod == REVERSE_RELEASE_DATE_SORTING) {
+            songs = defaultSortedSongs;
+            currentSortingMethod = DEFAULT_SORTING;
+        }
+        else {
             songs.sort(new Comparator<Song>() {
                 @Override
                 public int compare(Song o1, Song o2) {
@@ -246,6 +252,10 @@ public class PlaylistController extends MusicPlayer implements Initializable {
             });
             currentSortingMethod = REVERSE_DURATION_SORTING;
             hboxDurationContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
+        }
+        else if(currentSortingMethod == REVERSE_DURATION_SORTING) {
+            songs = defaultSortedSongs;
+            currentSortingMethod = DEFAULT_SORTING;
         } else {
             songs.sort(new Comparator<Song>() {
                 @Override
@@ -262,6 +272,9 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     @FXML
     private void playPlaylist() {
         SongQueue.forcePlay(songs.getFirst());
+        if (buttonSwitchState.getStyleClass().remove("play-button")) {
+            buttonSwitchState.getStyleClass().add("pause-button");
+        }
         int i = songs.size();
         for (int j = 1; j < i; j++) {
             SongQueue.addSong(songs.get(j));
