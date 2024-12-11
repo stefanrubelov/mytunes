@@ -7,8 +7,10 @@ import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
+import com.easv.gringofy.gui.SongQueue;
 import com.easv.gringofy.gui.models.PlayerModel;
 import com.easv.gringofy.utils.Debounce;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,15 +37,9 @@ import java.util.ResourceBundle;
 
 public class HomePageController extends MusicPlayer implements Initializable {
 
-    List<Song> defaultSongs = new ArrayList<>();
-    List<Playlist> defaultPlaylists = new ArrayList<>();
-    List<Album> defaultAlbums = new ArrayList<>();
-
-    PlayerModel playerModel = new PlayerModel();
-    NodeBuilder nodeBuilder = new NodeBuilder();
-    SongManager songManager = new SongManager();
-    PlaylistManager playlistManager = new PlaylistManager();
-    AlbumManager albumManager = new AlbumManager();
+    private PlayerModel playerModel = new PlayerModel();
+    private NodeBuilder nodeBuilder = new NodeBuilder();
+    private AnimationTimer timer;
 
     @FXML
     private FlowPane flowPaneHomeAlbums;
@@ -52,10 +49,21 @@ public class HomePageController extends MusicPlayer implements Initializable {
     private HBox hboxHomePlaylists;
     @FXML
     private TextField txtFieldSearchBar;
+    @FXML
+    private ProgressBar progressBar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    double progress = SongQueue.getProgressProperty().get();
+                    System.out.println(progress);
+                    progressBar.setProgress(progress);
+                }
+            };
+            timer.start();
             playerModel.loadDefaultSongs();
             playerModel.loadDefaultPlaylists();
             playerModel.loadDefaultAlbums();

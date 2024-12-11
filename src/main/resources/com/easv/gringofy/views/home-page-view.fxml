@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="746.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.HomePageController">
+<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.HomePageController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="653.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
          <children>
@@ -105,7 +105,7 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets></VBox>
-      <VBox alignment="CENTER" layoutX="11.0" layoutY="677.0" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
+      <VBox alignment="CENTER" layoutX="11.0" layoutY="677.0" maxWidth="1.7976931348623157E308" prefHeight="65.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
          <children>
             <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="848.0" spacing="10.0" styleClass="bottom-nav-buttons-container" stylesheets="@../css/Main.css">
                <children>
@@ -121,7 +121,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <ProgressBar prefHeight="17.0" prefWidth="528.0" progress="0.0" styleClass="song-progress-bar" stylesheets="@../css/Main.css" />
+            <ProgressBar fx:id="progressBar" prefHeight="0.0" prefWidth="528.0" progress="0.0" styleClass="song-progress-bar" stylesheets="@../css/Main.css" />
          </children>
          <padding>
             <Insets bottom="5.0" />

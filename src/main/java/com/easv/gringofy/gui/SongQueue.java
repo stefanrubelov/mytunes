@@ -1,6 +1,8 @@
 package com.easv.gringofy.gui;
 
 import com.easv.gringofy.be.Song;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -14,7 +16,19 @@ public class SongQueue {
     private static final List<Song> songQueue = new LinkedList<>();
     private static MediaPlayer mediaPlayer;
     private static int currentIndex = 0;
+    private static final SimpleDoubleProperty progressProperty = new SimpleDoubleProperty();
 
+    public static SimpleDoubleProperty getProgressProperty() {
+        return progressProperty;
+    }
+    private static void updateProgressBar() {
+        Platform.runLater(() -> {
+            double currentTime = mediaPlayer.getCurrentTime().toSeconds();
+            double totalTime = mediaPlayer.getTotalDuration().toSeconds();
+            double progress = currentTime / totalTime;
+            progressProperty.set(progress);
+        });
+    }
     public static boolean playPreviousSong() {
         if (currentIndex > 0) {
             currentIndex--;
@@ -30,6 +44,11 @@ public class SongQueue {
         File file = new File(song.getFilePath());
         Media media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
+
+        mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            updateProgressBar();
+        });
+
         mediaPlayer.setOnEndOfMedia(() -> {
             currentIndex++;
             playCurrentSong(songQueue.get(currentIndex));
@@ -56,6 +75,10 @@ public class SongQueue {
         File file = new File(song.getFilePath());
         Media media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
+
+        mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            updateProgressBar();
+        });
         mediaPlayer.play();
     }
 

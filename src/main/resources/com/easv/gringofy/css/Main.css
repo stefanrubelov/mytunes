@@ -103,7 +103,13 @@
 .song-progress-bar .track{
     -fx-background-color: rgba(254,192,26,.3);
 }
-
+.song-progress-bar .bar{
+    -fx-background-color: rgba(254,192,26,.9);;
+    -fx-background-insets: 1;
+    -fx-border-color: rgba(254,192,26,.9);
+    -fx-border-radius: 10px;
+    -fx-border-width: 1;
+}
 .container{
     -fx-background-color: transparent;
     -fx-padding:7px;
@@ -199,4 +205,6 @@
 .addPlaylistButton:hover{
     -fx-background-image: url("../images/plusIconHover.png");
 }
+
+
 
