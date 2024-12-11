@@ -94,6 +94,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        progressBar.progressProperty().bind(SongQueue.getProgressProperty());
         TRIANGLE_POINTING_DOWNWARDS.setFitHeight(10);
         TRIANGLE_POINTING_DOWNWARDS.setFitWidth(10);
         TRIANGLE_POINTING_UPWARDS.setFitHeight(10);

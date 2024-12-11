@@ -105,7 +105,7 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets></VBox>
-      <VBox alignment="CENTER" layoutX="11.0" layoutY="677.0" maxWidth="1.7976931348623157E308" prefHeight="65.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
+      <VBox alignment="CENTER" layoutX="14.0" layoutY="675.0" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
          <children>
             <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="848.0" spacing="10.0" styleClass="bottom-nav-buttons-container" stylesheets="@../css/Main.css">
                <children>

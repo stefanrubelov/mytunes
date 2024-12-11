@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlaylistsPageController">
+<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" stylesheets="@../css/Main.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlaylistsPageController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="638.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="653.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
          <children>
             <ImageView fitHeight="177.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -45,7 +45,7 @@
             </VBox>
          </children>
       </VBox>
-      <VBox fillWidth="false" layoutX="262.0" layoutY="14.0" prefHeight="638.0" prefWidth="674.0" styleClass="home-gallery" stylesheets="@../css/Main.css">
+      <VBox fillWidth="false" layoutX="262.0" layoutY="14.0" prefHeight="653.0" prefWidth="674.0" styleClass="home-gallery" stylesheets="@../css/Main.css">
          <children>
             <Label text="Playlists" textFill="WHITE">
                <padding>
@@ -59,14 +59,14 @@
             </ScrollPane>
             <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#showPlaylistForm" prefHeight="52.0" prefWidth="51.0" styleClass="addPlaylistButton" stylesheets="@../css/Main.css">
                <VBox.margin>
-                  <Insets left="580.0" top="50.0" />
+                  <Insets left="600.0" top="70.0" />
                </VBox.margin>
             </Button>
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets></VBox>
-      <VBox alignment="CENTER" layoutX="12.0" layoutY="663.0" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
+      <VBox alignment="CENTER" layoutX="12.0" layoutY="679.0" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="922.0" styleClass="bottom-nav-container" stylesheets="@../css/Main.css">
          <children>
             <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="848.0" spacing="10.0" styleClass="bottom-nav-buttons-container" stylesheets="@../css/Main.css">
                <children>
@@ -82,7 +82,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <ProgressBar prefHeight="17.0" prefWidth="528.0" progress="0.0" styleClass="song-progress-bar" stylesheets="@../css/Main.css" />
+            <ProgressBar fx:id="progressBar" prefHeight="0.0" prefWidth="528.0" progress="0.0" styleClass="song-progress-bar" stylesheets="@../css/Main.css" />
          </children>
          <padding>
             <Insets bottom="5.0" />

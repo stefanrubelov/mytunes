@@ -49,8 +49,6 @@ public class HomePageController extends MusicPlayer implements Initializable {
     private HBox hboxHomePlaylists;
     @FXML
     private TextField txtFieldSearchBar;
-    @FXML
-    private ProgressBar progressBar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

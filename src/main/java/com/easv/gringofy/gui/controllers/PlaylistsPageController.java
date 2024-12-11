@@ -4,12 +4,14 @@ import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
+import com.easv.gringofy.gui.SongQueue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
@@ -20,13 +22,13 @@ import java.util.*;
 
 public class PlaylistsPageController extends MusicPlayer implements Initializable {
 
-    NodeBuilder nodeBuilder = new NodeBuilder();
-    PlaylistManager playlistManager = new PlaylistManager();
+    private NodeBuilder nodeBuilder = new NodeBuilder();
+    private PlaylistManager playlistManager = new PlaylistManager();
 
-    List<Playlist> playlists;
+    private List<Playlist> playlists;
 
     @FXML
-    FlowPane flowPanePlaylistsContainer;
+    private FlowPane flowPanePlaylistsContainer;
 
     public void showPlaylistForm(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlist-creator.fxml"));
@@ -43,6 +45,7 @@ public class PlaylistsPageController extends MusicPlayer implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        progressBar.progressProperty().bind(SongQueue.getProgressProperty());
         try {
             fetchPlaylists();
             setPlaylists();
