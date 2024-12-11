@@ -55,15 +55,7 @@ public class HomePageController extends MusicPlayer implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    double progress = SongQueue.getProgressProperty().get();
-                    System.out.println(progress);
-                    progressBar.setProgress(progress);
-                }
-            };
-            timer.start();
+            progressBar.progressProperty().bind(SongQueue.getProgressProperty());
             playerModel.loadDefaultSongs();
             playerModel.loadDefaultPlaylists();
             playerModel.loadDefaultAlbums();
