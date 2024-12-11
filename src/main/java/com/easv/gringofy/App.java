@@ -4,6 +4,7 @@ import com.easv.gringofy.dal.db.SongDAODB;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.SongQueue;
 import com.easv.gringofy.utils.Env;
+import com.easv.gringofy.utils.Validator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +24,24 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+        Validator validator = new Validator()
+                .setField("name", "Stefan")
+                .setField("age", "15")
+                .required("name", "age")
+                .min("age", 15)
+                .max("name", 5)
+                .numeric("age", "name");
+
+        if (validator.passes()) {
+            System.out.println("success");
+        } else {
+            StringBuilder errorMessages = new StringBuilder();
+            validator.getErrors().forEach((field, messages) -> {
+                messages.forEach(message -> errorMessages.append(message).append("\n"));
+            });
+            System.out.println(errorMessages.toString());
+        }
     }
 
     public static void main(String[] args) {
