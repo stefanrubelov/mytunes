@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="364.0" prefWidth="594.0" styleClass="body" stylesheets="@../css/playlist_creator_styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlaylistCreatorController">
+<AnchorPane prefHeight="364.0" prefWidth="594.0" styleClass="body" stylesheets="@../css/creator.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlaylistCreatorController">
    <children>
       <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="364.0" prefWidth="594.0" styleClass="container">
          <children>
@@ -21,17 +21,17 @@
                   <Font size="33.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" prefHeight="220.0" prefWidth="474.0" styleClass="details-container" stylesheets="@../css/playlist_creator_styles.css">
+            <HBox alignment="CENTER" prefHeight="220.0" prefWidth="474.0" styleClass="details-container" stylesheets="@../css/creator.css">
                <children>
                   <ImageView fitHeight="235.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/defaultPlaylistPicture.png" />
                      </image>
                   </ImageView>
-                  <VBox prefHeight="231.0" prefWidth="334.0" styleClass="text-fields-container" stylesheets="@../css/playlist_creator_styles.css">
+                  <VBox prefHeight="231.0" prefWidth="334.0" styleClass="text-fields-container" stylesheets="@../css/creator.css">
                      <children>
-                        <TextField fx:id="txtFieldPlaylistName" prefHeight="54.0" prefWidth="314.0" promptText="Name" styleClass="name-input" stylesheets="@../css/playlist_creator_styles.css" />
-                        <TextArea fx:id="txtAreaPlaylistDescription" prefHeight="170.0" prefWidth="314.0" promptText="Description" styleClass="description-input" stylesheets="@../css/playlist_creator_styles.css" />
+                        <TextField fx:id="txtFieldPlaylistName" prefHeight="54.0" prefWidth="314.0" promptText="Name" styleClass="input" stylesheets="@../css/creator.css" />
+                        <TextArea fx:id="txtAreaPlaylistDescription" prefHeight="170.0" prefWidth="314.0" promptText="Description" styleClass="description-input" stylesheets="@../css/creator.css" />
                      </children>
                   </VBox>
                </children>
@@ -39,7 +39,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#createPlaylist" styleClass="btn" stylesheets="@../css/playlist_creator_styles.css" text="Save">
+            <Button mnemonicParsing="false" onAction="#createPlaylist" styleClass="btn" stylesheets="@../css/creator.css" text="Save">
                <VBox.margin>
                   <Insets left="400.0" top="10.0" />
                </VBox.margin>

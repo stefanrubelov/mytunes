@@ -49,6 +49,13 @@
 .bottom-nav-buttons-container > *:hover{
     -fx-opacity: 1;
 }
+.add-song-button{
+    -fx-background-color : rgba(50,50,50,.5);
+    -fx-pref-width: 100px;
+}
+.add-song-button:hover{
+    -fx-background-color: rgba(254,192,26,.7);
+}
 .play-button{
     -fx-background-image: url("../images/playButton1.png");
     -fx-pref-width: 25px;
@@ -59,6 +66,20 @@
 }
 .play-button:hover{
     -fx-background-image: url("../images/playButton2.png");
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+
+}
+.pause-button{
+    -fx-background-image: url("../images/pauseButton1.png");
+    -fx-pref-width: 25px;
+    -fx-padding: 0 30px 0 30px;
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+.pause-button:hover{
+    -fx-background-image: url("../images/pauseButton2.png");
     -fx-pref-width: 40px;
     -fx-pref-height: 40px;
 
@@ -179,16 +200,3 @@
     -fx-background-image: url("../images/plusIconHover.png");
 }
 
-.playPlaylistButton{
-    -fx-background-image: url("../images/playButton2.png");
-    -fx-background-color: transparent;
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
-}
-.playlist-options{
-    -fx-background-image: url("../images/tripleDots.png");
-    -fx-background-color: transparent;
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: contain;
-}

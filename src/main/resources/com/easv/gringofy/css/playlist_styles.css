@@ -1,59 +1,89 @@
-.header{
+.header {
     -fx-padding: 20px;
 }
 
-.songs-container{
-    -fx-background:transparent;
+.playPlaylistButton {
+    -fx-background-image: url("../images/playButton2.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+}
+
+.playPlaylistButton:hover {
+    -fx-pref-height: 65;
+}
+
+.playlist-options {
+    -fx-background-image: url("../images/tripleDots.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+}
+
+.songs-container {
+    -fx-background: transparent;
     -fx-background-color: transparent;
 }
-.tools-container{
+
+.tools-container {
     -fx-font-size: 16px;
     -fx-border-width: 0 0 1 0;
     -fx-border-color: #666;
     -fx-padding: 10px;
 }
-.tools-container > *{
+
+.tools-container > * {
     -fx-text-fill: #aaa;
 }
 
-.playlist-name{
+.song-artist-label {
+    -fx-text-fill: #aaa;
+}
+
+.playlist-name {
     -fx-font-size: 36px;
     -fx-font-weight: bolder;
 }
-.playlist-description{
+
+.playlist-description {
     -fx-wrap-text: true;
     -fx-text-fill: #aaa;
 }
-.song-nodes-container{
+
+.song-nodes-container {
     -fx-spacing: 3px;
 }
-.playlist-song-node{
+
+.playlist-song-node {
     -fx-background-color: rgba(90, 90, 90, .2);
     -fx-background-radius: 10px;
     -fx-padding: 5 30 5 28;
     -fx-spacing: 22px;
 }
-.playlist-song-node:hover{
+
+.playlist-song-node:hover {
     -fx-background-color: rgba(100, 100, 100, .7);
 }
-.song-id-label{
-    -fx-pref-width: 12px;
-    -fx-text-fill: #ddd;
-}
-.song-artist-label{
-    -fx-text-fill: #999;
-}
-.song-released-date-label{
-    -fx-pref-width: 100px;
-    -fx-text-fill: #ddd;
-}
-.song-duration-label{
-    -fx-pref-width: 50px;
-    -fx-text-fill: #ddd;
-}
-.song-options-image-view{
+
+.song-options-image-view {
     visibility: none;
 }
-.playlist-song-node:hover .song-options-image-view{
-    visibility:visible;
+
+.playlist-song-node:hover .song-options-image-view {
+    visibility: visible;
+}
+
+.tools-button-container {
+}
+
+.tools-button-container > * {
+    -fx-text-fill: #999;
+}
+
+.tools-button {
+    -fx-background-color: transparent;
+}
+
+.tools-button-container:hover .tools-button {
+    -fx-text-fill: #fff;
 }

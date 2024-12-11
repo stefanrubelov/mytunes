@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class SongManager {
-    private SongDAODB songDAODB = new SongDAODB();
+    private final SongDAODB songDAODB = new SongDAODB();
 
     public List<Song> getAllSongsByPlaylist(int playlist_id) throws SQLException {
         return songDAODB.getAllSongsByPlaylist(playlist_id);
@@ -26,5 +26,17 @@ public class SongManager {
 
     public Song getSongById(int id) throws PlayerException, SQLException {
         return songDAODB.get(id);
+    }
+
+    public void insert(Song song) throws PlayerException, SQLException {
+        songDAODB.insert(song);
+    }
+
+    public void delete(int id) throws PlayerException {
+        songDAODB.delete(id);
+    }
+
+    public void update(Song song) throws PlayerException {
+        songDAODB.update(song);
     }
 }

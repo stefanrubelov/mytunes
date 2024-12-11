@@ -29,29 +29,32 @@ public class PlaylistCreatorController {
     private TextArea txtAreaPlaylistDescription;
 
 
-    @FXML private void createPlaylist() throws PlayerException, SQLException {
+    @FXML
+    private void createPlaylist() throws PlayerException, SQLException {
         String name = txtFieldPlaylistName.getText();
         String description = txtAreaPlaylistDescription.getText();
         LocalDateTime now = LocalDateTime.now();
-        if(!editMode) {
+        if (!editMode) {
             Playlist playlist = new Playlist(name, description, now, now);
             playlistManager.insert(playlist);
             playlistsPageController.refreshPlaylists();
-        }
-        else{
+        } else {
             Playlist playlist = new Playlist(this.playlist.getId(), name, description);
             playlistManager.update(playlist);
+            playlistController.setPlaylist(playlist);
         }
         Stage stage = (Stage) txtFieldPlaylistName.getScene().getWindow();
         stage.close();
     }
 
-    public void setPlaylistsPageController(PlaylistsPageController playlistsPageController){
+    public void setPlaylistsPageController(PlaylistsPageController playlistsPageController) {
         this.playlistsPageController = playlistsPageController;
     }
-    public void setPlaylistController(PlaylistController playlistController){
+
+    public void setPlaylistController(PlaylistController playlistController) {
         this.playlistController = playlistController;
     }
+
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
     }

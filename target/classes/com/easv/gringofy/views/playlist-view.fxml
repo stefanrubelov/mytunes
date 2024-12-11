@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -77,24 +78,32 @@
             </HBox>
             <HBox fx:id="hboxToolsBar" prefHeight="56.0" prefWidth="674.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="55.0" styleClass="playPlaylistButton" stylesheets="@../css/Main.css">
+                  <Button mnemonicParsing="false" onAction="#playPlaylist" prefHeight="45.0" prefWidth="58.0" styleClass="playPlaylistButton">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
+                     <stylesheets>
+                        <URL value="@../css/Main.css" />
+                        <URL value="@../css/playlist_styles.css" />
+                     </stylesheets>
                   </Button>
-                  <Button fx:id="btnPlaylistOptions" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" styleClass="playlist-options" stylesheets="@../css/Main.css">
+                  <Button fx:id="btnPlaylistOptions" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" styleClass="playlist-options">
                      <HBox.margin>
                         <Insets left="540.0" top="10.0" />
                      </HBox.margin>
                      <contextMenu>
                         <ContextMenu fx:id="contextMenu">
                           <items>
-                              <MenuItem mnemonicParsing="false" text="Add to queue" />
+                              <MenuItem mnemonicParsing="false" onAction="#addToQueue" text="Add to queue" />
                             <MenuItem mnemonicParsing="false" onAction="#edit" text="Edit" />
                               <MenuItem mnemonicParsing="false" onAction="#delete" text="Delete" />
                           </items>
                         </ContextMenu>
                      </contextMenu>
+                     <stylesheets>
+                        <URL value="@../css/Main.css" />
+                        <URL value="@../css/playlist_styles.css" />
+                     </stylesheets>
                   </Button>
                </children>
                <VBox.margin>
@@ -104,18 +113,48 @@
             <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="637.0" styleClass="tools-container" stylesheets="@../css/playlist_styles.css">
                <children>
                   <Label text="#" />
-                  <Label text="Title">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin></Label>
-                  <Label text="Release date">
+                  <HBox fx:id="hboxTitleContainer" alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="85.0" styleClass="tools-button-container" stylesheets="@../css/playlist_styles.css">
+                     <children>
+                        <Button fx:id="btnSongTitle" mnemonicParsing="false" onAction="#sortByTitleOrArtist" stylesheets="@../css/playlist_styles.css" text="Title">
+                           <styleClass>
+                              <String fx:value="title-button" />
+                              <String fx:value="tools-button" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hboxReleaseDateContainer" alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="153.0" styleClass="tools-button-container" stylesheets="@../css/playlist_styles.css">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#sortByReleaseDate" stylesheets="@../css/playlist_styles.css" text="Release Date">
+                           <styleClass>
+                              <String fx:value="release-date-button" />
+                              <String fx:value="tools-button" />
+                           </styleClass>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                     </children>
                      <HBox.margin>
                         <Insets left="220.0" />
-                     </HBox.margin></Label>
-                  <Label text="Duration">
+                     </HBox.margin>
+                  </HBox>
+                  <HBox fx:id="hboxDurationContainer" alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="116.0" styleClass="tools-button-container" stylesheets="@../css/playlist_styles.css">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#sortByDuration" stylesheets="@../css/playlist_styles.css" text="Duration">
+                           <styleClass>
+                              <String fx:value="duration-button" />
+                              <String fx:value="tools-button" />
+                           </styleClass>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                     </children>
                      <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin></Label>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </HBox>
                </children>
             </HBox>
             <ScrollPane fx:id="scrollPaneSongs" hbarPolicy="NEVER" prefHeight="263.0" prefWidth="674.0" styleClass="songs-container" stylesheets="@../css/playlist_styles.css" vbarPolicy="NEVER">
@@ -128,7 +167,7 @@
                 <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="848.0" spacing="10.0" styleClass="bottom-nav-buttons-container" stylesheets="@../css/Main.css">
                     <children>
                         <Button mnemonicParsing="false" onAction="#playPreviousSong" styleClass="previous-button" stylesheets="@../css/Main.css" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#playCurrentSong" styleClass="play-button" stylesheets="@../css/Main.css">
+                        <Button fx:id="buttonSwitchState" alignment="CENTER" mnemonicParsing="false" onAction="#playSong" styleClass="play-button" stylesheets="@../css/Main.css">
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>

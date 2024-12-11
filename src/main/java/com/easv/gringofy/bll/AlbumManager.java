@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AlbumManager {
-    private AlbumDAODB albumDAODB = new AlbumDAODB();
+    private final AlbumDAODB albumDAODB = new AlbumDAODB();
 
     public List<Album> getAllAlbumsByInput(String input) {
         try {
@@ -21,6 +21,7 @@ public class AlbumManager {
     public List<Album> getAllAlbums() throws PlayerException, SQLException {
         return albumDAODB.getAllAlbums();
     }
+
     public Album getAlbumById(int id) {
 //        return albumDAODB.get(id);
         return null;

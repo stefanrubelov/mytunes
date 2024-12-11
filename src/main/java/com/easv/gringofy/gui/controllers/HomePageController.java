@@ -10,14 +10,20 @@ import com.easv.gringofy.gui.NodeBuilder;
 import com.easv.gringofy.gui.models.PlayerModel;
 import com.easv.gringofy.utils.Debounce;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -77,9 +83,15 @@ public class HomePageController extends MusicPlayer implements Initializable {
 
     public void showDefaultNodes() throws PlayerException, SQLException {
         clearSections();
-        playerModel.getDefaultSongs().forEach(song -> {flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song));});
-        playerModel.getDefaultPlaylists().forEach(playlist -> {hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist));});
-        playerModel.getDefaultAlbums().forEach(album -> {flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album));});
+        playerModel.getDefaultSongs().forEach(song -> {
+            flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song, buttonSwitchState));
+        });
+        playerModel.getDefaultPlaylists().forEach(playlist -> {
+            hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist));
+        });
+        playerModel.getDefaultAlbums().forEach(album -> {
+            flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album));
+        });
     }
 
     private void search(String input) throws PlayerException, SQLException {
@@ -109,7 +121,7 @@ public class HomePageController extends MusicPlayer implements Initializable {
 
             Platform.runLater(() -> {
                 clearSections();
-                songs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song)));
+                songs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song, buttonSwitchState)));
                 albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
                 playlists.forEach(playlist -> hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist)));
             });
@@ -117,5 +129,19 @@ public class HomePageController extends MusicPlayer implements Initializable {
             e.printStackTrace();
             // Handle exceptions appropriately
         }
+    }
+
+    @FXML
+    private void showSongCreatorWindow(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/song-creator.fxml"));
+        Parent root = loader.load();
+        SongCreatorController controller = (SongCreatorController) loader.getController();
+        controller.setEditMode(false);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Song Creator");
+        stage.setResizable(false);
+        stage.show();
     }
 }
