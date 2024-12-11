@@ -2,9 +2,11 @@ package com.easv.gringofy.gui.controllers;
 
 import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.bll.PlaylistManager;
+import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
 import com.easv.gringofy.gui.SongQueue;
+import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +26,7 @@ public class PlaylistsPageController extends MusicPlayer implements Initializabl
 
     private NodeBuilder nodeBuilder = new NodeBuilder();
     private PlaylistManager playlistManager = new PlaylistManager();
-
+    private PlayerModel playerModel = new PlayerModel();
     private List<Playlist> playlists;
 
     @FXML
@@ -47,17 +49,20 @@ public class PlaylistsPageController extends MusicPlayer implements Initializabl
     public void initialize(URL location, ResourceBundle resources) {
         progressBar.progressProperty().bind(SongQueue.getProgressProperty());
         try {
-            fetchPlaylists();
+            getPlaylists();
             setPlaylists();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void fetchPlaylists() throws SQLException {
-        playlists = playlistManager.getAllPlaylists();
+    private void fetchPlaylists() throws SQLException, PlayerException {
+        playerModel.loadDefaultPlaylists();
     }
 
+    private void getPlaylists() throws SQLException {
+        playlists = playerModel.getDefaultPlaylists();
+    }
     private void setPlaylists() {
         playlists.forEach(playlist -> {
             flowPanePlaylistsContainer.getChildren().add(nodeBuilder.playlistToNode(playlist));
@@ -68,9 +73,10 @@ public class PlaylistsPageController extends MusicPlayer implements Initializabl
         flowPanePlaylistsContainer.getChildren().clear();
     }
 
-    public void refreshPlaylists() throws SQLException {
+    public void refreshPlaylists() throws SQLException, PlayerException {
         clearPlaylists();
         fetchPlaylists();
+        getPlaylists();
         setPlaylists();
     }
 }

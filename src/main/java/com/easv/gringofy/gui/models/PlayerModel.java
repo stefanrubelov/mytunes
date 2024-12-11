@@ -26,21 +26,7 @@ public class PlayerModel {
     private static List<Song> defaultSongs = new ArrayList<>();
     private static List<Playlist> defaultPlaylists = new ArrayList<>();
     private static List<Album> defaultAlbums = new ArrayList<>();
-
-    @FXML
-    public void playPreviousSong(ActionEvent actionEvent) {
-
-    }
-
-    @FXML
-    public void playCurrentSong(ActionEvent actionEvent) {
-
-    }
-
-    @FXML
-    public void playNextSong(ActionEvent actionEvent) {
-
-    }
+    
 
     public void loadDefaultSongs() throws PlayerException, SQLException {
         defaultSongs = songManager.getAllSongs();

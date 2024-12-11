@@ -54,9 +54,6 @@ public class HomePageController extends MusicPlayer implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             progressBar.progressProperty().bind(SongQueue.getProgressProperty());
-            playerModel.loadDefaultSongs();
-            playerModel.loadDefaultPlaylists();
-            playerModel.loadDefaultAlbums();
             showDefaultNodes();
         } catch (PlayerException | SQLException e) {
             throw new RuntimeException(e);
