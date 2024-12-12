@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlaylistController">
+<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.ArtistController">
     <children>
         <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="653.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
             <children>
@@ -58,7 +58,7 @@
                <children>
                   <ImageView fitHeight="199.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="playlistImage">
                      <image>
-                        <Image url="@../images/defaultPlaylistPicture.png" />
+                        <Image url="@../images/defaultArtistImage.png" />
                      </image></ImageView>
                   <Label textFill="WHITE">
                      <font>
@@ -70,8 +70,8 @@
                   </Label>
                   <VBox alignment="CENTER_LEFT" prefHeight="199.0" prefWidth="380.0" style="-fx-spacing: 5px; -fx-padding: 10px;">
                      <children>
-                        <Label fx:id="lblPlaylistName" styleClass="playlist-name" stylesheets="@../css/dynamic_page.css" text="Playlist" textFill="WHITE" />
-                        <Label fx:id="lblPlaylistDescription" alignment="TOP_LEFT" prefHeight="57.0" prefWidth="377.0" styleClass="playlist-description" text="description" />
+                        <Label fx:id="lblArtistName" styleClass="playlist-name" stylesheets="@../css/dynamic_page.css" text="Artist" textFill="WHITE" />
+                        <Label fx:id="lblArtistDescription" alignment="TOP_LEFT" prefHeight="57.0" prefWidth="377.0" styleClass="playlist-description" text="description" />
                      </children>
                   </VBox>
                </children>
@@ -87,7 +87,7 @@
                         <URL value="@../css/dynamic_page.css" />
                      </stylesheets>
                   </Button>
-                  <Button fx:id="btnPlaylistOptions" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" styleClass="playlist-options">
+                  <Button fx:id="btnArtistOptions" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" styleClass="playlist-options">
                      <HBox.margin>
                         <Insets left="540.0" top="10.0" />
                      </HBox.margin>

@@ -175,6 +175,10 @@
     font-size: 12px;
     -fx-text-fill: #aaa;
 }
+.song-node-artist:hover{
+    -fx-text-fill: #fff;
+    -fx-underline: true;
+}
 .song-node-menu > *{
 
 }

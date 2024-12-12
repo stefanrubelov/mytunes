@@ -7,6 +7,7 @@ import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
+import com.easv.gringofy.gui.controllers.ArtistController;
 import com.easv.gringofy.gui.controllers.PlaylistController;
 import com.easv.gringofy.gui.controllers.SongCreatorController;
 import com.easv.gringofy.gui.models.PlayerModel;
@@ -38,7 +39,6 @@ public class NodeBuilder {
     private final PlayerModel playerModel = new PlayerModel();
     private final PlaylistManager playlistManager = new PlaylistManager();
     private final SongManager songManager = new SongManager();
-    private final MusicPlayer musicPlayer = new MusicPlayer();
 
     public HBox songToNode(Song song, Button switchStateButton) {
         // Creates the container for the node
@@ -156,6 +156,22 @@ public class NodeBuilder {
                 }
             }
         });
+        artistLabel.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/artist-view.fxml"));
+                try {
+                    Parent root = loader.load();
+                    ArtistController controller = (ArtistController) loader.getController();
+                    controller.setArtist(song.getArtist());
+                    controller.changeSwitchStateButton();
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) vbox.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         return hbox;
     }
 
@@ -208,7 +224,7 @@ public class NodeBuilder {
         return hbox;
     }
 
-    public HBox songToPlaylistSongNode(Song song, Playlist playlist, int index) {
+    public HBox songToPlaylistSongNode(Song song, int index) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
         Label songIdLabel = new Label(String.valueOf(index));

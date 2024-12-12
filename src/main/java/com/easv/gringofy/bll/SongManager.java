@@ -14,8 +14,9 @@ public class SongManager {
     public List<Song> getAllSongsByPlaylist(int playlist_id) throws SQLException {
         return songDAODB.getAllSongsByPlaylist(playlist_id);
     }
-
-
+    public List<Song> getAllSongsByArtist(int artist_id) throws SQLException {
+        return songDAODB.getAllSongsByArtist(artist_id);
+    }
     public List<Song> getAllSongs() throws PlayerException, SQLException {
         return songDAODB.getAllSongs();
     }

@@ -1,14 +1,13 @@
 package com.easv.gringofy.gui.controllers;
 
-import com.easv.gringofy.be.Album;
-import com.easv.gringofy.be.Artist;
-import com.easv.gringofy.be.Genre;
-import com.easv.gringofy.be.Song;
+import com.easv.gringofy.be.*;
 import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.ArtistManager;
 import com.easv.gringofy.bll.GenreManager;
 import com.easv.gringofy.bll.SongManager;
+import java.util.concurrent.CompletableFuture;
 import com.easv.gringofy.exceptions.PlayerException;
+import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,6 +43,7 @@ public class SongCreatorController implements Initializable {
     private final AlbumManager albumManager = new AlbumManager();
     private final GenreManager genreManager = new GenreManager();
     private final SongManager songManager = new SongManager();
+    private final PlayerModel playerModel = new PlayerModel();
     private final static String SONGS_DIRECTORY_PATH = "src/main/resources/songs";
     @FXML
     private VBox vboxInputsContainer;
@@ -108,7 +108,8 @@ public class SongCreatorController implements Initializable {
         this.filePath = destinationPath.toString();
     }
 
-    public void createSong(ActionEvent actionEvent) throws PlayerException {
+    @FXML
+    private void createSong(ActionEvent actionEvent) throws PlayerException, SQLException {
         if(!editMode) {
             File mp3File = new File(filePath);
             Media media = new Media(mp3File.toURI().toString());
@@ -122,8 +123,10 @@ public class SongCreatorController implements Initializable {
                 LocalDateTime now = LocalDateTime.now();
                 int durationInSeconds = (int) media.getDuration().toSeconds();
                 Song song = new Song(title, durationInSeconds, genre, artist, releaseDate, filePath, now, now);
+                ArtistSong artistSong  = new ArtistSong(song.getArtist().getId(), song.getId());
                 try {
                     songManager.insert(song);
+                    refreshData();
                     Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
                     stage.close();
                 } catch (PlayerException | SQLException e) {
@@ -146,7 +149,7 @@ public class SongCreatorController implements Initializable {
         comboBoxSongGenre.getSelectionModel().select(song.getGenre());
     }
 
-    public void updateSong() throws PlayerException {
+    private void updateSong() throws PlayerException, SQLException {
         int id = song.getId();
         String filePath = song.getFilePath();
         String title = txtFieldSongTitle.getText();
@@ -159,11 +162,28 @@ public class SongCreatorController implements Initializable {
         Song updatedSong = new Song(id, duration, genre, title, artist, releaseDate, filePath, now, now);
         songManager.update(updatedSong);
         Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
+        refreshData();
         stage.close();
     }
 
 
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
+    }
+    private void refreshData() throws PlayerException, SQLException {
+        playerModel.loadDefaultAlbums();
+        playerModel.loadDefaultPlaylists();
+        playerModel.loadDefaultSongs();
+    }
+    public CompletableFuture<Void> insert(Song song) {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                songManager.insert(song);
+            } catch (PlayerException e) {
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

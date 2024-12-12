@@ -13,6 +13,7 @@ public class Song {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private int playlistSongId;
+    private int artistSongId;
 
     public Song(int id, int duration, Genre genre, String title, Artist artist, String releaseDate, String filePath, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
@@ -90,4 +91,7 @@ public class Song {
         return playlistSongId;
     }
 
+    public void setArtistSongId(int artistSongId) {
+        this.artistSongId = artistSongId;
+    }
 }

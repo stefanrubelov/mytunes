@@ -1,6 +1,8 @@
 package com.easv.gringofy.dal.db;
 
 import com.easv.gringofy.be.Artist;
+import com.easv.gringofy.be.Playlist;
+import com.easv.gringofy.be.Song;
 import com.easv.gringofy.exceptions.PlayerException;
 
 import java.sql.ResultSet;
@@ -80,7 +82,30 @@ public class ArtistDAODB {
                 .where("id", "=", id)
                 .delete();
     }
+    public void addSong(Artist artist, Song song) throws SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        queryBuilder
+                .table("artist_song")
+                .insert("artist_id", artist.getId())
+                .insert("song_id", song.getId())
+                .insert("position", this.getLargestPosition(artist) + 1)
+                .save();
+    }
 
+    private int getLargestPosition(Artist artist) throws SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        ResultSet resultSet = queryBuilder
+                .from("artist_song")
+                .select("MAX(position) AS largest_position")
+                .where("artist_id", "=", artist.getId())
+                .get();
+
+        if (resultSet.next()) {
+            return resultSet.getInt("largest_position");
+        }
+
+        return 0;
+    }
     private Artist mapModel(ResultSet resultSet, int id) throws SQLException {
         String name = resultSet.getString("name");
         String description = resultSet.getString("description");

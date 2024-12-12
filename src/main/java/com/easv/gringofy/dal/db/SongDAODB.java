@@ -148,6 +148,39 @@ public class SongDAODB {
 
         return songs;
     }
+    public List<Song> getAllSongsByArtist(int artist_id) throws SQLException {
+        List<Song> songs = new ArrayList<>();
+        ResultSet resultSet = queryBuilder
+                .select("songs.id")
+                .select("songs.duration")
+                .select("songs.title")
+                .select("songs.release_date")
+                .select("songs.created_at")
+                .select("songs.updated_at")
+                .select("songs.path")
+                .select("artists.id AS artist_id")
+                .select("artists.name AS artist_name")
+                .select("artists.description AS artist_description")
+                .select("genres.id AS genre_id")
+                .select("genres.title AS genre_title")
+                .select("artist_song.id AS artist_song_id")
+                .from("artist_song")
+                .join("songs", "artist_song.song_id = songs.id", "")
+                .join("artists", "songs.artist_id = artists.id", "")
+                .join("genres", "songs.genre_id = genres.id", "")
+                .where("artist_song.artist_id", "=", artist_id)
+                .orderBy("artist_song.position", "asc")
+                .get();
+
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            Song song = mapModel(resultSet, id);
+            song.setArtistSongId(resultSet.getInt("artist_song_id"));
+            songs.add(song);
+        }
+
+        return songs;
+    }
 
     public List<Song> getAllSongsByInput(String input) throws PlayerException, SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
@@ -178,7 +211,6 @@ public class SongDAODB {
         Genre genre = new Genre(resultSet.getInt("genre_id"), resultSet.getString("genre_title"));
         String releaseDate = resultSet.getString("release_date");
         String path = resultSet.getString("path");
-//        String path = "";
         LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
         LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
         Song song = new Song(id, duration, genre, title, artist, releaseDate, path, createdAt, updatedAt);
