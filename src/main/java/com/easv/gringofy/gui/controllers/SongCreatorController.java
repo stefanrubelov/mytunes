@@ -123,9 +123,9 @@ public class SongCreatorController implements Initializable {
                 LocalDateTime now = LocalDateTime.now();
                 int durationInSeconds = (int) media.getDuration().toSeconds();
                 Song song = new Song(title, durationInSeconds, genre, artist, releaseDate, filePath, now, now);
-                ArtistSong artistSong  = new ArtistSong(song.getArtist().getId(), song.getId());
                 try {
                     songManager.insert(song);
+                    artistManager.addSong(song.getArtist(), song);
                     refreshData();
                     Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
                     stage.close();
