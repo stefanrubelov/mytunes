@@ -116,7 +116,8 @@ public class NodeBuilder {
                 songManager.delete(song.getId());
                 FlowPane parent = (FlowPane) hbox.getParent();
                 parent.getChildren().remove(hbox);
-            } catch (PlayerException e) {
+                playerModel.loadDefaultSongs();
+            } catch (PlayerException | SQLException e) {
                 throw new RuntimeException(e);
             }
         });

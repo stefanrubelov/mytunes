@@ -5,7 +5,9 @@ import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.ArtistManager;
 import com.easv.gringofy.bll.GenreManager;
 import com.easv.gringofy.bll.SongManager;
+
 import java.util.concurrent.CompletableFuture;
+
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
@@ -39,6 +41,7 @@ public class SongCreatorController implements Initializable {
     private Song song;
     private boolean editMode = false;
 
+    private HomePageController homePageController;
     private final ArtistManager artistManager = new ArtistManager();
     private final AlbumManager albumManager = new AlbumManager();
     private final GenreManager genreManager = new GenreManager();
@@ -77,6 +80,7 @@ public class SongCreatorController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     private void selectFile(ActionEvent event) throws IOException {
         Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
@@ -110,7 +114,7 @@ public class SongCreatorController implements Initializable {
 
     @FXML
     private void createSong(ActionEvent actionEvent) throws PlayerException, SQLException {
-        if(!editMode) {
+        if (!editMode) {
             File mp3File = new File(filePath);
             Media media = new Media(mp3File.toURI().toString());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -125,23 +129,26 @@ public class SongCreatorController implements Initializable {
                 Song song = new Song(title, durationInSeconds, genre, artist, releaseDate, filePath, now, now);
                 try {
                     songManager.insert(song);
-                    artistManager.addSong(song.getArtist(), song);
-                    refreshData();
+                    int id = songManager.getCurrentId();
+                    artistManager.addSong(song.getArtist(), id);
+                    refreshSongsData();
+                    homePageController.showDefaultNodes();
                     Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
                     stage.close();
                 } catch (PlayerException | SQLException e) {
                     throw new RuntimeException(e);
                 }
             });
-        }
-        else{
+        } else {
             updateSong();
         }
     }
+
     public void setSong(Song song) {
         this.song = song;
     }
-    public void setCurrentParameters(){
+
+    public void setCurrentParameters() {
         buttonSelectSong.setVisible(false);
         txtFieldSongTitle.setText(song.getTitle());
         txtFieldSongReleaseDate.setText(song.getReleaseDate());
@@ -162,7 +169,7 @@ public class SongCreatorController implements Initializable {
         Song updatedSong = new Song(id, duration, genre, title, artist, releaseDate, filePath, now, now);
         songManager.update(updatedSong);
         Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
-        refreshData();
+        refreshSongsData();
         stage.close();
     }
 
@@ -170,9 +177,14 @@ public class SongCreatorController implements Initializable {
     public void setEditMode(boolean editMode) {
         this.editMode = editMode;
     }
+
     private void refreshData() throws PlayerException, SQLException {
         playerModel.loadDefaultAlbums();
         playerModel.loadDefaultPlaylists();
+        playerModel.loadDefaultSongs();
+    }
+
+    private void refreshSongsData() throws PlayerException, SQLException {
         playerModel.loadDefaultSongs();
     }
     public CompletableFuture<Void> insert(Song song) {
@@ -185,5 +197,8 @@ public class SongCreatorController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+    }
+    public void setController(HomePageController homePageController) {
+        this.homePageController = homePageController;
     }
 }

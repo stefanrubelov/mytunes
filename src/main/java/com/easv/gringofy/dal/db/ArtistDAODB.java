@@ -82,12 +82,12 @@ public class ArtistDAODB {
                 .where("id", "=", id)
                 .delete();
     }
-    public void addSong(Artist artist, Song song) throws SQLException {
+    public void addSong(Artist artist, int song_id) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder
                 .table("artist_song")
                 .insert("artist_id", artist.getId())
-                .insert("song_id", song.getId())
+                .insert("song_id", song_id)
                 .insert("position", this.getLargestPosition(artist) + 1)
                 .save();
     }

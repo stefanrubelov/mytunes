@@ -1,6 +1,5 @@
 package com.easv.gringofy.bll;
 
-import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.dal.db.SongDAODB;
 import com.easv.gringofy.exceptions.PlayerException;
@@ -39,5 +38,8 @@ public class SongManager {
 
     public void update(Song song) throws PlayerException {
         songDAODB.update(song);
+    }
+    public int getCurrentId() throws SQLException {
+        return songDAODB.getCurrentId();
     }
 }

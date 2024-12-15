@@ -18,7 +18,7 @@ public class ArtistManager {
     public void deleteArtist(Artist artist) throws SQLException, PlayerException {
         artistDAODB.delete(artist.getId());
     }
-    public void addSong(Artist artist, Song song) throws SQLException {
-        artistDAODB.addSong(artist, song);
+    public void addSong(Artist artist, int song_id) throws SQLException {
+        artistDAODB.addSong(artist, song_id);
     }
 }

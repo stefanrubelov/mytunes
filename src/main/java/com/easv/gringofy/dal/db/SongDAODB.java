@@ -217,4 +217,17 @@ public class SongDAODB {
 
         return song;
     }
+    public int getCurrentId() throws SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+
+        ResultSet resultSet = queryBuilder
+                .from("songs")
+                .select("MAX(id) AS current_id")
+                .get();
+
+        if (resultSet.next()) {
+            return resultSet.getInt("current_id");
+        }
+        return 0;
+    }
 }
