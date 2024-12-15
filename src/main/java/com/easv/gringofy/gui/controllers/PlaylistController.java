@@ -1,6 +1,7 @@
 package com.easv.gringofy.gui.controllers;
 
 import com.easv.gringofy.be.Playlist;
+import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.bll.SongManager;
@@ -144,5 +145,33 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     @FXML
     private void play() {
         super.play(songs);
+    }
+    public void moveUpwards(Song song) throws PlayerException, SQLException {
+        int i = defaultSortedSongs.indexOf(song);
+        if(i>0) {
+            Song song2 = defaultSortedSongs.get(i - 1);
+            defaultSortedSongs.set(i, song2);
+            defaultSortedSongs.set(i - 1, song);
+            setSongs(defaultSortedSongs);
+            songs = defaultSortedSongs;
+            PlaylistSong playlistSong1 = new PlaylistSong(song.getPlaylistSongId());
+            PlaylistSong playlistSong2 = new PlaylistSong(song2.getPlaylistSongId());
+            playlistManager.decrementPosition(playlistSong1);
+            playlistManager.incrementPosition(playlistSong2);
+        }
+    }
+    public void moveDownwards(Song song) throws PlayerException, SQLException {
+        int i = defaultSortedSongs.indexOf(song);
+        if(i<defaultSortedSongs.size()-1) {
+            Song song2 = defaultSortedSongs.get(i+1);
+            defaultSortedSongs.set(i, song2);
+            defaultSortedSongs.set(i + 1, song);
+            setSongs(defaultSortedSongs);
+            songs = defaultSortedSongs;
+            PlaylistSong playlistSong1 = new PlaylistSong(song.getPlaylistSongId());
+            PlaylistSong playlistSong2 = new PlaylistSong(song2.getPlaylistSongId());
+            playlistManager.incrementPosition(playlistSong1);
+            playlistManager.decrementPosition(playlistSong2);
+        }
     }
 }

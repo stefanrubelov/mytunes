@@ -40,4 +40,10 @@ public class PlaylistManager {
     public void removePlaylistSong(PlaylistSong playlistSong) throws PlayerException, SQLException {
         playlistDAODB.removeSong(playlistSong);
     }
+    public void incrementPosition(PlaylistSong playlistSong) throws PlayerException, SQLException {
+        playlistDAODB.incrementPosition(playlistSong);
+    }
+    public void decrementPosition(PlaylistSong playlistSong) throws PlayerException, SQLException {
+        playlistDAODB.decrementPosition(playlistSong);
+    }
 }

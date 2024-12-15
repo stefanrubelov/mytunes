@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -36,6 +37,9 @@ public class NodeBuilder {
     private static final String DEFAULT_PLAYLIST_PICTURE = "/com/easv/gringofy/images/logo.png";
     private static final String DEFAULT_ALBUM_PICTURE = "/com/easv/gringofy/images/defaultAlbumPicture.png";
     private static final String PLAY_SONG_ICON = "/com/easv/gringofy/images/playSongIcon.png";
+    private static final String ARROW_UP_ICON = "/com/easv/gringofy/images/triangleUp.png";
+    private static final String ARROW_DOWN_ICON = "/com/easv/gringofy/images/triangleDown.png";
+    private static final int DEFAULT_SORTING = 0;
     private final PlayerModel playerModel = new PlayerModel();
     private final PlaylistManager playlistManager = new PlaylistManager();
     private final SongManager songManager = new SongManager();
@@ -225,7 +229,7 @@ public class NodeBuilder {
         return hbox;
     }
 
-    public HBox songToPlaylistSongNode(Song song, int index) {
+    public HBox songToPlaylistSongNode(Song song, int index, MusicPlayer controller) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
         Label songIdLabel = new Label(String.valueOf(index));
@@ -236,9 +240,24 @@ public class NodeBuilder {
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_SONG_PICTURE)));
         imageView.setImage(image);
         VBox vbox = new VBox();
+        vbox.setPrefWidth(150);
         Label titleLabel = new Label(song.getTitle());
         Label artistLabel = new Label(song.getArtist().getName());
         vbox.getChildren().addAll(titleLabel, artistLabel);
+
+        VBox arrowsContainer = new VBox();
+        arrowsContainer.setAlignment(Pos.CENTER);
+        Image arrowUp = new Image(Objects.requireNonNull(getClass().getResourceAsStream(ARROW_UP_ICON)));
+        Image arrowDown = new Image(Objects.requireNonNull(getClass().getResourceAsStream(ARROW_DOWN_ICON)));
+        ImageView arrowUpImageView = new ImageView(arrowUp);
+        ImageView arrowDownImageView = new ImageView(arrowDown);
+        arrowUpImageView.setVisible(false);
+        arrowDownImageView.setVisible(false);
+        arrowUpImageView.setFitWidth(10);
+        arrowUpImageView.setFitHeight(10);
+        arrowDownImageView.setFitWidth(10);
+        arrowDownImageView.setFitHeight(10);
+        arrowsContainer.getChildren().addAll(arrowUpImageView, arrowDownImageView);
 
         Label releasedDateLabel = new Label(song.getReleaseDate());
         Label durationLabel = new Label(formatTime(song.getDuration()));
@@ -271,14 +290,21 @@ public class NodeBuilder {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         hbox.getStyleClass().add("playlist-song-node");
+        arrowsContainer.getStyleClass().add("arrows-container");
+        arrowUpImageView.getStyleClass().add("arrow-icon");
+        arrowDownImageView.getStyleClass().add("arrow-icon");
         releasedDateLabel.getStyleClass().add("song-released-date-label");
         songIdLabel.getStyleClass().add("song-id-label");
         artistLabel.getStyleClass().add("song-artist-label");
         durationLabel.getStyleClass().add("song-duration-label");
         optionsImageView.getStyleClass().add("song-options-image-view");
         HBox.setMargin(durationLabel, new Insets(0, 20, 0, 85));
-        hbox.getChildren().addAll(songIdLabel, imageView, vbox, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
-
+        if(controller instanceof PlaylistController) {
+            hbox.getChildren().addAll(songIdLabel, imageView, vbox, arrowsContainer, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
+        }
+        else{
+            hbox.getChildren().addAll(songIdLabel, imageView, vbox, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
+        }
 
         optionsImageContainer.setOnMouseClicked(event -> songMenu.show(optionsImageView, event.getScreenX(), event.getScreenY()));
 
@@ -289,14 +315,42 @@ public class NodeBuilder {
                 playlistManager.removePlaylistSong(playlistSong);
                 VBox parent = (VBox) hbox.getParent();
                 parent.getChildren().remove(hbox);
-            } catch (PlayerException e) {
-                throw new RuntimeException(e);
-            } catch (SQLException e) {
+            } catch (PlayerException | SQLException e) {
                 throw new RuntimeException(e);
             }
         });
         item4.setOnAction(event -> {
             SongQueue.addSong(song);
+        });
+        arrowUpImageView.setOnMouseClicked(event -> {
+            assert controller instanceof PlaylistController;
+            PlaylistController playlistController = (PlaylistController) controller;
+            try {
+                playlistController.moveUpwards(song);
+            } catch (PlayerException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        arrowDownImageView.setOnMouseClicked(event -> {
+            assert controller instanceof PlaylistController;
+            PlaylistController playlistController = (PlaylistController) controller;
+            try {
+                playlistController.moveDownwards(song);
+            } catch (PlayerException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        hbox.setOnMouseEntered(event -> {
+            if(controller instanceof PlaylistController && controller.getCurrentSortingMethod() == DEFAULT_SORTING) {
+                arrowDownImageView.setVisible(true);
+                arrowUpImageView.setVisible(true);
+            }
+        });
+        hbox.setOnMouseExited(event -> {
+            if(controller instanceof PlaylistController) {
+                arrowDownImageView.setVisible(false);
+                arrowUpImageView.setVisible(false);
+            }
         });
         return hbox;
     }

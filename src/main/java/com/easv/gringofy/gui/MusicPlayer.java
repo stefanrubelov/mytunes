@@ -155,7 +155,7 @@ public class MusicPlayer {
         vboxSongsContainer.getChildren().clear();
         AtomicInteger i = new AtomicInteger(1);
         songs.forEach(song -> {
-            vboxSongsContainer.getChildren().add(nodeBuilder.songToPlaylistSongNode(song, i.get()));
+            vboxSongsContainer.getChildren().add(nodeBuilder.songToPlaylistSongNode(song, i.get(), this));
             i.getAndIncrement();
         });
     }
@@ -269,5 +269,8 @@ public class MusicPlayer {
         playerModel.loadDefaultPlaylists();
         playerModel.loadDefaultAlbums();
         playerModel.loadDefaultSongs();
+    }
+    public int getCurrentSortingMethod() {
+        return currentSortingMethod;
     }
 }

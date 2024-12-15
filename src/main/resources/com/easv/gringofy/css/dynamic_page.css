@@ -87,3 +87,13 @@
 .tools-button-container:hover .tools-button {
     -fx-text-fill: #fff;
 }
+.arrow-icon{
+    /*visibility: none;*/
+    -fx-opacity: .4;
+}
+.arrow-icon:hover{
+    -fx-opacity: 1;
+}
+.arrows-container{
+-fx-spacing: 5px;
+}

@@ -93,6 +93,7 @@ public class ArtistController extends MusicPlayer implements Initializable {
     @FXML
     private void delete(ActionEvent actionEvent) throws PlayerException, SQLException, IOException {
         artistManager.deleteArtist(artist);
+        System.out.println("delete");
         refreshData();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/home-page-view.fxml"));
         Parent root = loader.load();
