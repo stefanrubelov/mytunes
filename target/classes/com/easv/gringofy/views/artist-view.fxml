@@ -42,6 +42,7 @@
                         <Button mnemonicParsing="false" onAction="#goToHomePageView" text="Home" />
                         <Button mnemonicParsing="false" onAction="#goToCategoriesView" text="Categories" />
                         <Button mnemonicParsing="false" onAction="#goToPlaylistsView" text="Playlists" />
+                        <Button mnemonicParsing="false" onAction="#goToArtistsView" text="Artists" />
                     </children>
                     <padding>
                         <Insets left="25.0" />
@@ -58,7 +59,7 @@
                <children>
                   <ImageView fitHeight="199.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="playlistImage">
                      <image>
-                        <Image url="@../images/defaultArtistImage.png" />
+                        <Image url="@../images/defaultArtistPicture.png" />
                      </image></ImageView>
                   <Label textFill="WHITE">
                      <font>
@@ -115,7 +116,7 @@
                   <Label text="#" />
                   <HBox fx:id="hboxTitleContainer" alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="85.0" styleClass="tools-button-container" stylesheets="@../css/dynamic_page.css">
                      <children>
-                        <Button fx:id="btnSongTitle" mnemonicParsing="false" onAction="#sortByTitleOrArtist" stylesheets="@../css/dynamic_page.css" text="Title">
+                        <Button fx:id="btnSongTitle" mnemonicParsing="false" onAction="#sortByTitle" stylesheets="@../css/dynamic_page.css" text="Title">
                            <styleClass>
                               <String fx:value="title-button" />
                               <String fx:value="tools-button" />

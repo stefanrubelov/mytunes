@@ -37,7 +37,7 @@ public class PlaylistCreatorController {
         if (!editMode) {
             Playlist playlist = new Playlist(name, description, now, now);
             playlistManager.insert(playlist);
-            playlistsPageController.refreshPlaylists();
+            playlistsPageController.refresh();
         } else {
             Playlist playlist = new Playlist(this.playlist.getId(), name, description);
             playlistManager.update(playlist);

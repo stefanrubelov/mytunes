@@ -209,6 +209,14 @@
 .addPlaylistButton:hover{
     -fx-background-image: url("../images/plusIconHover.png");
 }
-
+.artist-node{
+    -fx-alignment: CENTER;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-spacing: 5;
+}
+.artist-node:hover{
+    -fx-background-color: rgba(100,100,100,.2);
+}
 
 

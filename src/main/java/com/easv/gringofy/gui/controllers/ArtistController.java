@@ -103,8 +103,8 @@ public class ArtistController extends MusicPlayer implements Initializable {
     }
 
     @FXML
-    private void sortByTitleOrArtist(ActionEvent actionEvent) {
-        super.sortByTitleOrArtist(songs, defaultSortedSongs);
+    private void sortByTitle(ActionEvent actionEvent) {
+        super.sortByTitle(songs, defaultSortedSongs);
     }
 
     @FXML
@@ -116,4 +116,5 @@ public class ArtistController extends MusicPlayer implements Initializable {
     private void sortByDuration(ActionEvent actionEvent) {
         super.sortByDuration(songs, defaultSortedSongs);
     }
+
 }

@@ -92,6 +92,17 @@ public class MusicPlayer {
     }
 
     @FXML
+    protected void goToArtistsView(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/artists-view.fxml"));
+        Parent root = loader.load();
+        MusicPlayer controller = loader.getController();
+        controller.changeSwitchStateButton();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
+
+    @FXML
     protected void playSong(ActionEvent event) {
         if (SongQueue.switchState()) {
             changeSwitchStateButton2();
@@ -209,7 +220,30 @@ public class MusicPlayer {
         }
         setSongs(songs);
     }
-
+    protected void sortByTitle(List<Song> songs, List<Song> defaultSortedSongs) {
+        clearIndications();
+        if (currentSortingMethod == ALPHABETICAL_TITLE_SORTING) {
+            songs.sort(new Comparator<Song>() {
+                @Override
+                public int compare(Song o1, Song o2) {
+                    return o2.getTitle().compareTo(o1.getTitle());
+                }
+            });
+            currentSortingMethod = REVERSE_ALPHABETICAL_TITLE_SORTING;
+            hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
+            btnSongTitle.setText("Title");
+        }
+        else if(currentSortingMethod == REVERSE_ALPHABETICAL_TITLE_SORTING) {
+            songs = defaultSortedSongs;
+            currentSortingMethod = DEFAULT_SORTING;
+        }
+        else {
+            songs.sort((o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
+            currentSortingMethod = ALPHABETICAL_TITLE_SORTING;
+            hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_UPWARDS);
+        }
+        setSongs(songs);
+    }
     protected void sortByReleaseDate(List<Song> songs, List<Song> defaultSortedSongs) {
         clearIndications();
         if (currentSortingMethod == RELEASE_DATE_SORTING) {

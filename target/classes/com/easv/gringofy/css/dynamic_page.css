@@ -97,3 +97,12 @@
 .arrows-container{
 -fx-spacing: 5px;
 }
+
+.song-artist-label{
+    font-size: 12px;
+    -fx-text-fill: #aaa;
+}
+.song-artist-label:hover{
+    -fx-text-fill: #fff;
+    -fx-underline: true;
+}
