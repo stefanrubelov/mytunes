@@ -8,7 +8,8 @@ import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
-import com.easv.gringofy.gui.SongQueue;
+import com.easv.gringofy.bll.SongQueue;
+import com.easv.gringofy.gui.controllers.creators.PlaylistCreatorController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,22 +18,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 import static java.util.Collections.sort;
 
@@ -53,16 +47,10 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     private Button btnPlaylistOptions;
     @FXML
     private ContextMenu contextMenu;
-    @FXML
-    private Button buttonSwitchState;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        progressBar.progressProperty().bind(SongQueue.getProgressProperty());
-        TRIANGLE_POINTING_DOWNWARDS.setFitHeight(10);
-        TRIANGLE_POINTING_DOWNWARDS.setFitWidth(10);
-        TRIANGLE_POINTING_UPWARDS.setFitHeight(10);
-        TRIANGLE_POINTING_UPWARDS.setFitWidth(10);
+        super.setSortingLooks();
         btnPlaylistOptions.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 contextMenu.show(btnPlaylistOptions, event.getScreenX(), event.getScreenY());
@@ -114,6 +102,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
         controller.setEditMode(true);
         controller.setPlaylist(playlist);
         controller.setPlaylistController(this);
+        controller.setCurrentParameters();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

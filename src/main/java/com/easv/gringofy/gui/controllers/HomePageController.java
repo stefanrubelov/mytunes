@@ -1,13 +1,11 @@
 package com.easv.gringofy.gui.controllers;
 
 import com.easv.gringofy.be.*;
-import com.easv.gringofy.bll.AlbumManager;
-import com.easv.gringofy.bll.PlaylistManager;
-import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
-import com.easv.gringofy.gui.SongQueue;
+import com.easv.gringofy.bll.SongQueue;
+import com.easv.gringofy.gui.controllers.creators.SongCreatorController;
 import com.easv.gringofy.gui.models.PlayerModel;
 import com.easv.gringofy.utils.Debounce;
 import javafx.animation.AnimationTimer;
@@ -18,10 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -29,10 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HomePageController extends MusicPlayer implements Initializable {
@@ -85,7 +77,7 @@ public class HomePageController extends MusicPlayer implements Initializable {
             hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist));
         });
         playerModel.getDefaultAlbums().forEach(album -> {
-            flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album));
+            flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album, this));
         });
     }
 
@@ -117,7 +109,7 @@ public class HomePageController extends MusicPlayer implements Initializable {
             Platform.runLater(() -> {
                 clearSections();
                 songs.forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song, buttonSwitchState)));
-                albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album)));
+                albums.forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album, this)));
                 playlists.forEach(playlist -> hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist)));
             });
         } catch (PlayerException | SQLException e) {

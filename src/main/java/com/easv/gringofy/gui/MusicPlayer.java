@@ -1,6 +1,7 @@
 package com.easv.gringofy.gui;
 
 import com.easv.gringofy.be.Song;
+import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
@@ -94,6 +95,16 @@ public class MusicPlayer {
     @FXML
     protected void goToArtistsView(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/artists-view.fxml"));
+        Parent root = loader.load();
+        MusicPlayer controller = loader.getController();
+        controller.changeSwitchStateButton();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
+    @FXML
+    protected void goToAlbumsView(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/albums-view.fxml"));
         Parent root = loader.load();
         MusicPlayer controller = loader.getController();
         controller.changeSwitchStateButton();
@@ -307,5 +318,13 @@ public class MusicPlayer {
     }
     public int getCurrentSortingMethod() {
         return currentSortingMethod;
+    }
+
+    protected void setSortingLooks(){
+        progressBar.progressProperty().bind(SongQueue.getProgressProperty());
+        TRIANGLE_POINTING_DOWNWARDS.setFitHeight(10);
+        TRIANGLE_POINTING_DOWNWARDS.setFitWidth(10);
+        TRIANGLE_POINTING_UPWARDS.setFitHeight(10);
+        TRIANGLE_POINTING_UPWARDS.setFitWidth(10);
     }
 }

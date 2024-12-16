@@ -5,7 +5,8 @@ import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
-import com.easv.gringofy.gui.SongQueue;
+import com.easv.gringofy.bll.SongQueue;
+import com.easv.gringofy.gui.controllers.creators.PlaylistCreatorController;
 import com.easv.gringofy.gui.interfaces.ICollectionPage;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
@@ -14,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 

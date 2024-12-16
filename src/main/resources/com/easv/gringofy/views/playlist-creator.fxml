@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="364.0" prefWidth="594.0" styleClass="body" stylesheets="@../css/creator.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.PlaylistCreatorController">
+<AnchorPane prefHeight="364.0" prefWidth="594.0" styleClass="body" stylesheets="@../css/creator.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.creators.PlaylistCreatorController">
    <children>
       <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="364.0" prefWidth="594.0" styleClass="container">
          <children>

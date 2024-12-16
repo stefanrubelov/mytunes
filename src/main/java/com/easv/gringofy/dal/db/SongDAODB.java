@@ -93,6 +93,7 @@ public class SongDAODB {
                 .select("songs.release_date")
                 .select("songs.created_at")
                 .select("songs.updated_at")
+                .select("songs.path")
                 .select("artists.id AS artist_id")
                 .select("artists.name AS artist_name")
                 .select("artists.description AS artist_description")
@@ -213,9 +214,8 @@ public class SongDAODB {
         String path = resultSet.getString("path");
         LocalDateTime createdAt = resultSet.getTimestamp("created_at").toLocalDateTime();
         LocalDateTime updatedAt = resultSet.getTimestamp("updated_at").toLocalDateTime();
-        Song song = new Song(id, duration, genre, title, artist, releaseDate, path, createdAt, updatedAt);
 
-        return song;
+        return new Song(id, duration, genre, title, artist, releaseDate, path, createdAt, updatedAt);
     }
     public int getCurrentId() throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();

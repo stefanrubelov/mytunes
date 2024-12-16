@@ -37,6 +37,7 @@
                   <Button mnemonicParsing="false" onAction="#goToCategoriesView" text="Categories" />
                   <Button mnemonicParsing="false" onAction="#goToPlaylistsView" text="Playlists" />
                   <Button mnemonicParsing="false" onAction="#goToArtistsView" text="Artists" />
+                  <Button mnemonicParsing="false" onAction="#goToAlbumsView" text="Albums" />
                </children>
                <padding>
                   <Insets left="25.0" />

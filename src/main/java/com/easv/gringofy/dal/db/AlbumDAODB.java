@@ -106,14 +106,14 @@ public class AlbumDAODB {
                 .delete();
     }
 
-    public void addSong(Playlist playlist, Song song) throws SQLException {
+    public void addSong(Album album, Song song) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
 
         queryBuilder
                 .table("album_song")
-                .insert("album_id", playlist.getId())
+                .insert("album_id", album.getId())
                 .insert("song_id", song.getId())
-                .insert("position", this.getLargestPosition(playlist) + 1)
+                .insert("position", this.getLargestPosition(album) + 1)
                 .save();
     }
 
@@ -139,13 +139,13 @@ public class AlbumDAODB {
                 .update();
     }
 
-    private int getLargestPosition(Playlist playlist) throws SQLException {
+    private int getLargestPosition(Album album) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
 
         ResultSet resultSet = queryBuilder
                 .from("album_song")
                 .select("MAX(position) AS largest_position")
-                .where("album_id", "=", playlist.getId())
+                .where("album_id", "=", album.getId())
                 .get();
 
         if (resultSet.next()) {

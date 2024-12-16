@@ -1,8 +1,6 @@
 package com.easv.gringofy.dal.db;
 
-import com.easv.gringofy.be.Artist;
-import com.easv.gringofy.be.Playlist;
-import com.easv.gringofy.be.Song;
+import com.easv.gringofy.be.*;
 import com.easv.gringofy.exceptions.PlayerException;
 
 import java.sql.ResultSet;
@@ -105,6 +103,26 @@ public class ArtistDAODB {
         }
 
         return 0;
+    }
+
+    public void incrementPosition(ArtistSong artistSong) throws SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+
+        queryBuilder
+                .table("artist_song")
+                .set("position", "position + 1", true)
+                .where("id", "=", artistSong.getId())
+                .update();
+    }
+
+    public void decrementPosition(ArtistSong artistSong) throws SQLException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+
+        queryBuilder
+                .table("artist_song")
+                .set("position", "position - 1", true)
+                .where("id", "=", artistSong.getId())
+                .update();
     }
     private Artist mapModel(ResultSet resultSet, int id) throws SQLException {
         String name = resultSet.getString("name");

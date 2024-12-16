@@ -42,4 +42,8 @@ public class SongManager {
     public int getCurrentId() throws SQLException {
         return songDAODB.getCurrentId();
     }
+
+    public List<Song> getAllSongsByAlbum(int id) throws SQLException {
+        return songDAODB.getAllSongsByAlbum(id);
+    }
 }

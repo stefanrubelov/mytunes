@@ -3,8 +3,6 @@ package com.easv.gringofy.gui.models;
 import com.easv.gringofy.be.*;
 import com.easv.gringofy.bll.*;
 import com.easv.gringofy.exceptions.PlayerException;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +13,6 @@ public class PlayerModel {
     private final SongManager songManager = new SongManager();
     private final PlaylistManager playlistManager = new PlaylistManager();
     private final AlbumManager albumManager = new AlbumManager();
-    private final SongPlayer songPlayer = new SongPlayer();
     private final ArtistManager artistManager = new ArtistManager();
 
     private static List<Song> defaultSongs = new ArrayList<>();
@@ -27,7 +24,7 @@ public class PlayerModel {
         defaultSongs = songManager.getAllSongs();
     }
 
-    public void loadDefaultPlaylists() throws PlayerException, SQLException {
+    public void loadDefaultPlaylists() throws SQLException {
         defaultPlaylists = playlistManager.getAllPlaylists();
     }
 
@@ -60,11 +57,6 @@ public class PlayerModel {
     public List<Album> getAllAlbumsByInput(String input) throws PlayerException {
         return albumManager.getAllAlbumsByInput(input);
     }
-
-    public void addSongToQueue(Song song) {
-        songPlayer.addSongToQueue(song);
-    }
-
 
 
 }

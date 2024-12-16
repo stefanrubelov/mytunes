@@ -1,13 +1,15 @@
 package com.easv.gringofy.gui.controllers;
 
 import com.easv.gringofy.be.Artist;
+import com.easv.gringofy.be.ArtistSong;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.bll.ArtistManager;
 import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
-import com.easv.gringofy.gui.SongQueue;
-import com.easv.gringofy.gui.models.PlayerModel;
+import com.easv.gringofy.bll.SongQueue;
+import com.easv.gringofy.gui.controllers.creators.ArtistCreatorController;
+import com.easv.gringofy.gui.controllers.creators.SongCreatorController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,11 +48,7 @@ public class ArtistController extends MusicPlayer implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        progressBar.progressProperty().bind(SongQueue.getProgressProperty());
-        TRIANGLE_POINTING_DOWNWARDS.setFitHeight(10);
-        TRIANGLE_POINTING_DOWNWARDS.setFitWidth(10);
-        TRIANGLE_POINTING_UPWARDS.setFitHeight(10);
-        TRIANGLE_POINTING_UPWARDS.setFitWidth(10);
+        super.setSortingLooks();
         btnArtistOptions.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 contextMenu.show(btnArtistOptions, event.getScreenX(), event.getScreenY());
@@ -88,6 +86,24 @@ public class ArtistController extends MusicPlayer implements Initializable {
 
     @FXML
     private void edit(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/artist-creator.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            ArtistCreatorController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            controller.setArtistController(this);
+            controller.setEditMode(true);
+            controller.setArtist(artist);
+            controller.setCurrentParameters();
+            stage.setTitle("Artist editor");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -116,4 +132,32 @@ public class ArtistController extends MusicPlayer implements Initializable {
         super.sortByDuration(songs, defaultSortedSongs);
     }
 
+    public void moveUpwards(Song song) throws PlayerException, SQLException {
+        int i = defaultSortedSongs.indexOf(song);
+        if(i>0) {
+            Song song2 = defaultSortedSongs.get(i - 1);
+            defaultSortedSongs.set(i, song2);
+            defaultSortedSongs.set(i - 1, song);
+            setSongs(defaultSortedSongs);
+            songs = defaultSortedSongs;
+            ArtistSong artistSong1 = new ArtistSong(song.getArtistSongId());
+            ArtistSong artistSong2 = new ArtistSong(song2.getArtistSongId());
+            artistManager.decrementPosition(artistSong1);
+            artistManager.incrementPosition(artistSong2);
+        }
+    }
+    public void moveDownwards(Song song) throws PlayerException, SQLException {
+        int i = defaultSortedSongs.indexOf(song);
+        if(i<defaultSortedSongs.size()-1) {
+            Song song2 = defaultSortedSongs.get(i+1);
+            defaultSortedSongs.set(i, song2);
+            defaultSortedSongs.set(i + 1, song);
+            setSongs(defaultSortedSongs);
+            songs = defaultSortedSongs;
+            ArtistSong artistSong1 = new ArtistSong(song.getArtistSongId());
+            ArtistSong artistSong2 = new ArtistSong(song2.getArtistSongId());
+            artistManager.incrementPosition(artistSong1);
+            artistManager.decrementPosition(artistSong2);
+        }
+    }
 }

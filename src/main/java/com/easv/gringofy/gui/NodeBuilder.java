@@ -1,12 +1,13 @@
 package com.easv.gringofy.gui;
 
 import com.easv.gringofy.be.*;
+import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.bll.SongManager;
+import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.exceptions.PlayerException;
-import com.easv.gringofy.gui.controllers.ArtistController;
-import com.easv.gringofy.gui.controllers.PlaylistController;
-import com.easv.gringofy.gui.controllers.SongCreatorController;
+import com.easv.gringofy.gui.controllers.*;
+import com.easv.gringofy.gui.controllers.creators.SongCreatorController;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -20,7 +21,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -44,6 +44,7 @@ public class NodeBuilder {
     private static final int DEFAULT_SORTING = 0;
     private final PlayerModel playerModel = new PlayerModel();
     private final PlaylistManager playlistManager = new PlaylistManager();
+    private final AlbumManager albumManager = new AlbumManager();
     private final SongManager songManager = new SongManager();
 
     public HBox songToNode(Song song, Button switchStateButton) {
@@ -89,16 +90,20 @@ public class NodeBuilder {
         ContextMenu songMenu = new ContextMenu();
         Label hoverItem = new Label("Add to playlist");
         CustomMenuItem item1 = new CustomMenuItem(hoverItem);
+        Label hoverItemAlbum = new Label("Add to album");
+        CustomMenuItem item6 = new CustomMenuItem(hoverItemAlbum);
         MenuItem item2 = new MenuItem("Add to favorites");
         MenuItem item3 = new MenuItem("Add to queue");
         MenuItem item4 = new MenuItem("Delete song");
         MenuItem item5 = new MenuItem("Edit Song");
-        songMenu.getItems().addAll(item1, item2, item3, item4, item5);
+        songMenu.getItems().addAll(item1, item6, item2, item3, item4, item5);
 
         // Menu for the available playlists
         ContextMenu playlistsMenu = new ContextMenu();
         addPlaylists(song, playlistsMenu);
 
+        ContextMenu albumsMenu = new ContextMenu();
+        addAlbums(song, albumsMenu);
 
         hbox.getStyleClass().add("song-node");
         songImageWrapper.getStyleClass().add("song--node-image-wrapper");
@@ -113,11 +118,8 @@ public class NodeBuilder {
         playlistsMenu.getStyleClass().add("song-node-playlists");
 
         // Set actions for menu items
-//        item2.setOnAction(event -> System.out.println("Add the song to the playlist")); // to implement
-        item3.setOnAction(event -> {
-            SongQueue.addSong(song);
-        });
-        item4.setOnAction(event -> {
+        item3.setOnAction(_ -> SongQueue.addSong(song));
+        item4.setOnAction(_ -> {
             try {
                 songManager.delete(song.getId());
                 FlowPane parent = (FlowPane) hbox.getParent();
@@ -127,12 +129,12 @@ public class NodeBuilder {
                 throw new RuntimeException(e);
             }
         });
-        item5.setOnAction(event -> {
+        item5.setOnAction(_ -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/song-creator.fxml"));
-            Parent root = null;
+            Parent root;
             try {
                 root = loader.load();
-                SongCreatorController controller = (SongCreatorController) loader.getController();
+                SongCreatorController controller = loader.getController();
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
                 stage.setScene(scene);
@@ -147,7 +149,15 @@ public class NodeBuilder {
             }
 
         });
-        hoverItem.setOnMouseEntered(event -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
+        hoverItem.setOnMouseEntered(_ -> {
+            playlistsMenu.show(hoverItem, Side.LEFT, -10, -8);
+            albumsMenu.hide();
+        });
+
+        hoverItemAlbum.setOnMouseEntered(_ -> {
+            playlistsMenu.hide();
+            albumsMenu.show(hoverItemAlbum, Side.LEFT, -10, -8);
+        });
 
         // Show the context menu on left-click
         imageWrapper.setOnMouseClicked(event -> {
@@ -194,17 +204,30 @@ public class NodeBuilder {
         return vbox;
     }
 
-    public HBox albumToNode(Album album) {
+    public HBox albumToNode(Album album, MusicPlayer controller) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEFAULT_ALBUM_PICTURE)));
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(50);
-        imageView.setFitHeight(50);
+        if(controller instanceof HomePageController){
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+            hbox.setPrefWidth(300);
+        }
+        else{
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(100);
+            hbox.setPrefWidth(600);
+        }
         Label titleLabel = new Label(album.getTitle());
         hbox.getStyleClass().add("album-node");
         titleLabel.getStyleClass().add("album-node-title");
         hbox.getChildren().addAll(imageView, titleLabel);
+        hbox.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                showAlbumView(album, hbox);
+            }
+        });
         return hbox;
     }
 
@@ -282,17 +305,13 @@ public class NodeBuilder {
         durationLabel.getStyleClass().add("song-duration-label");
         optionsImageView.getStyleClass().add("song-options-image-view");
         HBox.setMargin(durationLabel, new Insets(0, 20, 0, 85));
-        if(controller instanceof PlaylistController) {
-            hbox.getChildren().addAll(songIdLabel, imageView, vbox, arrowsContainer, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
-        }
-        else{
-            hbox.getChildren().addAll(songIdLabel, imageView, vbox, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
-        }
+        hbox.getChildren().addAll(songIdLabel, imageView, vbox, arrowsContainer, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
+
 
         optionsImageContainer.setOnMouseClicked(event -> songMenu.show(optionsImageView, event.getScreenX(), event.getScreenY()));
 
-        hoverItem.setOnMouseEntered(event -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
-        item3.setOnAction(event -> {
+        hoverItem.setOnMouseEntered(_ -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
+        item3.setOnAction(_ -> {
             try {
                 PlaylistSong playlistSong = new PlaylistSong(song.getPlaylistSongId());
                 playlistManager.removePlaylistSong(playlistSong);
@@ -302,42 +321,67 @@ public class NodeBuilder {
                 throw new RuntimeException(e);
             }
         });
-        item4.setOnAction(event -> {
-            SongQueue.addSong(song);
-        });
-        arrowUpImageView.setOnMouseClicked(event -> {
-            assert controller instanceof PlaylistController;
-            PlaylistController playlistController = (PlaylistController) controller;
-            try {
+        item4.setOnAction(_ -> SongQueue.addSong(song));
+        arrowUpImageView.setOnMouseClicked(_ -> {
+            if(controller instanceof PlaylistController playlistController) {
+                try {
                 playlistController.moveUpwards(song);
             } catch (PlayerException | SQLException e) {
                 throw new RuntimeException(e);
             }
-        });
-        arrowDownImageView.setOnMouseClicked(event -> {
-            assert controller instanceof PlaylistController;
-            PlaylistController playlistController = (PlaylistController) controller;
-            try {
-                playlistController.moveDownwards(song);
-            } catch (PlayerException | SQLException e) {
-                throw new RuntimeException(e);
+        }
+            else if(controller instanceof ArtistController artistController) {
+                try{
+                    artistController.moveUpwards(song);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if(controller instanceof AlbumController albumController) {
+                try{
+                    albumController.moveUpwards(song);
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
-        hbox.setOnMouseEntered(event -> {
-            if(controller instanceof PlaylistController && controller.getCurrentSortingMethod() == DEFAULT_SORTING) {
+        arrowDownImageView.setOnMouseClicked(_ -> {
+
+            if (controller instanceof PlaylistController playlistController) {
+                try {
+                    playlistController.moveDownwards(song);
+                } catch (PlayerException | SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if(controller instanceof ArtistController artistController) {
+                try{
+                    artistController.moveDownwards(song);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if(controller instanceof AlbumController albumController) {
+                try{
+                    albumController.moveDownwards(song);
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        hbox.setOnMouseEntered(_ -> {
+            if(controller.getCurrentSortingMethod() == DEFAULT_SORTING) {
                 arrowDownImageView.setVisible(true);
                 arrowUpImageView.setVisible(true);
             }
         });
-        hbox.setOnMouseExited(event -> {
-            if(controller instanceof PlaylistController) {
+        hbox.setOnMouseExited(_ -> {
                 arrowDownImageView.setVisible(false);
                 arrowUpImageView.setVisible(false);
-            }
         });
-        artistLabel.setOnMouseClicked(event -> {
-            showArtistView(song.getArtist(), hbox);
-        });
+        artistLabel.setOnMouseClicked(_ -> showArtistView(song.getArtist(), hbox));
         return hbox;
     }
 
@@ -346,7 +390,7 @@ public class NodeBuilder {
         Circle circle = new Circle(80);
 
         try (InputStream input = getClass().getResourceAsStream(DEFAULT_ARTIST_PICTURE)) {
-            Image image = new Image(input);
+            Image image = new Image(Objects.requireNonNull(input));
             circle.setFill(new ImagePattern(image));
         } catch (IOException e) {
             e.printStackTrace();
@@ -377,12 +421,23 @@ public class NodeBuilder {
         List<Playlist> playlists = playerModel.getDefaultPlaylists();
         playlists.forEach(playlist -> {
             MenuItem menuItem = new MenuItem(playlist.toString());
-            menuItem.setOnAction(event -> {
-                PlaylistSong playlistSong = new PlaylistSong(playlist.getId(), song.getId());
+            menuItem.setOnAction(_ -> {
                 try {
                     playlistManager.addSong(playlist, song);
-                } catch (PlayerException e) {
+                } catch (PlayerException | SQLException e) {
                     throw new RuntimeException(e);
+                }
+            });
+            contextMenu.getItems().add(menuItem);
+        });
+    }
+    private void addAlbums(Song song, ContextMenu contextMenu) {
+        List<Album> albums = playerModel.getDefaultAlbums();
+        albums.forEach(album -> {
+            MenuItem menuItem = new MenuItem(album.toString());
+            menuItem.setOnAction(_ -> {
+                try {
+                    albumManager.addSong(album, song);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -394,7 +449,7 @@ public class NodeBuilder {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/artist-view.fxml"));
         try {
             Parent root = loader.load();
-            ArtistController controller = (ArtistController) loader.getController();
+            ArtistController controller = loader.getController();
             controller.setArtist(artist);
             controller.changeSwitchStateButton();
             Scene scene = new Scene(root);
@@ -408,8 +463,22 @@ public class NodeBuilder {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlist-view.fxml"));
         try {
             Parent root = loader.load();
-            PlaylistController controller = (PlaylistController) loader.getController();
+            PlaylistController controller = loader.getController();
             controller.setPlaylist(playlist);
+            controller.changeSwitchStateButton();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void showAlbumView(Album album, Node node) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/album-view.fxml"));
+        try {
+            Parent root = loader.load();
+            AlbumController controller = loader.getController();
+            controller.setAlbum(album);
             controller.changeSwitchStateButton();
             Scene scene = new Scene(root);
             Stage stage = (Stage) node.getScene().getWindow();

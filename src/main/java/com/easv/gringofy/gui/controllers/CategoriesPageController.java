@@ -1,7 +1,7 @@
 package com.easv.gringofy.gui.controllers;
 
 import com.easv.gringofy.gui.MusicPlayer;
-import com.easv.gringofy.gui.SongQueue;
+import com.easv.gringofy.bll.SongQueue;
 import javafx.fxml.Initializable;
 
 import java.net.URL;

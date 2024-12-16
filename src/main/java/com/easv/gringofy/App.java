@@ -1,15 +1,13 @@
 package com.easv.gringofy;
 
-import com.easv.gringofy.dal.db.SongDAODB;
 import com.easv.gringofy.exceptions.PlayerException;
-import com.easv.gringofy.gui.SongQueue;
+import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.gui.models.PlayerModel;
 import com.easv.gringofy.utils.Env;
 import com.easv.gringofy.utils.Validator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PlaylistManager {
-    private PlaylistDAODB playlistDAODB = new PlaylistDAODB();
+    private final PlaylistDAODB playlistDAODB = new PlaylistDAODB();
 
     public List<Playlist> getAllPlaylists() throws SQLException {
         return playlistDAODB.getAllPlaylists();
