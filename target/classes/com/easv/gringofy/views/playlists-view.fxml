@@ -53,9 +53,9 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </Label>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="476.0" prefWidth="669.0" style="-fx-background-color: transparent; -fx-background: transparent;" vbarPolicy="NEVER">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="476.0" prefWidth="667.0" style="-fx-background-color: transparent; -fx-background: transparent;">
                <content>
-                  <FlowPane fx:id="flowPanePlaylistsContainer" prefHeight="11.0" prefWidth="664.0" style="-fx-hgap: 30px; -fx-vgap: 25px; -fx-padding: 20px;" />
+                  <FlowPane fx:id="flowPanePlaylistsContainer" prefHeight="40.0" prefWidth="641.0" style="-fx-hgap: 30px; -fx-vgap: 25px; -fx-padding: 20px;" />
                </content>
             </ScrollPane>
             <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#showPlaylistForm" prefHeight="52.0" prefWidth="51.0" styleClass="addPlaylistButton" stylesheets="@../css/Main.css">

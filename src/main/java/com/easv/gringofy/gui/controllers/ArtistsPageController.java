@@ -34,7 +34,7 @@ public class ArtistsPageController extends MusicPlayer  implements ICollectionPa
 
     @FXML
     private void showArtistForm(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlist-creator.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/artist-creator.fxml"));
         Parent root = loader.load();
         ArtistCreatorController controller = (ArtistCreatorController) loader.getController();
         controller.setArtistsPageController(this);

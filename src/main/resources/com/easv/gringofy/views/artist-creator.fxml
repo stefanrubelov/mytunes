@@ -25,13 +25,13 @@
                     <children>
                         <ImageView fitHeight="235.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/defaultPlaylistPicture.png" />
+                                <Image url="@../images/defaultArtistPicture.png" />
                             </image>
                         </ImageView>
                         <VBox prefHeight="231.0" prefWidth="334.0" styleClass="text-fields-container" stylesheets="@../css/creator.css">
                             <children>
-                                <TextField fx:id="txtFieldPlaylistName" prefHeight="54.0" prefWidth="314.0" promptText="Name" styleClass="input" stylesheets="@../css/creator.css" />
-                                <TextArea fx:id="txtAreaPlaylistDescription" prefHeight="170.0" prefWidth="314.0" promptText="Description" styleClass="description-input" stylesheets="@../css/creator.css" />
+                                <TextField fx:id="txtFieldArtistName" prefHeight="54.0" prefWidth="314.0" promptText="Name" styleClass="input" stylesheets="@../css/creator.css" />
+                                <TextArea fx:id="txtAreaArtistDescription" prefHeight="170.0" prefWidth="314.0" promptText="Description" styleClass="description-input" stylesheets="@../css/creator.css" />
                             </children>
                         </VBox>
                     </children>

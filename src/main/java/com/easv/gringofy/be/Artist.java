@@ -23,6 +23,13 @@ public class Artist {
         this.description = description;
     }
 
+    public Artist(String name, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.name = name;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public int getId() {
         return id;
     }

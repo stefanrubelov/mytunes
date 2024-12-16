@@ -21,4 +21,11 @@ public class ArtistManager {
     public void addSong(Artist artist, int song_id) throws SQLException {
         artistDAODB.addSong(artist, song_id);
     }
+    public void insert(Artist artist) throws PlayerException {
+        artistDAODB.insert(artist);
+    }
+
+    public void update(Artist artist) throws PlayerException {
+        artistDAODB.update(artist);
+    }
 }

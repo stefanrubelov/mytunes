@@ -303,6 +303,7 @@ public class MusicPlayer {
         playerModel.loadDefaultPlaylists();
         playerModel.loadDefaultAlbums();
         playerModel.loadDefaultSongs();
+        playerModel.loadDefaultArtists();
     }
     public int getCurrentSortingMethod() {
         return currentSortingMethod;
