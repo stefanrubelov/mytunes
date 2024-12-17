@@ -2,8 +2,6 @@ package com.easv.gringofy.bll;
 
 import com.easv.gringofy.be.Album;
 import com.easv.gringofy.be.AlbumSong;
-import com.easv.gringofy.be.PlaylistSong;
-import com.easv.gringofy.be.Song;
 import com.easv.gringofy.dal.db.AlbumDAODB;
 import com.easv.gringofy.exceptions.PlayerException;
 
@@ -23,11 +21,6 @@ public class AlbumManager {
 
     public List<Album> getAllAlbums() throws PlayerException, SQLException {
         return albumDAODB.getAllAlbums();
-    }
-
-    public Album getAlbumById(int id) {
-//        return albumDAODB.get(id);
-        return null;
     }
 
     public void incrementPosition(AlbumSong albumSong) {

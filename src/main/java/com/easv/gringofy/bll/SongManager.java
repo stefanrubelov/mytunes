@@ -24,10 +24,6 @@ public class SongManager {
         return songDAODB.getAllSongsByInput(input);
     }
 
-    public Song getSongById(int id) throws PlayerException, SQLException {
-        return songDAODB.get(id);
-    }
-
     public void insert(Song song) throws PlayerException, SQLException {
         songDAODB.insert(song);
     }

@@ -44,9 +44,7 @@ public class SongQueue {
         Media media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
 
-        mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-            updateProgressBar();
-        });
+        mediaPlayer.currentTimeProperty().addListener((_, _, _) -> updateProgressBar());
 
         mediaPlayer.setOnEndOfMedia(() -> {
             currentIndex++;
@@ -75,9 +73,7 @@ public class SongQueue {
         Media media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
 
-        mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-            updateProgressBar();
-        });
+        mediaPlayer.currentTimeProperty().addListener((_, _, _) -> updateProgressBar());
         mediaPlayer.play();
     }
 
@@ -103,5 +99,9 @@ public class SongQueue {
 
     public static void addSong(Song song) {
         songQueue.add(song);
+    }
+
+    public static void setVolume(Number newValue) {
+        mediaPlayer.setVolume(newValue.doubleValue());
     }
 }

@@ -5,12 +5,9 @@ import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
-import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.gui.controllers.creators.AlbumCreatorController;
-import com.easv.gringofy.gui.controllers.creators.SongCreatorController;
 import com.easv.gringofy.gui.interfaces.ICollectionPage;
 import com.easv.gringofy.gui.models.PlayerModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,16 +23,16 @@ import java.util.ResourceBundle;
 
 public class AlbumsPageController extends MusicPlayer implements ICollectionPage {
 
-    private NodeBuilder nodeBuilder = new NodeBuilder();
+    private final NodeBuilder nodeBuilder = new NodeBuilder();
     private AlbumManager albumManager = new AlbumManager();
-    private PlayerModel playerModel = new PlayerModel();
+    private final PlayerModel playerModel = new PlayerModel();
     private List<Album> albums;
 
     @FXML
     private FlowPane flowPaneAlbumsContainer;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        progressBar.progressProperty().bind(SongQueue.getProgressProperty());
+        super.initialize(location, resources);
         try {
             get();
             set();
@@ -56,9 +53,7 @@ public class AlbumsPageController extends MusicPlayer implements ICollectionPage
 
     @Override
     public void set() {
-        albums.forEach(album -> {
-            flowPaneAlbumsContainer.getChildren().add(nodeBuilder.albumToNode(album, this));
-        });
+        albums.forEach(album -> flowPaneAlbumsContainer.getChildren().add(nodeBuilder.albumToNode(album, this)));
     }
 
     @Override
@@ -73,7 +68,7 @@ public class AlbumsPageController extends MusicPlayer implements ICollectionPage
         get();
         set();
     }
-    public void showAlbumForm(ActionEvent actionEvent) {
+    public void showAlbumForm() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/album-creator.fxml"));
         Parent root;
         try {
@@ -90,5 +85,9 @@ public class AlbumsPageController extends MusicPlayer implements ICollectionPage
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setAlbumManager(AlbumManager albumManager) {
+        this.albumManager = albumManager;
     }
 }

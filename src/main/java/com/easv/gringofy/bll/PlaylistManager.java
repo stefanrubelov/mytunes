@@ -4,7 +4,6 @@ import com.easv.gringofy.be.Playlist;
 import com.easv.gringofy.be.PlaylistSong;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.dal.db.PlaylistDAODB;
-import com.easv.gringofy.dal.db.SongDAODB;
 import com.easv.gringofy.exceptions.PlayerException;
 
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ public class PlaylistManager {
         return playlistDAODB.getAllPlaylists();
     }
 
-    public List<Playlist> getAllPlaylistsByInput(String input) throws PlayerException, SQLException {
+    public List<Playlist> getAllPlaylistsByInput(String input) throws SQLException {
         return playlistDAODB.getAllPlaylistsByInput(input);
     }
 

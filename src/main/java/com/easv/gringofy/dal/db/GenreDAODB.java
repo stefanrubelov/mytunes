@@ -1,30 +1,23 @@
 package com.easv.gringofy.dal.db;
 
-import com.easv.gringofy.be.Artist;
 import com.easv.gringofy.be.Genre;
-import com.easv.gringofy.be.Song;
 import com.easv.gringofy.exceptions.PlayerException;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GenreDAODB {
-    private QueryBuilder queryBuilder;
+    private final QueryBuilder queryBuilder;
 
     public GenreDAODB() {
         this.queryBuilder = new QueryBuilder();
     }
 
-    public List<Genre> getAllGenres() throws PlayerException, SQLException {
+    public List<Genre> getAllGenres() throws SQLException {
         List<Genre> genres = new ArrayList<>();
-        Genre genre = null;
+        Genre genre;
 
         ResultSet resultSet = queryBuilder
                 .select("*")

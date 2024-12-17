@@ -7,6 +7,7 @@ import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,16 +16,19 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MusicPlayer {
+public class MusicPlayer implements Initializable {
 
     protected static final int DEFAULT_SORTING = 0;
     protected static final int ALPHABETICAL_TITLE_SORTING = 1;
@@ -38,16 +42,20 @@ public class MusicPlayer {
 
     protected static final ImageView TRIANGLE_POINTING_DOWNWARDS = new ImageView(new Image("com/easv/gringofy/images/trianglePointingDownwards.png"));
     protected static final ImageView TRIANGLE_POINTING_UPWARDS = new ImageView(new Image("com/easv/gringofy/images/trianglePointingUpwards.png"));
+    protected static final VolumeSlider volumeSlider = new VolumeSlider(0, 1, 1);
 
     private final PlayerModel playerModel = new PlayerModel();
     private final NodeBuilder nodeBuilder = new NodeBuilder();
 
     private int currentSortingMethod = DEFAULT_SORTING;
-    @FXML
-    protected Button buttonSwitchState;
 
     @FXML
+    protected Button buttonSwitchState;
+    @FXML
+    protected StackPane stackPaneToolsContainer;
+    @FXML
     protected ProgressBar progressBar;
+
     @FXML
     private HBox hboxTitleContainer;
     @FXML
@@ -58,6 +66,12 @@ public class MusicPlayer {
     private Button btnSongTitle;
     @FXML
     private VBox vboxSongsContainer;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setVolumeSlider();
+        progressBar.progressProperty().bind(SongQueue.getProgressProperty());
+    }
 
     @FXML
     protected void goToHomePageView(ActionEvent event) throws IOException {
@@ -102,6 +116,7 @@ public class MusicPlayer {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
+
     @FXML
     protected void goToAlbumsView(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/albums-view.fxml"));
@@ -114,25 +129,26 @@ public class MusicPlayer {
     }
 
     @FXML
-    protected void playSong(ActionEvent event) {
+    protected void playSong() {
         if (SongQueue.switchState()) {
             changeSwitchStateButton2();
         }
     }
 
     @FXML
-    protected void playPreviousSong(ActionEvent actionEvent) {
+    protected void playPreviousSong() {
         if (SongQueue.playPreviousSong()) {
             changeSwitchStateButton2();
         }
     }
 
     @FXML
-    protected void playNextSong(ActionEvent actionEvent) {
+    protected void playNextSong() {
         if (SongQueue.playNextSong()) {
             changeSwitchStateButton2();
         }
     }
+
     protected void play(List<Song> songs) {
         SongQueue.forcePlay(songs.getFirst());
         if (buttonSwitchState.getStyleClass().remove("play-button")) {
@@ -143,9 +159,11 @@ public class MusicPlayer {
             SongQueue.addSong(songs.get(j));
         }
     }
+
     protected void addToQueue(List<Song> songs) {
         songs.forEach(SongQueue::addSong);
     }
+
     protected void changeSwitchStateButton() {
         System.out.println(SongQueue.getState());
         if (SongQueue.getState()) {
@@ -181,6 +199,7 @@ public class MusicPlayer {
             i.getAndIncrement();
         });
     }
+
     protected void clearIndications() {
         hboxTitleContainer.getChildren().remove(TRIANGLE_POINTING_DOWNWARDS);
         hboxTitleContainer.getChildren().remove(TRIANGLE_POINTING_UPWARDS);
@@ -194,137 +213,108 @@ public class MusicPlayer {
     protected void sortByTitleOrArtist(List<Song> songs, List<Song> defaultSortedSongs) {
         clearIndications();
         if (currentSortingMethod == ALPHABETICAL_TITLE_SORTING) {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o2.getTitle().compareTo(o1.getTitle());
-                }
-            });
+            songs.sort((o1, o2) -> o2.getTitle().compareTo(o1.getTitle()));
             currentSortingMethod = REVERSE_ALPHABETICAL_TITLE_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
             btnSongTitle.setText("Title");
         } else if (currentSortingMethod == REVERSE_ALPHABETICAL_TITLE_SORTING) {
-            songs.sort((o1, o2) -> o1.getArtist().getName().compareTo(o2.getArtist().getName()));
+            songs.sort(Comparator.comparing(o -> o.getArtist().getName()));
             currentSortingMethod = ALPHABETICAL_ARTIST_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_UPWARDS);
             btnSongTitle.setText("Artist");
         } else if (currentSortingMethod == ALPHABETICAL_ARTIST_SORTING) {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o2.getArtist().getName().compareTo(o1.getArtist().getName());
-                }
-            });
+            songs.sort((o1, o2) -> o2.getArtist().getName().compareTo(o1.getArtist().getName()));
             currentSortingMethod = REVERSE_ALPHABETICAL_ARTIST_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
             btnSongTitle.setText("Artist");
-        }
-        else if(currentSortingMethod == REVERSE_ALPHABETICAL_ARTIST_SORTING) {
+        } else if (currentSortingMethod == REVERSE_ALPHABETICAL_ARTIST_SORTING) {
             songs = defaultSortedSongs;
             currentSortingMethod = DEFAULT_SORTING;
-        }
-        else {
-            songs.sort((o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
+        } else {
+            songs.sort(Comparator.comparing(Song::getTitle));
             currentSortingMethod = ALPHABETICAL_TITLE_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_UPWARDS);
             btnSongTitle.setText("Title");
         }
         setSongs(songs);
     }
+
     protected void sortByTitle(List<Song> songs, List<Song> defaultSortedSongs) {
         clearIndications();
         if (currentSortingMethod == ALPHABETICAL_TITLE_SORTING) {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o2.getTitle().compareTo(o1.getTitle());
-                }
-            });
+            songs.sort((o1, o2) -> o2.getTitle().compareTo(o1.getTitle()));
             currentSortingMethod = REVERSE_ALPHABETICAL_TITLE_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
             btnSongTitle.setText("Title");
-        }
-        else if(currentSortingMethod == REVERSE_ALPHABETICAL_TITLE_SORTING) {
+        } else if (currentSortingMethod == REVERSE_ALPHABETICAL_TITLE_SORTING) {
             songs = defaultSortedSongs;
             currentSortingMethod = DEFAULT_SORTING;
-        }
-        else {
-            songs.sort((o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
+        } else {
+            songs.sort(Comparator.comparing(Song::getTitle));
             currentSortingMethod = ALPHABETICAL_TITLE_SORTING;
             hboxTitleContainer.getChildren().add(TRIANGLE_POINTING_UPWARDS);
         }
         setSongs(songs);
     }
+
     protected void sortByReleaseDate(List<Song> songs, List<Song> defaultSortedSongs) {
         clearIndications();
         if (currentSortingMethod == RELEASE_DATE_SORTING) {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o2.getReleaseDate().compareTo(o1.getReleaseDate());
-                }
-            });
+            songs.sort((o1, o2) -> o2.getReleaseDate().compareTo(o1.getReleaseDate()));
             hboxReleaseDateContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
             currentSortingMethod = REVERSE_RELEASE_DATE_SORTING;
-        }
-        else if(currentSortingMethod == REVERSE_RELEASE_DATE_SORTING) {
+        } else if (currentSortingMethod == REVERSE_RELEASE_DATE_SORTING) {
             currentSortingMethod = DEFAULT_SORTING;
             songs = defaultSortedSongs;
-        }
-        else {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o1.getReleaseDate().compareTo(o2.getReleaseDate());
-                }
-            });
+        } else {
+            songs.sort(Comparator.comparing(Song::getReleaseDate));
             hboxReleaseDateContainer.getChildren().add(TRIANGLE_POINTING_UPWARDS);
             currentSortingMethod = RELEASE_DATE_SORTING;
         }
         setSongs(songs);
     }
+
     protected void sortByDuration(List<Song> songs, List<Song> defaultSortedSongs) {
         clearIndications();
         if (currentSortingMethod == DURATION_SORTING) {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o2.getDuration() - o1.getDuration();
-                }
-            });
+            songs.sort((o1, o2) -> o2.getDuration() - o1.getDuration());
             currentSortingMethod = REVERSE_DURATION_SORTING;
             hboxDurationContainer.getChildren().add(TRIANGLE_POINTING_DOWNWARDS);
-        }
-        else if(currentSortingMethod == REVERSE_DURATION_SORTING) {
+        } else if (currentSortingMethod == REVERSE_DURATION_SORTING) {
             songs = defaultSortedSongs;
             currentSortingMethod = DEFAULT_SORTING;
         } else {
-            songs.sort(new Comparator<Song>() {
-                @Override
-                public int compare(Song o1, Song o2) {
-                    return o1.getDuration() - o2.getDuration();
-                }
-            });
+            songs.sort(Comparator.comparingInt(Song::getDuration));
             currentSortingMethod = DURATION_SORTING;
             hboxDurationContainer.getChildren().add(TRIANGLE_POINTING_UPWARDS);
         }
         setSongs(songs);
     }
+
     protected void refreshData() throws PlayerException, SQLException {
         playerModel.loadDefaultPlaylists();
         playerModel.loadDefaultAlbums();
         playerModel.loadDefaultSongs();
         playerModel.loadDefaultArtists();
     }
+
     public int getCurrentSortingMethod() {
         return currentSortingMethod;
     }
 
-    protected void setSortingLooks(){
+    protected void setSortingLooks() {
         progressBar.progressProperty().bind(SongQueue.getProgressProperty());
         TRIANGLE_POINTING_DOWNWARDS.setFitHeight(10);
         TRIANGLE_POINTING_DOWNWARDS.setFitWidth(10);
         TRIANGLE_POINTING_UPWARDS.setFitHeight(10);
         TRIANGLE_POINTING_UPWARDS.setFitWidth(10);
+    }
+
+    protected void setVolumeSlider() {
+        volumeSlider.setTranslateX(350);
+        volumeSlider.setTranslateY(0);
+        stackPaneToolsContainer.getChildren().add(volumeSlider);
+
+        volumeSlider.volumeValueProperty().addListener((_, _, newValue) -> SongQueue.setVolume(newValue));
     }
 }

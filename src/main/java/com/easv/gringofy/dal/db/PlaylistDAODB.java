@@ -13,7 +13,7 @@ public class PlaylistDAODB {
 
     public List<Playlist> getAllPlaylists() throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
-        List<Playlist> playlists = new ArrayList<Playlist>();
+        List<Playlist> playlists = new ArrayList<>();
 
         ResultSet resultSet = queryBuilder
                 .from("playlists")
@@ -31,7 +31,7 @@ public class PlaylistDAODB {
 
     public List<Playlist> getAllPlaylistsByInput(String input) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
-        List<Playlist> playlists = new ArrayList<Playlist>();
+        List<Playlist> playlists = new ArrayList<>();
 
         ResultSet resultSet = queryBuilder
                 .from("playlists")

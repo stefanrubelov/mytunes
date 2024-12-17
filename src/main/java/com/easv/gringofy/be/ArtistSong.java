@@ -6,12 +6,6 @@ public class ArtistSong {
     private int songId;
     private int position;
 
-    public ArtistSong(int id, int artistId, int songId) {
-        this.id = id;
-        this.artistId = artistId;
-        this.songId = songId;
-    }
-
     public ArtistSong(int id) {
         this.id = id;
     }
@@ -23,24 +17,9 @@ public class ArtistSong {
         this.position = position;
     }
 
-    public ArtistSong(int artistId, int songId) {
-        this.artistId = artistId;
-        this.songId = songId;
-    }
 
     public int getId() {
         return id;
     }
 
-    public int getArtistId() {
-        return artistId;
-    }
-
-    public int getSongId() {
-        return songId;
-    }
-
-    public int getPosition() {
-        return position;
-    }
 }

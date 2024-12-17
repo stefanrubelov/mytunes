@@ -229,3 +229,9 @@
     -fx-background-color: rgba(254,192,26,.3);
     -fx-background-radius: 5;
 }
+.slider .track {
+    -fx-background-color: rgba(254,192,26,.3);
+}
+.slider .thumb{
+    -fx-background-color:rgba(254,192,26,.9);
+}

@@ -10,16 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArtistDAODB {
-    private QueryBuilder queryBuilder;
 
-    public ArtistDAODB() {
-        this.queryBuilder = new QueryBuilder();
-    }
 
     public List<Artist> getAll() throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
         List<Artist> artists = new ArrayList<>();
-        Artist artist = null;
+        Artist artist;
 
         ResultSet resultSet = queryBuilder
                 .select("*")
@@ -46,7 +42,6 @@ public class ArtistDAODB {
                 .get();
 
         if (resultSet.next()) {
-            ;
             artist = mapModel(resultSet, id);
         }
 
@@ -105,7 +100,7 @@ public class ArtistDAODB {
         return 0;
     }
 
-    public void incrementPosition(ArtistSong artistSong) throws SQLException {
+    public void incrementPosition(ArtistSong artistSong) {
         QueryBuilder queryBuilder = new QueryBuilder();
 
         queryBuilder
@@ -115,7 +110,7 @@ public class ArtistDAODB {
                 .update();
     }
 
-    public void decrementPosition(ArtistSong artistSong) throws SQLException {
+    public void decrementPosition(ArtistSong artistSong) {
         QueryBuilder queryBuilder = new QueryBuilder();
 
         queryBuilder

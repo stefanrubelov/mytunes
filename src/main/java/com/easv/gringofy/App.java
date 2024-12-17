@@ -1,7 +1,6 @@
 package com.easv.gringofy;
 
 import com.easv.gringofy.exceptions.PlayerException;
-import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.gui.models.PlayerModel;
 import com.easv.gringofy.utils.Env;
 import com.easv.gringofy.utils.Validator;
@@ -18,7 +17,6 @@ public class App extends Application {
     PlayerModel playerModel = new PlayerModel();
     @Override
     public void start(Stage stage) throws IOException, PlayerException, SQLException {
-        SongQueue songQueue = new SongQueue();
         playerModel.loadDefaultSongs();
         playerModel.loadDefaultPlaylists();
         playerModel.loadDefaultAlbums();

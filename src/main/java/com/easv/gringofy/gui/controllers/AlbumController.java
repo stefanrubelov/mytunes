@@ -6,8 +6,6 @@ import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.controllers.creators.AlbumCreatorController;
-import com.easv.gringofy.gui.controllers.creators.ArtistCreatorController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,13 +47,14 @@ public class AlbumController  extends MusicPlayer implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.setSortingLooks();
+        super.initialize(location, resources);
         btnAlbumOptions.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 contextMenu.show(btnAlbumOptions, event.getScreenX(), event.getScreenY());
             }
         });
     }
-    public void moveUpwards(Song song) throws PlayerException, SQLException {
+    public void moveUpwards(Song song) {
         int i = defaultSortedSongs.indexOf(song);
         if(i>0) {
             Song song2 = defaultSortedSongs.get(i - 1);
@@ -69,7 +68,7 @@ public class AlbumController  extends MusicPlayer implements Initializable {
             albumManager.incrementPosition(albumSong2);
         }
     }
-    public void moveDownwards(Song song) throws PlayerException {
+    public void moveDownwards(Song song){
         int i = defaultSortedSongs.indexOf(song);
         if(i<defaultSortedSongs.size()-1) {
             Song song2 = defaultSortedSongs.get(i+1);

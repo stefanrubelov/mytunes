@@ -1,12 +1,6 @@
 package com.easv.gringofy.be;
 
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-
 import java.time.LocalDateTime;
 import java.util.*;
 

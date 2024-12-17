@@ -7,10 +7,7 @@ import com.easv.gringofy.bll.ArtistManager;
 import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
-import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.gui.controllers.creators.ArtistCreatorController;
-import com.easv.gringofy.gui.controllers.creators.SongCreatorController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,6 +46,7 @@ public class ArtistController extends MusicPlayer implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.setSortingLooks();
+        super.initialize(location, resources);
         btnArtistOptions.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 contextMenu.show(btnArtistOptions, event.getScreenX(), event.getScreenY());
@@ -75,17 +73,17 @@ public class ArtistController extends MusicPlayer implements Initializable {
     }
 
     @FXML
-    private void play(ActionEvent actionEvent) {
+    private void play() {
         super.play(songs);
     }
 
     @FXML
-    private void addToQueue(ActionEvent actionEvent) {
+    private void addToQueue() {
         super.addToQueue(songs);
     }
 
     @FXML
-    private void edit(ActionEvent actionEvent) {
+    private void edit() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/artist-creator.fxml"));
         Parent root;
         try {
@@ -107,7 +105,7 @@ public class ArtistController extends MusicPlayer implements Initializable {
     }
 
     @FXML
-    private void delete(ActionEvent actionEvent) throws PlayerException, SQLException, IOException {
+    private void delete() throws PlayerException, SQLException, IOException {
         artistManager.deleteArtist(artist);
         refreshData();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/home-page-view.fxml"));
@@ -118,21 +116,21 @@ public class ArtistController extends MusicPlayer implements Initializable {
     }
 
     @FXML
-    private void sortByTitle(ActionEvent actionEvent) {
+    private void sortByTitle() {
         super.sortByTitle(songs, defaultSortedSongs);
     }
 
     @FXML
-    private void sortByReleaseDate(ActionEvent actionEvent) {
+    private void sortByReleaseDate() {
         super.sortByReleaseDate(songs, defaultSortedSongs);
     }
 
     @FXML
-    private void sortByDuration(ActionEvent actionEvent) {
+    private void sortByDuration() {
         super.sortByDuration(songs, defaultSortedSongs);
     }
 
-    public void moveUpwards(Song song) throws PlayerException, SQLException {
+    public void moveUpwards(Song song) throws SQLException {
         int i = defaultSortedSongs.indexOf(song);
         if(i>0) {
             Song song2 = defaultSortedSongs.get(i - 1);
@@ -146,7 +144,7 @@ public class ArtistController extends MusicPlayer implements Initializable {
             artistManager.incrementPosition(artistSong2);
         }
     }
-    public void moveDownwards(Song song) throws PlayerException, SQLException {
+    public void moveDownwards(Song song) throws SQLException {
         int i = defaultSortedSongs.indexOf(song);
         if(i<defaultSortedSongs.size()-1) {
             Song song2 = defaultSortedSongs.get(i+1);

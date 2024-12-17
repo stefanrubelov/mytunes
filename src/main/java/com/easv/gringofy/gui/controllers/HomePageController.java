@@ -4,13 +4,10 @@ import com.easv.gringofy.be.*;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
-import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.gui.controllers.creators.SongCreatorController;
 import com.easv.gringofy.gui.models.PlayerModel;
 import com.easv.gringofy.utils.Debounce;
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,9 +26,8 @@ import java.util.ResourceBundle;
 
 public class HomePageController extends MusicPlayer implements Initializable {
 
-    private PlayerModel playerModel = new PlayerModel();
-    private NodeBuilder nodeBuilder = new NodeBuilder();
-    private AnimationTimer timer;
+    private final PlayerModel playerModel = new PlayerModel();
+    private final NodeBuilder nodeBuilder = new NodeBuilder();
 
     @FXML
     private FlowPane flowPaneHomeAlbums;
@@ -45,7 +41,7 @@ public class HomePageController extends MusicPlayer implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            progressBar.progressProperty().bind(SongQueue.getProgressProperty());
+            super.initialize(location, resources);
             showDefaultNodes();
         } catch (PlayerException | SQLException e) {
             throw new RuntimeException(e);
@@ -53,44 +49,24 @@ public class HomePageController extends MusicPlayer implements Initializable {
 
         Debounce debouncer = new Debounce(200);
 
-        txtFieldSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-            debouncer.debounce(() -> Platform.runLater(() -> {
-                try {
-                    if (newValue.length() >= 3) {
-                        fetchSearch(newValue);
-                    } else if (oldValue.length() > newValue.length() && oldValue.length() >= 3) {
-                        showDefaultNodes();
-                    }
-                } catch (PlayerException | SQLException e) {
-                    throw new RuntimeException(e);
+        txtFieldSearchBar.textProperty().addListener((_, oldValue, newValue) -> debouncer.debounce(() -> Platform.runLater(() -> {
+            try {
+                if (newValue.length() >= 3) {
+                    fetchSearch(newValue);
+                } else if (oldValue.length() > newValue.length() && oldValue.length() >= 3) {
+                    showDefaultNodes();
                 }
-            }));
-        });
+            } catch (PlayerException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+        })));
     }
 
     public void showDefaultNodes() throws PlayerException, SQLException {
         clearSections();
-        playerModel.getDefaultSongs().forEach(song -> {
-            flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song, buttonSwitchState));
-        });
-        playerModel.getDefaultPlaylists().forEach(playlist -> {
-            hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist));
-        });
-        playerModel.getDefaultAlbums().forEach(album -> {
-            flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album, this));
-        });
-    }
-
-    private void search(String input) throws PlayerException, SQLException {
-
-        Debounce debouncer = new Debounce(100);
-        debouncer.debounce(() -> {
-            try {
-                fetchSearch(input);
-            } catch (PlayerException | SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        playerModel.getDefaultSongs().forEach(song -> flowPaneHomeSongs.getChildren().add(nodeBuilder.songToNode(song, buttonSwitchState)));
+        playerModel.getDefaultPlaylists().forEach(playlist -> hboxHomePlaylists.getChildren().add(nodeBuilder.playlistToNode(playlist)));
+        playerModel.getDefaultAlbums().forEach(album -> flowPaneHomeAlbums.getChildren().add(nodeBuilder.albumToNode(album, this)));
     }
 
     private void clearSections() {
@@ -119,10 +95,10 @@ public class HomePageController extends MusicPlayer implements Initializable {
     }
 
     @FXML
-    private void showSongCreatorWindow(ActionEvent actionEvent) throws IOException {
+    private void showSongCreatorWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/song-creator.fxml"));
         Parent root = loader.load();
-        SongCreatorController controller = (SongCreatorController) loader.getController();
+        SongCreatorController controller = loader.getController();
         controller.setController(this);
         controller.setEditMode(false);
         Scene scene = new Scene(root);

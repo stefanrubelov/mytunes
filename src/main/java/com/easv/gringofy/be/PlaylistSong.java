@@ -6,26 +6,8 @@ public class PlaylistSong {
     private int songId;
     private int position;
 
-    public PlaylistSong(int id, int playlistId, int songId) {
-        this.id = id;
-        this.playlistId = playlistId;
-        this.songId = songId;
-    }
-
     public PlaylistSong(int id) {
         this.id = id;
-    }
-
-    public PlaylistSong(int id, int playlistId, int songId, int position) {
-        this.id = id;
-        this.playlistId = playlistId;
-        this.songId = songId;
-        this.position = position;
-    }
-
-    public PlaylistSong(int playlistId, int songId) {
-        this.playlistId = playlistId;
-        this.songId = songId;
     }
 
     public int getId() {

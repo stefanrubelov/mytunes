@@ -7,8 +7,6 @@ import com.easv.gringofy.bll.PlaylistManager;
 import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
-import com.easv.gringofy.gui.NodeBuilder;
-import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.gui.controllers.creators.PlaylistCreatorController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,14 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static java.util.Collections.sort;
 
 public class PlaylistController extends MusicPlayer implements Initializable {
 
     private Playlist playlist;
     private final PlaylistManager playlistManager = new PlaylistManager();
     private final SongManager songManager = new SongManager();
-    private final NodeBuilder nodeBuilder = new NodeBuilder();
     private List<Song> songs;
     private List<Song> defaultSortedSongs;
 
@@ -51,6 +47,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.setSortingLooks();
+        super.initialize(location, resources);
         btnPlaylistOptions.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 contextMenu.show(btnPlaylistOptions, event.getScreenX(), event.getScreenY());
@@ -88,7 +85,6 @@ public class PlaylistController extends MusicPlayer implements Initializable {
         refreshData();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlists-view.fxml"));
         Parent root = loader.load();
-        PlaylistsPageController controller = loader.getController();
         Scene scene = new Scene(root);
         Stage stage = (Stage) lblPlaylistName.getScene().getWindow();
         stage.setScene(scene);

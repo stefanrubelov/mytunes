@@ -16,18 +16,18 @@ import java.util.function.Consumer;
 public class QueryBuilder {
     private String selectClause = "";
     private String fromClause = "";
-    private List<String> whereClauses = new ArrayList<>();
-    private List<Object> parameters = new ArrayList<>();
-    private List<String> joinClauses = new ArrayList<>();
+    private final List<String> whereClauses = new ArrayList<>();
+    private final List<Object> parameters = new ArrayList<>();
+    private final List<String> joinClauses = new ArrayList<>();
     private String orderByClause = "";
     private Integer top = null;
-    private List<String> unionClauses = new ArrayList<>();
-    private List<String> setClauses = new ArrayList<>();
+    private final List<String> unionClauses = new ArrayList<>();
+    private final List<String> setClauses = new ArrayList<>();
     private boolean delete = false;
     private boolean update = false;
     private boolean get = false;
     private boolean insert = false;
-    private ArrayList<String> insertColumnsPlaceholders;
+    private final ArrayList<String> insertColumnsPlaceholders;
     private final DBConnection dbConnection;
 
     public QueryBuilder() {

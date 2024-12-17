@@ -1,15 +1,11 @@
 package com.easv.gringofy.gui.controllers;
 
 import com.easv.gringofy.be.Artist;
-import com.easv.gringofy.bll.PlaylistManager;
-import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
-import com.easv.gringofy.bll.SongQueue;
 import com.easv.gringofy.gui.controllers.creators.ArtistCreatorController;
 import com.easv.gringofy.gui.interfaces.ICollectionPage;
 import com.easv.gringofy.gui.models.PlayerModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,19 +21,18 @@ import java.util.ResourceBundle;
 
 public class ArtistsPageController extends MusicPlayer  implements ICollectionPage {
 
-    private NodeBuilder nodeBuilder = new NodeBuilder();
-    private PlaylistManager playlistManager = new PlaylistManager();
-    private PlayerModel playerModel = new PlayerModel();
+    private final NodeBuilder nodeBuilder = new NodeBuilder();
+    private final PlayerModel playerModel = new PlayerModel();
     private List<Artist> artists;
 
     @FXML
     private FlowPane flowPanePlaylistsContainer;
 
     @FXML
-    private void showArtistForm(ActionEvent actionEvent) throws IOException {
+    private void showArtistForm() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/artist-creator.fxml"));
         Parent root = loader.load();
-        ArtistCreatorController controller = (ArtistCreatorController) loader.getController();
+        ArtistCreatorController controller = loader.getController();
         controller.setArtistsPageController(this);
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -49,7 +44,7 @@ public class ArtistsPageController extends MusicPlayer  implements ICollectionPa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        progressBar.progressProperty().bind(SongQueue.getProgressProperty());
+        super.initialize(location, resources);
         try {
             get();
             set();
@@ -59,7 +54,7 @@ public class ArtistsPageController extends MusicPlayer  implements ICollectionPa
     }
 
     @Override
-    public void fetch() throws SQLException, PlayerException {
+    public void fetch() throws SQLException {
         playerModel.loadDefaultArtists();
     }
 
@@ -69,9 +64,7 @@ public class ArtistsPageController extends MusicPlayer  implements ICollectionPa
     }
     @Override
     public void set() {
-        artists.forEach(artist -> {
-            flowPanePlaylistsContainer.getChildren().add(nodeBuilder.artistToNode(artist));
-        });
+        artists.forEach(artist -> flowPanePlaylistsContainer.getChildren().add(nodeBuilder.artistToNode(artist)));
     }
 
     @Override
@@ -80,7 +73,7 @@ public class ArtistsPageController extends MusicPlayer  implements ICollectionPa
     }
 
     @Override
-    public void refresh() throws SQLException, PlayerException {
+    public void refresh() throws SQLException {
         clear();
         fetch();
         get();
