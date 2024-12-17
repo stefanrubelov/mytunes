@@ -219,10 +219,10 @@ public class NodeBuilder {
             imageView.setFitHeight(100);
             hbox.setPrefWidth(600);
         }
-        Label titleLabel = new Label(album.getTitle());
+        Label albumTitleLabel = new Label(album.getTitle());
         hbox.getStyleClass().add("album-node");
-        titleLabel.getStyleClass().add("album-node-title");
-        hbox.getChildren().addAll(imageView, titleLabel);
+        albumTitleLabel.getStyleClass().add("album-node-title");
+        hbox.getChildren().addAll(imageView, albumTitleLabel);
         hbox.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 showAlbumView(album, hbox);
@@ -280,13 +280,18 @@ public class NodeBuilder {
         Label hoverItem = new Label("Add to playlist");
         CustomMenuItem item1 = new CustomMenuItem(hoverItem);
         MenuItem item2 = new MenuItem("Add to favorites");
-        MenuItem item3 = new MenuItem("Delete from playlist");
+        MenuItem item3 = new MenuItem();
         MenuItem item4 = new MenuItem("Add to queue");
 
         ContextMenu playlistsMenu = new ContextMenu();
         addPlaylists(song, playlistsMenu);
 
         if(controller instanceof PlaylistController) {
+            item3.setText("Delete from playlist");
+            songMenu.getItems().addAll(item1, item2, item3, item4);
+        }
+        else if(controller instanceof AlbumController){
+            item3.setText("Delete from album");
             songMenu.getItems().addAll(item1, item2, item3, item4);
         }
         else{
@@ -312,24 +317,28 @@ public class NodeBuilder {
 
         hoverItem.setOnMouseEntered(_ -> playlistsMenu.show(hoverItem, Side.LEFT, -10, -8));
         item3.setOnAction(_ -> {
-            try {
-                PlaylistSong playlistSong = new PlaylistSong(song.getPlaylistSongId());
-                playlistManager.removePlaylistSong(playlistSong);
+            if(controller instanceof PlaylistController) {
+                try {
+                    PlaylistSong playlistSong = new PlaylistSong(song.getPlaylistSongId());
+                    playlistManager.removePlaylistSong(playlistSong);
+                    VBox parent = (VBox) hbox.getParent();
+                    parent.getChildren().remove(hbox);
+                } catch (PlayerException | SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if(controller instanceof AlbumController){
+                AlbumSong albumSong= new AlbumSong(song.getAlbumSongId());
+                albumManager.removeSong(albumSong);
                 VBox parent = (VBox) hbox.getParent();
                 parent.getChildren().remove(hbox);
-            } catch (PlayerException | SQLException e) {
-                throw new RuntimeException(e);
             }
         });
         item4.setOnAction(_ -> SongQueue.addSong(song));
         arrowUpImageView.setOnMouseClicked(_ -> {
             if(controller instanceof PlaylistController playlistController) {
-                try {
                 playlistController.moveUpwards(song);
-            } catch (PlayerException | SQLException e) {
-                throw new RuntimeException(e);
             }
-        }
             else if(controller instanceof ArtistController artistController) {
                 try{
                     artistController.moveUpwards(song);
@@ -349,11 +358,7 @@ public class NodeBuilder {
         arrowDownImageView.setOnMouseClicked(_ -> {
 
             if (controller instanceof PlaylistController playlistController) {
-                try {
-                    playlistController.moveDownwards(song);
-                } catch (PlayerException | SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                playlistController.moveDownwards(song);
             }
             else if(controller instanceof ArtistController artistController) {
                 try{
@@ -437,7 +442,7 @@ public class NodeBuilder {
             MenuItem menuItem = new MenuItem(album.toString());
             menuItem.setOnAction(_ -> {
                 try {
-                    albumManager.addSong(album, song);
+                    albumManager.addSong(album, song.getId());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

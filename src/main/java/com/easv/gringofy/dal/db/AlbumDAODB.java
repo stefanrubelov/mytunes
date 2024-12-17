@@ -83,7 +83,16 @@ public class AlbumDAODB {
 
         return albums;
     }
-
+    public void insert(Album album) throws PlayerException {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        queryBuilder
+                .table("albums")
+                .insert("title", album.getTitle())
+                .insert("description", album.getDescription())
+                .insert("artist_id", album.getArtist().getId())
+                .insert("release_date", album.getReleaseDate())
+                .save();
+    }
     public void update(Album album) {
         QueryBuilder queryBuilder = new QueryBuilder();
 
@@ -106,13 +115,13 @@ public class AlbumDAODB {
                 .delete();
     }
 
-    public void addSong(Album album, Song song) throws SQLException {
+    public void addSong(Album album, int songId) throws SQLException {
         QueryBuilder queryBuilder = new QueryBuilder();
 
         queryBuilder
                 .table("album_song")
                 .insert("album_id", album.getId())
-                .insert("song_id", song.getId())
+                .insert("song_id", songId)
                 .insert("position", this.getLargestPosition(album) + 1)
                 .save();
     }
@@ -155,23 +164,23 @@ public class AlbumDAODB {
         return 0;
     }
 
-    public void incrementPosition(AlbumSong album) {
+    public void incrementPosition(AlbumSong albumSong) {
         QueryBuilder queryBuilder = new QueryBuilder();
 
         queryBuilder
                 .table("album_song")
                 .set("position", "position + 1", true)
-                .where("id", "=", album.getId())
+                .where("id", "=", albumSong.getId())
                 .update();
     }
 
-    public void decrementPosition(AlbumSong album) {
+    public void decrementPosition(AlbumSong albumSong) {
         QueryBuilder queryBuilder = new QueryBuilder();
 
         queryBuilder
                 .table("album_song")
                 .set("position", "position - 1", true)
-                .where("id", "=", album.getId())
+                .where("id", "=", albumSong.getId())
                 .update();
     }
 

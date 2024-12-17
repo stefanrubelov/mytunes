@@ -19,8 +19,8 @@ public class AlbumSong {
         this.position = position;
     }
 
-    public AlbumSong(int albumId) {
-        this.albumId = albumId;
+    public AlbumSong(int id) {
+        this.id = id;
     }
 
     public AlbumSong(int albumId, int songId) {

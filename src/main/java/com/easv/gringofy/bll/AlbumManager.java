@@ -31,16 +31,29 @@ public class AlbumManager {
     }
 
     public void incrementPosition(AlbumSong albumSong) {
+        albumDAODB.incrementPosition(albumSong);
     }
 
     public void decrementPosition(AlbumSong albumSong) {
+        albumDAODB.decrementPosition(albumSong);
     }
 
-    public void addSong(Album album, Song song) throws SQLException {
-        albumDAODB.addSong(album, song);
+    public void addSong(Album album, int songId) throws SQLException {
+        albumDAODB.addSong(album, songId);
     }
-
+    public void removeSong(AlbumSong albumSong) {
+        albumDAODB.removeSong(albumSong);
+    }
     public void deleteAlbum(Album album) {
         albumDAODB.delete(album);
     }
+
+    public void insert(Album album) throws PlayerException {
+        albumDAODB.insert(album);
+    }
+
+    public void update(Album album) {
+        albumDAODB.update(album);
+    }
+
 }

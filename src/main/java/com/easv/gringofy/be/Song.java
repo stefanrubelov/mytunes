@@ -95,11 +95,14 @@ public class Song {
     public void setArtistSongId(int artistSongId) {
         this.artistSongId = artistSongId;
     }
-
+    public void setAlbumSongId(int albumSongId) {
+        this.albumSongId = albumSongId;
+    }
     public int getAlbumSongId() {
         return albumSongId;
     }
     public int getArtistSongId(){
         return artistSongId;
     }
+
 }

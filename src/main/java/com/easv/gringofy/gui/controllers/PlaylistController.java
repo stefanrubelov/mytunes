@@ -98,14 +98,14 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     private void edit() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlist-creator.fxml"));
         Parent root = loader.load();
-        PlaylistCreatorController controller = (PlaylistCreatorController) loader.getController();
+        PlaylistCreatorController controller = loader.getController();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
         controller.setEditMode(true);
         controller.setPlaylist(playlist);
         controller.setPlaylistController(this);
         controller.setCurrentParameters();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
         stage.setTitle("Playlist Editor");
         stage.setResizable(false);
         stage.show();
@@ -135,7 +135,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
     private void play() {
         super.play(songs);
     }
-    public void moveUpwards(Song song) throws PlayerException, SQLException {
+    public void moveUpwards(Song song) {
         int i = defaultSortedSongs.indexOf(song);
         if(i>0) {
             Song song2 = defaultSortedSongs.get(i - 1);
@@ -149,7 +149,7 @@ public class PlaylistController extends MusicPlayer implements Initializable {
             playlistManager.incrementPosition(playlistSong2);
         }
     }
-    public void moveDownwards(Song song) throws PlayerException, SQLException {
+    public void moveDownwards(Song song){
         int i = defaultSortedSongs.indexOf(song);
         if(i<defaultSortedSongs.size()-1) {
             Song song2 = defaultSortedSongs.get(i+1);

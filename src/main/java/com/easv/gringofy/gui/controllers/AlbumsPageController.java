@@ -6,12 +6,19 @@ import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
 import com.easv.gringofy.gui.NodeBuilder;
 import com.easv.gringofy.bll.SongQueue;
+import com.easv.gringofy.gui.controllers.creators.AlbumCreatorController;
+import com.easv.gringofy.gui.controllers.creators.SongCreatorController;
 import com.easv.gringofy.gui.interfaces.ICollectionPage;
 import com.easv.gringofy.gui.models.PlayerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -67,5 +74,21 @@ public class AlbumsPageController extends MusicPlayer implements ICollectionPage
         set();
     }
     public void showAlbumForm(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/album-creator.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            AlbumCreatorController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            controller.setEditMode(false);
+            controller.setAlbumsPageController(this);
+            stage.setTitle("Album creator");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

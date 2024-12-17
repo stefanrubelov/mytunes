@@ -41,6 +41,7 @@ public class ArtistCreatorController {
             Artist artist = new Artist(this.artist.getId(), name, description);
             artistManager.update(artist);
             artistController.setArtist(artist);
+            refreshArtistsData();
         }
         Stage stage = (Stage) txtFieldArtistName.getScene().getWindow();
         stage.close();

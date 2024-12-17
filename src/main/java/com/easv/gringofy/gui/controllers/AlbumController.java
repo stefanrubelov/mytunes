@@ -5,6 +5,8 @@ import com.easv.gringofy.bll.AlbumManager;
 import com.easv.gringofy.bll.SongManager;
 import com.easv.gringofy.exceptions.PlayerException;
 import com.easv.gringofy.gui.MusicPlayer;
+import com.easv.gringofy.gui.controllers.creators.AlbumCreatorController;
+import com.easv.gringofy.gui.controllers.creators.ArtistCreatorController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,7 +69,7 @@ public class AlbumController  extends MusicPlayer implements Initializable {
             albumManager.incrementPosition(albumSong2);
         }
     }
-    public void moveDownwards(Song song) throws PlayerException, SQLException {
+    public void moveDownwards(Song song) throws PlayerException {
         int i = defaultSortedSongs.indexOf(song);
         if(i<defaultSortedSongs.size()-1) {
             Song song2 = defaultSortedSongs.get(i+1);
@@ -77,6 +79,7 @@ public class AlbumController  extends MusicPlayer implements Initializable {
             songs = defaultSortedSongs;
             AlbumSong albumSong1 = new AlbumSong(song.getAlbumSongId());
             AlbumSong albumSong2 = new AlbumSong(song2.getAlbumSongId());
+            System.out.println(song.getAlbumSongId());
             albumManager.incrementPosition(albumSong1);
             albumManager.decrementPosition(albumSong2);
         }
@@ -111,6 +114,24 @@ public class AlbumController  extends MusicPlayer implements Initializable {
 
     @FXML
     private void edit() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/album-creator.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            AlbumCreatorController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            controller.setEditMode(true);
+            controller.setAlbum(album);
+            controller.setAlbumController(this);
+            controller.setCurrentParameters();
+            stage.setTitle("Album editor");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

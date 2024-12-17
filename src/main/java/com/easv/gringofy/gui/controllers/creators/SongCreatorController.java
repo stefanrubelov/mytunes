@@ -75,9 +75,7 @@ public class SongCreatorController implements Initializable {
             comboBoxSongGenre.getItems().addAll(genres);
             comboBoxSongArtist.getItems().addAll(artists);
             comboBoxSongAlbum.getItems().addAll(albums);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (PlayerException e) {
+        } catch (SQLException | PlayerException e) {
             throw new RuntimeException(e);
         }
     }
@@ -132,6 +130,7 @@ public class SongCreatorController implements Initializable {
                     songManager.insert(song);
                     int id = songManager.getCurrentId();
                     artistManager.addSong(song.getArtist(), id);
+                    albumManager.addSong(album, id);
                     refreshSongsData();
                     homePageController.showDefaultNodes();
                     Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
