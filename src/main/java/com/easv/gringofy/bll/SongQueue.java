@@ -16,6 +16,7 @@ public class SongQueue {
     private static MediaPlayer mediaPlayer;
     private static int currentIndex = 0;
     private static final SimpleDoubleProperty progressProperty = new SimpleDoubleProperty();
+    private final SongManager songManager = new SongManager();
 
     public static SimpleDoubleProperty getProgressProperty() {
         return progressProperty;
@@ -48,7 +49,9 @@ public class SongQueue {
 
         mediaPlayer.setOnEndOfMedia(() -> {
             currentIndex++;
-            playCurrentSong(songQueue.get(currentIndex));
+            if(songQueue.size() > currentIndex) {
+                playCurrentSong(songQueue.get(currentIndex));
+            }
         });
         mediaPlayer.play();
 

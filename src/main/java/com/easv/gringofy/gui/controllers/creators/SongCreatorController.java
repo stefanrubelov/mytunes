@@ -47,6 +47,7 @@ public class SongCreatorController implements Initializable {
     private final AlbumManager albumManager = new AlbumManager();
     private final GenreManager genreManager = new GenreManager();
     private final SongManager songManager = new SongManager();
+    private final GenreManager genreManagerSong = new GenreManager();
     private final PlayerModel playerModel = new PlayerModel();
     private final static String SONGS_DIRECTORY_PATH = "src/main/resources/songs";
     @FXML
@@ -85,7 +86,7 @@ public class SongCreatorController implements Initializable {
         Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select a Song");
-        FileChooser.ExtensionFilter mp3Filter = new FileChooser.ExtensionFilter("MP3 Files (*.mp3)", "*.mp3");
+        FileChooser.ExtensionFilter mp3Filter = new FileChooser.ExtensionFilter("Audio Files (*.mp3, *.wav)", "*.mp3", "*.wav");
         fileChooser.getExtensionFilters().add(mp3Filter);
         // set initial directory
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -130,7 +131,10 @@ public class SongCreatorController implements Initializable {
                     songManager.insert(song);
                     int id = songManager.getCurrentId();
                     artistManager.addSong(song.getArtist(), id);
-                    albumManager.addSong(album, id);
+                    genreManager.addSong(genre, id);
+                    if(album != null) {
+                        albumManager.addSong(album, id);
+                    }
                     refreshSongsData();
                     homePageController.showDefaultNodes();
                     Stage stage = (Stage) vboxInputsContainer.getScene().getWindow();
@@ -185,9 +189,7 @@ public class SongCreatorController implements Initializable {
         return CompletableFuture.runAsync(() -> {
             try {
                 songManager.insert(song);
-            } catch (PlayerException e) {
-                throw new RuntimeException(e);
-            } catch (SQLException e) {
+            } catch (PlayerException | SQLException e) {
                 throw new RuntimeException(e);
             }
         });

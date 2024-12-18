@@ -78,7 +78,6 @@ public class AlbumController  extends MusicPlayer implements Initializable {
             songs = defaultSortedSongs;
             AlbumSong albumSong1 = new AlbumSong(song.getAlbumSongId());
             AlbumSong albumSong2 = new AlbumSong(song2.getAlbumSongId());
-            System.out.println(song.getAlbumSongId());
             albumManager.incrementPosition(albumSong1);
             albumManager.decrementPosition(albumSong2);
         }

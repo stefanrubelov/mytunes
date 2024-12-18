@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SongDAODB {
     QueryBuilder queryBuilder = new QueryBuilder();
@@ -151,6 +152,39 @@ public class SongDAODB {
 
         return songs;
     }
+    public List<Song> getAllSongsByGenre(int genre_id) throws SQLException {
+        List<Song> songs = new ArrayList<>();
+        ResultSet resultSet = queryBuilder
+                .select("songs.id")
+                .select("songs.duration")
+                .select("songs.title")
+                .select("songs.release_date")
+                .select("songs.created_at")
+                .select("songs.updated_at")
+                .select("songs.path")
+                .select("artists.id AS artist_id")
+                .select("artists.name AS artist_name")
+                .select("artists.description AS artist_description")
+                .select("genres.id AS genre_id")
+                .select("genres.title AS genre_title")
+                .select("genre_song.id AS genre_song_id")
+                .from("genre_song")
+                .join("songs", "genre_song.song_id = songs.id", "")
+                .join("genres", "genre_song.genre_id = genres.id", "") // Corrected JOIN for genres
+                .join("artists", "songs.artist_id = artists.id", "")   // Added JOIN for artists
+                .where("genre_song.genre_id", "=", genre_id)
+                .orderBy("genre_song.position", "asc")
+                .get();
+
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            Song song = mapModel(resultSet, id);
+            song.setGenreSongId(resultSet.getInt("genre_song_id"));
+            songs.add(song);
+        }
+
+        return songs;
+    }
     public List<Song> getAllSongsByArtist(int artist_id) throws SQLException {
         List<Song> songs = new ArrayList<>();
         ResultSet resultSet = queryBuilder
@@ -232,4 +266,5 @@ public class SongDAODB {
         }
         return 0;
     }
+
 }

@@ -38,7 +38,7 @@
                </VBox.margin>
                <children>
                   <Button mnemonicParsing="false" onAction="#goToHomePageView" text="Home" />
-                  <Button mnemonicParsing="false" onAction="#goToCategoriesView" text="Categories" />
+                  <Button mnemonicParsing="false" onAction="#goToGenresView" text="Genres" />
                   <Button mnemonicParsing="false" onAction="#goToPlaylistsView" text="Playlists" />
                   <Button mnemonicParsing="false" onAction="#goToArtistsView" text="Artists" />
                   <Button mnemonicParsing="false" onAction="#goToAlbumsView" text="Albums" />

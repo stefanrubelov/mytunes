@@ -1,5 +1,6 @@
 package com.easv.gringofy.bll;
 
+import com.easv.gringofy.be.Genre;
 import com.easv.gringofy.be.Song;
 import com.easv.gringofy.dal.db.SongDAODB;
 import com.easv.gringofy.exceptions.PlayerException;
@@ -41,5 +42,9 @@ public class SongManager {
 
     public List<Song> getAllSongsByAlbum(int id) throws SQLException {
         return songDAODB.getAllSongsByAlbum(id);
+    }
+
+    public List<Song> getAllSongsByGenre(Genre genre) throws SQLException {
+        return songDAODB.getAllSongsByGenre(genre.getId());
     }
 }

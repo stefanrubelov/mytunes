@@ -26,6 +26,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -92,11 +93,12 @@ public class NodeBuilder {
         CustomMenuItem item1 = new CustomMenuItem(hoverItem);
         Label hoverItemAlbum = new Label("Add to album");
         CustomMenuItem item6 = new CustomMenuItem(hoverItemAlbum);
-        MenuItem item2 = new MenuItem("Add to favorites");
+//        MenuItem item2 = new MenuItem("Add to favorites");
         MenuItem item3 = new MenuItem("Add to queue");
         MenuItem item4 = new MenuItem("Delete song");
         MenuItem item5 = new MenuItem("Edit Song");
-        songMenu.getItems().addAll(item1, item6, item2, item3, item4, item5);
+//        songMenu.getItems().addAll(item1, item6, item2, item3, item4, item5);
+        songMenu.getItems().addAll(item1, item6, item3, item4, item5);
 
         // Menu for the available playlists
         ContextMenu playlistsMenu = new ContextMenu();
@@ -288,11 +290,15 @@ public class NodeBuilder {
 
         if(controller instanceof PlaylistController) {
             item3.setText("Delete from playlist");
-            songMenu.getItems().addAll(item1, item2, item3, item4);
+//            songMenu.getItems().addAll(item1, item2, item3, item4);
+            songMenu.getItems().addAll(item1, item3, item4);
+
         }
         else if(controller instanceof AlbumController){
             item3.setText("Delete from album");
-            songMenu.getItems().addAll(item1, item2, item3, item4);
+//            songMenu.getItems().addAll(item1, item2, item3, item4);
+            songMenu.getItems().addAll(item1, item3, item4);
+
         }
         else{
             songMenu.getItems().addAll(item1, item2, item4);
@@ -346,6 +352,14 @@ public class NodeBuilder {
                     throw new RuntimeException(e);
                 }
             }
+            else if(controller instanceof GenreController genreController) {
+                try{
+                    genreController.moveUpwards(song);
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
             else if(controller instanceof AlbumController albumController) {
                 try{
                     albumController.moveUpwards(song);
@@ -364,6 +378,14 @@ public class NodeBuilder {
                 try{
                     artistController.moveDownwards(song);
                 } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if(controller instanceof GenreController genreController) {
+                try{
+                    genreController.moveDownwards(song);
+                }
+                catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -414,7 +436,28 @@ public class NodeBuilder {
 
         return vbox;
     }
+    public VBox genreToNode(Genre genre) {
+        VBox vbox = new VBox();
+        Circle circle = new Circle(80);
+        vbox.setAlignment(Pos.CENTER);
+        ImageView genreImageView = new ImageView();
+        File image = new File(genre.getPath());
+        Image genreImage = new Image(image.toURI().toString());
+        genreImageView.setImage(genreImage);
+        circle.setFill(new ImagePattern(genreImage));
+        Label genreName = new Label(genre.getTitle());
+        vbox.getChildren().addAll(circle, genreName);
 
+        vbox.getStyleClass().add("genre-node");
+
+        vbox.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                showGenreView(genre,vbox);
+            }
+        });
+
+        return vbox;
+    }
 
     public String formatTime(int totalSeconds) {
         int minutes = totalSeconds / 60;
@@ -464,6 +507,20 @@ public class NodeBuilder {
             throw new RuntimeException(e);
         }
     }
+    private void showGenreView(Genre genre, Node node) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/genre-view.fxml"));
+        try {
+            Parent root = loader.load();
+            GenreController controller = loader.getController();
+            controller.setGenre(genre);
+            controller.changeSwitchStateButton();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void showPlaylistView(Playlist playlist, Node node) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/playlist-view.fxml"));
         try {
@@ -492,4 +549,6 @@ public class NodeBuilder {
             throw new RuntimeException(e);
         }
     }
+
+
 }

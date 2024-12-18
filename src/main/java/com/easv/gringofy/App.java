@@ -18,6 +18,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException, PlayerException, SQLException {
         playerModel.loadDefaultSongs();
+        playerModel.loadDefaultGenres();
         playerModel.loadDefaultPlaylists();
         playerModel.loadDefaultAlbums();
         playerModel.loadDefaultArtists();

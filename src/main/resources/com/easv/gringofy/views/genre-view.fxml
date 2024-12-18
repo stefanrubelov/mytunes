@@ -14,11 +14,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.AlbumController">
+<AnchorPane cacheShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="946.0" style="-fx-background-size: cover;" styleClass="body" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.GenreController">
     <children>
         <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" prefHeight="653.0" prefWidth="217.0" styleClass="left-menu" stylesheets="@../css/Main.css">
             <children>
@@ -59,9 +59,9 @@
             <children>
                 <HBox prefHeight="200.0" prefWidth="690.0" styleClass="header" stylesheets="@../css/dynamic_page.css">
                     <children>
-                        <ImageView fitHeight="199.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="playlistImage">
+                        <ImageView fx:id="imgGenre" fitHeight="199.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="playlistImage">
                             <image>
-                                <Image url="@../images/defaultAlbumPicture.png" />
+                                <Image url="@../images/musicGenres/defaultGenrePicture.png" />
                             </image></ImageView>
                         <Label textFill="WHITE">
                             <font>
@@ -73,8 +73,7 @@
                         </Label>
                         <VBox alignment="CENTER_LEFT" prefHeight="199.0" prefWidth="380.0" style="-fx-spacing: 5px; -fx-padding: 10px;">
                             <children>
-                                <Label fx:id="lblAlbumName" styleClass="playlist-name" stylesheets="@../css/dynamic_page.css" text="Album" textFill="WHITE" />
-                                <Label fx:id="lblAlbumDescription" alignment="TOP_LEFT" prefHeight="57.0" prefWidth="377.0" styleClass="playlist-description" text="description" />
+                                <Label fx:id="lblGenreName" styleClass="playlist-name" stylesheets="@../css/dynamic_page.css" text="Genre" textFill="WHITE" />
                             </children>
                         </VBox>
                     </children>
@@ -90,7 +89,7 @@
                                 <URL value="@../css/dynamic_page.css" />
                             </stylesheets>
                         </Button>
-                        <Button fx:id="btnAlbumOptions" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" styleClass="playlist-options">
+                        <Button fx:id="btnGenreOptions" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" styleClass="playlist-options">
                             <HBox.margin>
                                 <Insets left="540.0" top="10.0" />
                             </HBox.margin>
@@ -118,7 +117,7 @@
                         <Label text="#" />
                         <HBox fx:id="hboxTitleContainer" alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="85.0" styleClass="tools-button-container" stylesheets="@../css/dynamic_page.css">
                             <children>
-                                <Button fx:id="btnSongTitle" mnemonicParsing="false" onAction="#sortByTitle" stylesheets="@../css/dynamic_page.css" text="Title">
+                                <Button fx:id="btnSongTitle" mnemonicParsing="false" onAction="#sortByTitleOrArtist" stylesheets="@../css/dynamic_page.css" text="Title">
                                     <styleClass>
                                         <String fx:value="title-button" />
                                         <String fx:value="tools-button" />

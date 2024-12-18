@@ -85,8 +85,8 @@ public class MusicPlayer implements Initializable {
     }
 
     @FXML
-    protected void goToCategoriesView(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/categories-view.fxml"));
+    protected void goToGenresView(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/easv/gringofy/views/genres-view.fxml"));
         Parent root = loader.load();
         MusicPlayer controller = loader.getController();
         controller.changeSwitchStateButton();
@@ -150,13 +150,15 @@ public class MusicPlayer implements Initializable {
     }
 
     protected void play(List<Song> songs) {
-        SongQueue.forcePlay(songs.getFirst());
-        if (buttonSwitchState.getStyleClass().remove("play-button")) {
-            buttonSwitchState.getStyleClass().add("pause-button");
-        }
-        int i = songs.size();
-        for (int j = 1; j < i; j++) {
-            SongQueue.addSong(songs.get(j));
+        if (!songs.isEmpty()) {
+            SongQueue.forcePlay(songs.getFirst());
+            if (buttonSwitchState.getStyleClass().remove("play-button")) {
+                buttonSwitchState.getStyleClass().add("pause-button");
+            }
+            int i = songs.size();
+            for (int j = 1; j < i; j++) {
+                SongQueue.addSong(songs.get(j));
+            }
         }
     }
 

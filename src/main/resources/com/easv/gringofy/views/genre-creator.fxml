@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="364.0" prefWidth="594.0" styleClass="body" stylesheets="@../css/creator.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easv.gringofy.gui.controllers.creators.GenreCreatorController">
+    <children>
+        <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="364.0" prefWidth="594.0" styleClass="container">
+            <children>
+                <Label text="Edit details" textFill="WHITE">
+                    <font>
+                        <Font size="33.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" prefHeight="220.0" prefWidth="474.0" styleClass="details-container" stylesheets="@../css/creator.css">
+                    <children>
+                  <StackPane fx:id="stackPaneContainer" prefHeight="150.0" prefWidth="200.0" styleClass="genreImageContainer" stylesheets="@../css/creator.css">
+                     <children>
+                              <ImageView fx:id="imgViewImageContainer" fitHeight="235.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" styleClass="genreCreatorImage">
+                                  <image>
+                                      <Image url="@../images/musicGenres/defaultGenrePicture.png" />
+                                  </image>
+                              </ImageView>
+                        <ImageView fx:id="imgViewEditIcon" fitHeight="52.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/editIcon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                        <VBox prefHeight="231.0" prefWidth="334.0" styleClass="text-fields-container" stylesheets="@../css/creator.css">
+                            <children>
+                                <TextField fx:id="txtFieldGenreName" prefHeight="54.0" prefWidth="314.0" promptText="Name" styleClass="input" stylesheets="@../css/creator.css" />
+                        <Label fx:id="lblPath" text="Path to picture: " textFill="WHITE" />
+                            </children>
+                        </VBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </HBox>
+                <Button mnemonicParsing="false" onAction="#createGenre" styleClass="btn" stylesheets="@../css/creator.css" text="Save">
+                    <VBox.margin>
+                        <Insets left="400.0" top="10.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
