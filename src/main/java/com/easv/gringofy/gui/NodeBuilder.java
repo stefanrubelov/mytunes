@@ -42,6 +42,7 @@ public class NodeBuilder {
     private static final String PLAY_SONG_ICON = "/com/easv/gringofy/images/playSongIcon.png";
     private static final String ARROW_UP_ICON = "/com/easv/gringofy/images/triangleUp.png";
     private static final String ARROW_DOWN_ICON = "/com/easv/gringofy/images/triangleDown.png";
+    private static final String SMALL_PLAY_ICON = "/com/easv/gringofy/images/smallPlayIcon.png";
     private static final int DEFAULT_SORTING = 0;
     private final PlayerModel playerModel = new PlayerModel();
     private final PlaylistManager playlistManager = new PlaylistManager();
@@ -236,8 +237,15 @@ public class NodeBuilder {
     public HBox songToPlaylistSongNode(Song song, int index, MusicPlayer controller) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
+        StackPane idPane = new StackPane();
+        ImageView smallPlayIcon = new ImageView();
+        Image smallPlayIconImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(SMALL_PLAY_ICON)));
+        smallPlayIcon.setImage(smallPlayIconImage);
+        smallPlayIcon.setFitWidth(15);
+        smallPlayIcon.setFitHeight(15);
+        smallPlayIcon.setVisible(false);
         Label songIdLabel = new Label(String.valueOf(index));
-
+        idPane.getChildren().addAll(songIdLabel, smallPlayIcon);
         ImageView imageView = new ImageView();
         imageView.setFitWidth(35);
         imageView.setFitHeight(35);
@@ -316,7 +324,7 @@ public class NodeBuilder {
         durationLabel.getStyleClass().add("song-duration-label");
         optionsImageView.getStyleClass().add("song-options-image-view");
         HBox.setMargin(durationLabel, new Insets(0, 20, 0, 85));
-        hbox.getChildren().addAll(songIdLabel, imageView, vbox, arrowsContainer, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
+        hbox.getChildren().addAll(idPane, imageView, vbox, arrowsContainer, spacer, releasedDateLabel, durationLabel, optionsImageContainer);
 
 
         optionsImageContainer.setOnMouseClicked(event -> songMenu.show(optionsImageView, event.getScreenX(), event.getScreenY()));
@@ -399,14 +407,21 @@ public class NodeBuilder {
             }
         });
         hbox.setOnMouseEntered(_ -> {
+            smallPlayIcon.setVisible(true);
+            songIdLabel.setVisible(false);
             if(controller.getCurrentSortingMethod() == DEFAULT_SORTING) {
                 arrowDownImageView.setVisible(true);
                 arrowUpImageView.setVisible(true);
             }
         });
         hbox.setOnMouseExited(_ -> {
-                arrowDownImageView.setVisible(false);
-                arrowUpImageView.setVisible(false);
+            smallPlayIcon.setVisible(false);
+            songIdLabel.setVisible(true);
+            arrowDownImageView.setVisible(false);
+            arrowUpImageView.setVisible(false);
+        });
+        idPane.setOnMouseClicked(_ ->{
+            SongQueue.forcePlay(song);
         });
         artistLabel.setOnMouseClicked(_ -> showArtistView(song.getArtist(), hbox));
         return hbox;
